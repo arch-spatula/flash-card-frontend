@@ -1,7 +1,8 @@
 import "./App.css";
+import { Router } from "./routes/Routes";
 
 function App() {
-  return <h1>hello world! </h1>;
+  return <Router />;
 }
 
 export default App;
