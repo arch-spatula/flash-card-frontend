@@ -7,22 +7,35 @@ import Layout from './GlobalLayout';
  * @see https://github.com/wanted-frontedend-team5/pre-onboarding-10th-1-5/blob/main/src/router/Router.jsx
  */
 
-const router = createBrowserRouter([
+const routes = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
-    children: [
-      { index: true, element: <div>Welcome</div> },
-      { path: '/signup', element: <div>Sign Up</div> },
-      { path: '/signin', element: <div>Sign In</div> },
-      { path: '/cards', element: <div>Cards</div> },
-    ],
     errorElement: <div>404</div>,
+    children: [
+      {
+        path: '/signup',
+        element: <div>Sign Up</div>,
+      },
+      {
+        path: '/signin',
+        element: <div>Sign In</div>,
+      },
+      {
+        path: '/cards',
+        element: <div>Cards</div>,
+      },
+      {
+        index: true,
+        element: <div>Welcome</div>,
+      },
+    ],
   },
 ]);
 
 function Router() {
-  return <RouterProvider router={router} />;
+  return <RouterProvider router={routes} />;
+  // const routedElements = useRoutes(routes);
 }
 
 export default Router;
