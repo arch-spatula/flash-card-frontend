@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './GlobalLayout';
 
 /**
@@ -7,35 +7,19 @@ import Layout from './GlobalLayout';
  * @see https://github.com/wanted-frontedend-team5/pre-onboarding-10th-1-5/blob/main/src/router/Router.jsx
  */
 
-const routes = createBrowserRouter([
-  {
-    path: '/',
-    element: <Layout />,
-    errorElement: <div>404</div>,
-    children: [
-      {
-        path: '/signup',
-        element: <div>Sign Up</div>,
-      },
-      {
-        path: '/signin',
-        element: <div>Sign In</div>,
-      },
-      {
-        path: '/cards',
-        element: <div>Cards</div>,
-      },
-      {
-        index: true,
-        element: <div>Welcome</div>,
-      },
-    ],
-  },
-]);
-
 function Router() {
-  return <RouterProvider router={routes} />;
-  // const routedElements = useRoutes(routes);
+  return (
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<div>Welcome</div>} />
+          <Route path="/signin" element={<div>Sign In</div>} />
+          <Route path="/signup" element={<div>Sign Up</div>} />
+          <Route path="*" element={<div>404</div>} />
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  );
 }
 
 export default Router;
