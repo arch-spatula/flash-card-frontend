@@ -44,5 +44,12 @@
   },
   "msw": {
     "workerDirectory": "public"
-  }
+  },
+  "routes": [
+    {
+      "src": "/[^.]+",
+      "dest": "/",
+      "status": 200
+    }
+  ]
 }
