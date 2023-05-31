@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
-import user from "@testing-library/user-event";
-import App from "./App";
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import user from '@testing-library/user-event';
+import App from './App';
 
-describe("App", () => {
-  it("should renders hello world!", async () => {
+describe('App', () => {
+  it('should renders have navbar tex nav', async () => {
     // Arrange
     user.setup();
     render(<App />);
@@ -13,8 +13,6 @@ describe("App", () => {
     // 현재는 생략
 
     // Expect
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-      "hello world!"
-    );
+    expect(screen.getByRole('navigation')).toHaveTextContent('nav');
   });
 });
