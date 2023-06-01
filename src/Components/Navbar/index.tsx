@@ -2,46 +2,47 @@ import { Link } from 'react-router-dom';
 import { Nav, Container, List, ListItem } from './Navbar.style';
 import { useLogin } from '../../hooks';
 
-function Navbar() {
+export function Navbar() {
   const { isLoggedIn } = useLogin();
+  return <Nav>{isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}</Nav>;
+}
 
+function LoggedInNav() {
   return (
-    <Nav>
-      <Container>
-        {isLoggedIn ? (
-          <>
-            <List>
-              <ListItem>
-                <Link to={'/cards'}>Home</Link>
-              </ListItem>
-              <ListItem>
-                <Link to={'/deck'}>Deck</Link>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem>
-                <Link to={'/setting'}>Setting</Link>
-              </ListItem>
-            </List>
-          </>
-        ) : (
-          <>
-            <List>
-              <ListItem>
-                <Link to={'/'}>Home</Link>
-              </ListItem>
-            </List>
-            <List>
-              <ListItem>
-                <Link to={'/signup'}>Sign Up</Link>
-                <Link to={'/signin'}>Sign In</Link>
-              </ListItem>
-            </List>
-          </>
-        )}
-      </Container>
-    </Nav>
+    <Container>
+      <List>
+        <ListItem>
+          <Link to={'/cards'}>Home</Link>
+        </ListItem>
+        <ListItem>
+          <Link to={'/deck'}>Deck</Link>
+        </ListItem>
+      </List>
+      <List>
+        <ListItem>
+          <Link to={'/setting'}>Setting</Link>
+        </ListItem>
+      </List>
+    </Container>
   );
 }
 
-export { Navbar };
+function LoggedOutNav() {
+  return (
+    <Container>
+      <List>
+        <ListItem>
+          <Link to={'/'}>Home</Link>
+        </ListItem>
+      </List>
+      <List>
+        <ListItem>
+          <Link to={'/signup'}>Sign Up</Link>
+        </ListItem>
+        <ListItem>
+          <Link to={'/signin'}>Sign In</Link>
+        </ListItem>
+      </List>
+    </Container>
+  );
+}
