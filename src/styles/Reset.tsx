@@ -96,6 +96,10 @@ const GlobalStyle = css`
   html {
     overflow-y: scroll;
   }
+  a {
+    text-decoration: none;
+    outline: none;
+  }
   /* HTML5 display-role reset for older browsers */
   article,
   aside,
