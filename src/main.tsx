@@ -8,8 +8,13 @@ import { ThemeProvider } from '@emotion/react';
 import theme from './styles/theme.ts';
 
 if (process.env.NODE_ENV === 'development') {
-  worker.start();
+  /**
+   * api가 안정화 되면 아래 설정 {onUnhandledRequest: 'bypass'}은 해제합니다.
+   * @see https://stackoverflow.com/questions/68024935/msw-logging-warnings-for-unhandled-supertest-requests
+   */
+  worker.start({ onUnhandledRequest: 'bypass' });
 }
+
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
