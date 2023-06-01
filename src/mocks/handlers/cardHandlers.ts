@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { API_URLS, BASE_URL } from '../constant/config';
+import { API_URLS, BASE_URL } from '../../constant/config';
 
 const cards = {
   documents: [
@@ -22,16 +22,20 @@ const cards = {
   ],
 };
 
-export const cardHandlers = [
-  rest.get(BASE_URL + API_URLS.CARDS, (_, res, ctx) => {
-    return res(ctx.status(200), ctx.json(cards));
-  }),
+export const getCards = rest.get(BASE_URL + API_URLS.CARDS, (_, res, ctx) => {
+  return res(ctx.status(200), ctx.json(cards));
+});
 
-  rest.post(BASE_URL + API_URLS.CARDS, (_, res, ctx) => {
+export const createCard = rest.post(
+  BASE_URL + API_URLS.CARDS,
+  (_, res, ctx) => {
     return res(ctx.status(201), ctx.json({ insertedId: '1234asdf' }));
-  }),
+  }
+);
 
-  rest.patch(BASE_URL + API_URLS.CARDS, (_, res, ctx) => {
+export const updateCard = rest.patch(
+  BASE_URL + API_URLS.CARDS,
+  (_, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -39,9 +43,12 @@ export const cardHandlers = [
         modifiedCount: 1,
       })
     );
-  }),
+  }
+);
 
-  rest.delete(BASE_URL + API_URLS.CARDS, (_, res, ctx) => {
+export const deleteCard = rest.delete(
+  BASE_URL + API_URLS.CARDS,
+  (_, res, ctx) => {
     return res(ctx.status(204), ctx.json(null));
-  }),
-];
+  }
+);
