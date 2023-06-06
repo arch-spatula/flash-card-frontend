@@ -13,6 +13,6 @@ describe('App', () => {
     // 현재는 생략
 
     // Expect
-    expect(screen.getByRole('navigation')).toHaveTextContent('nav');
+    expect(screen.getByRole('navigation')).toHaveTextContent('Home');
   });
 });

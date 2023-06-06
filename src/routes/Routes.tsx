@@ -1,5 +1,14 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from './GlobalLayout';
+import {
+  Cards,
+  Deck,
+  Landing,
+  NotFound,
+  Setting,
+  SignIn,
+  SignUp,
+} from '../pages';
 
 /**
  * 참고 자료
@@ -12,10 +21,13 @@ function Router() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<div>Welcome</div>} />
-          <Route path="/signin" element={<div>Sign In</div>} />
-          <Route path="/signup" element={<div>Sign Up</div>} />
-          <Route path="*" element={<div>404</div>} />
+          <Route path="/" element={<Landing />} />
+          <Route path="/cards" element={<Cards />} />
+          <Route path="/deck" element={<Deck />} />
+          <Route path="/setting" element={<Setting />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </BrowserRouter>
