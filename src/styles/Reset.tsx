@@ -92,6 +92,7 @@ const GlobalStyle = css`
   }
   body {
     overflow-x: hidden;
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   }
   html {
     overflow-y: scroll;
