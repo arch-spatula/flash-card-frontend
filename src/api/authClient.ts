@@ -14,7 +14,7 @@ async function signInAPI(email: string, password: string) {
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error;
+      return error.response?.data;
     }
   }
 }
@@ -28,7 +28,7 @@ async function signUpAPI(email: string, password: string) {
     return res;
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error;
+      return error.response?.data;
     }
   }
 }

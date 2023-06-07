@@ -1,5 +1,15 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './GlobalLayout';
+import {
+  Cards,
+  Deck,
+  Landing,
+  NotFound,
+  Setting,
+  SignIn,
+  SignUp,
+} from '../pages';
+import { ROUTE_PATHS } from '../constant/config';
 
 /**
  * 참고 자료
@@ -7,19 +17,24 @@ import Layout from './GlobalLayout';
  * @see https://github.com/wanted-frontedend-team5/pre-onboarding-10th-1-5/blob/main/src/router/Router.jsx
  */
 
+const routes = createBrowserRouter([
+  {
+    path: ROUTE_PATHS.WELCOME,
+    element: <Layout />,
+    children: [
+      { index: true, element: <Landing /> },
+      { path: ROUTE_PATHS.SIGN_IN, element: <SignIn /> },
+      { path: ROUTE_PATHS.SIGN_UP, element: <SignUp /> },
+      { path: ROUTE_PATHS.CARDS, element: <Cards /> },
+      { path: ROUTE_PATHS.DECK, element: <Deck /> },
+      { path: ROUTE_PATHS.SETTING, element: <Setting /> },
+    ],
+    errorElement: <NotFound />,
+  },
+]);
+
 function Router() {
-  return (
-    <BrowserRouter>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<div>Welcome</div>} />
-          <Route path="/signin" element={<div>Sign In</div>} />
-          <Route path="/signup" element={<div>Sign Up</div>} />
-          <Route path="*" element={<div>404</div>} />
-        </Routes>
-      </Layout>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={routes} />;
 }
 
 export default Router;

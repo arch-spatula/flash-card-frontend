@@ -11,4 +11,6 @@ export const ROUTE_PATHS = {
   SIGN_IN: '/signin',
   SIGN_UP: '/signup',
   CARDS: '/cards',
+  DECK: '/deck',
+  SETTING: '/setting',
 };
