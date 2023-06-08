@@ -1,6 +1,6 @@
+import { render, screen } from '../../../libs/test-utils';
 import { describe, vi } from 'vitest';
 import { Button } from '.';
-import { render, screen } from '@testing-library/react';
 import user from '@testing-library/user-event';
 
 describe('Button', () => {
@@ -15,5 +15,22 @@ describe('Button', () => {
 
     expect(btnElement).toBeInTheDocument();
     expect(mock).toHaveBeenCalledTimes(1);
+  });
+
+  it('should not invoke the function when the button is disabled', async () => {
+    user.setup();
+    const btnText = 'Button';
+    const mock = vi.fn(() => 0);
+
+    render(
+      <Button onClick={mock} disabled>
+        {btnText}
+      </Button>
+    );
+    const btnElement = screen.getByRole('button');
+    await user.click(btnElement);
+
+    expect(btnElement).toBeDisabled();
+    expect(mock).toHaveBeenCalledTimes(0);
   });
 });
