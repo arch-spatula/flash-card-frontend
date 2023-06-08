@@ -1,5 +1,4 @@
-import { HelperText } from './Input.style';
-import { InputWrapper } from './Input.style';
+import { InputWrapper, HelperText } from './Input.style';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   value: string;
