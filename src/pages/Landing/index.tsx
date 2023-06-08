@@ -1,3 +1,4 @@
+import { Button } from '../../Components';
 import { useLogin } from '../../hooks';
 
 function Landing() {
@@ -5,8 +6,8 @@ function Landing() {
   return (
     <div>
       <h1>Welcome</h1>
-      <button onClick={login}>login</button>
-      <button onClick={logout}>logout</button>
+      <Button onClick={login}>login</Button>
+      <Button onClick={logout}>logout</Button>
     </div>
   );
 }
