@@ -19,12 +19,15 @@ function SignIn() {
       setEmailError('');
       setPasswordError('');
       const res = await signInAPI(emailValue, passwordValue);
+
       if (res?.msg === 'Error: 비밀번호가 일치하지 않습니다.')
         throw new Error('비밀번호가 일치하지 않습니다.');
       if (res?.msg === 'Error: 이메일이 없습니다.')
         throw new Error('이메일이 없습니다.');
 
       if (res?.success) {
+        const { access_token } = res;
+        if (access_token) localStorage.setItem('token', `${access_token}`);
         navigate(ROUTE_PATHS.CARDS);
       }
     } catch (error) {
@@ -32,8 +35,9 @@ function SignIn() {
       if (err.message === '이메일이 없습니다.') {
         setEmailError('이메일이 없습니다.');
       }
-      if (err.message === '비밀번호가 일치하지 않습니다.')
+      if (err.message === '비밀번호가 일치하지 않습니다.') {
         setPasswordError('비밀번호가 일치하지 않습니다.');
+      }
     }
   };
 
