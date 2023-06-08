@@ -22,7 +22,7 @@ function Layout() {
 const MainContainer = styled.main`
   width: 82.5rem;
   margin: auto;
-  height: calc(100vh - 4rem);
+  min-height: calc(100vh - 4rem);
 `;
 
 export default Layout;
