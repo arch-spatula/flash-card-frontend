@@ -1,6 +1,6 @@
 import { SignIn } from '.';
-import { fireEvent, render, screen } from '../../libs/test-utils';
-import { describe, it, vi } from 'vitest';
+import { render, screen } from '../../libs/test-utils';
+import { describe, it } from 'vitest';
 
 describe('SignIn', () => {
   it('should render Sign In as Heading', () => {
