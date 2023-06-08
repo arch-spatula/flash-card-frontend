@@ -1,4 +1,4 @@
-import { InputWrapper, HelperText } from './Input.style';
+import { InputWrapper, HelperText, InputContainer } from './Input.style';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   value: string;
@@ -15,9 +15,9 @@ export function Input({
   ...other
 }: InputProps) {
   return (
-    <>
+    <InputContainer>
       <InputWrapper onChange={onChange} value={value} {...other} />
       {!hideHelper && <HelperText>{helperText}</HelperText>}
-    </>
+    </InputContainer>
   );
 }
