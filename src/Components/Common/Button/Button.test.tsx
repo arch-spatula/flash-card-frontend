@@ -1,5 +1,5 @@
 import { render, screen } from '../../../libs/test-utils';
-import { describe, vi } from 'vitest';
+import { describe, vi, it } from 'vitest';
 import { Button } from '.';
 import user from '@testing-library/user-event';
 
