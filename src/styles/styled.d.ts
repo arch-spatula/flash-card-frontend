@@ -25,6 +25,8 @@ declare module '@emotion/react' {
       body16Bold: string;
       body14Regular: string;
       body14Bold: string;
+      caption12Regular: string;
+      caption12Bold: string;
     };
   }
 }

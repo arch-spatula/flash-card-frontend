@@ -46,6 +46,20 @@ const theme = {
     font-size: 14px;
     line-height: 24px;
   `,
+    caption12Regular: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+  `,
+    caption12Bold: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 20px;
+  `,
   },
 };
 
