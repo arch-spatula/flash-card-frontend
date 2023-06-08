@@ -14,5 +14,9 @@ export function useInput() {
     setInputVal('');
   }, []);
 
-  return { inputVal, changeInputVal, resetInputVal };
+  const focusInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    e.target.focus();
+  }, []);
+
+  return { inputVal, changeInputVal, resetInputVal, focusInput };
 }
