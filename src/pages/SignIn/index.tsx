@@ -56,7 +56,9 @@ function SignIn() {
         value={passwordValue}
         helperText={passwordError}
       />
-      <Button onClick={signIn}>Sign In</Button>
+      <Button onClick={signIn} disabled={!emailValue && !passwordValue}>
+        Sign In
+      </Button>
     </MainContainer>
   );
 }
