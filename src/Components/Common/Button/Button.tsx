@@ -1,3 +1,5 @@
+import { ButtonWrapper } from './Button.style';
+
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -5,8 +7,8 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 export function Button({ children, onClick, ...other }: ButtonProps) {
   return (
-    <button onClick={onClick} {...other}>
+    <ButtonWrapper onClick={onClick} {...other}>
       {children}
-    </button>
+    </ButtonWrapper>
   );
 }

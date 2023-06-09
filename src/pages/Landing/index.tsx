@@ -1,12 +1,20 @@
+import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks';
+import { ROUTE_PATHS } from '../../constant/config';
+import { useEffect } from 'react';
 
 function Landing() {
-  const { login, logout } = useLogin();
+  const { token } = useLogin();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token) {
+      navigate(ROUTE_PATHS.CARDS);
+    }
+  }, [token]);
+
   return (
     <div>
       <h1>Welcome</h1>
-      <button onClick={login}>login</button>
-      <button onClick={logout}>logout</button>
     </div>
   );
 }

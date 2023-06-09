@@ -18,6 +18,20 @@ const theme = {
     gray900: '#111827',
   },
   fonts: {
+    heading24Regular: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 36px;
+  `,
+    heading24Bold: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 36px;
+  `,
     body16Regular: `
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     font-style: normal;
@@ -45,6 +59,20 @@ const theme = {
     font-weight: 700;
     font-size: 14px;
     line-height: 24px;
+  `,
+    caption12Regular: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 20px;
+  `,
+    caption12Bold: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 20px;
   `,
   },
 };

@@ -3,8 +3,8 @@ import { Nav, Container, List, ListItem } from './Navbar.style';
 import { useLogin } from '../../hooks';
 
 export function Navbar() {
-  const { isLoggedIn } = useLogin();
-  return <Nav>{isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}</Nav>;
+  const { token } = useLogin();
+  return <Nav>{token ? <LoggedInNav /> : <LoggedOutNav />}</Nav>;
 }
 
 function LoggedInNav() {

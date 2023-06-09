@@ -2,7 +2,7 @@ import '@emotion/react'; // it's important to use ThemeProvider
 
 declare module '@emotion/react' {
   export interface Theme {
-    color: {
+    colors: {
       red: string;
       yellow: string;
       green: string;
@@ -21,10 +21,14 @@ declare module '@emotion/react' {
       gray900: string;
     };
     fonts: {
+      heading24Regular: string;
+      heading24Bold: string;
       body16Regular: string;
       body16Bold: string;
       body14Regular: string;
       body14Bold: string;
+      caption12Regular: string;
+      caption12Bold: string;
     };
   }
 }
