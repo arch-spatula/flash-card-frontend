@@ -43,7 +43,7 @@ function SignIn() {
 
       if (res?.success) {
         const { access_token } = res;
-        if (access_token) setToken(`${access_token}`);
+        if (access_token) setToken(access_token);
         navigate(ROUTE_PATHS.CARDS);
       }
     } catch (error) {
