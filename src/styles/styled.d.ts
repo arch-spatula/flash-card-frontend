@@ -21,6 +21,8 @@ declare module '@emotion/react' {
       gray900: string;
     };
     fonts: {
+      heading24Regular: string;
+      heading24Bold: string;
       body16Regular: string;
       body16Bold: string;
       body14Regular: string;
