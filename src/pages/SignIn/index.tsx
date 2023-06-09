@@ -13,9 +13,18 @@ import { MainContainer, MainWrapper, Title } from './SignIn.style';
  */
 
 function SignIn() {
-  const { inputVal: emailValue, changeInputVal: changeEmail } = useInput();
-  const { inputVal: passwordValue, changeInputVal: changePassword } =
-    useInput();
+  const {
+    inputVal: emailValue,
+    changeInputVal: changeEmail,
+    inputRef: emailRef,
+    focusInput: focusEmail,
+  } = useInput();
+  const {
+    inputVal: passwordValue,
+    changeInputVal: changePassword,
+    inputRef: passwordRef,
+    focusInput: focusPassword,
+  } = useInput();
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -41,9 +50,11 @@ function SignIn() {
       const err = error as Error;
       if (err.message === '이메일이 없습니다.') {
         setEmailError('이메일이 없습니다.');
+        focusEmail();
       }
       if (err.message === '비밀번호가 일치하지 않습니다.') {
         setPasswordError('비밀번호가 일치하지 않습니다.');
+        focusPassword();
       }
     }
   };
@@ -59,12 +70,14 @@ function SignIn() {
           onChange={changeEmail}
           value={emailValue}
           helperText={emailError}
+          customRef={emailRef}
         />
         <Input
           type="password"
           onChange={changePassword}
           value={passwordValue}
           helperText={passwordError}
+          customRef={passwordRef}
         />
         <Button onClick={signIn} disabled={disabled}>
           Sign In
