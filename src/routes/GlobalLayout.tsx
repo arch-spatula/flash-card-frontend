@@ -20,7 +20,7 @@ function Layout() {
 }
 
 const MainContainer = styled.main`
-  width: 82.5rem;
+  max-width: 82.5rem;
   margin: auto;
   min-height: calc(100vh - 4rem);
 `;
