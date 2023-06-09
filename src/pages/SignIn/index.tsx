@@ -48,6 +48,8 @@ function SignIn() {
     }
   };
 
+  const disabled = [emailValue, passwordValue].some((elem) => !elem);
+
   return (
     <MainContainer>
       <MainWrapper>
@@ -64,7 +66,7 @@ function SignIn() {
           value={passwordValue}
           helperText={passwordError}
         />
-        <Button onClick={signIn} disabled={!emailValue && !passwordValue}>
+        <Button onClick={signIn} disabled={disabled}>
           Sign In
         </Button>
       </MainWrapper>
