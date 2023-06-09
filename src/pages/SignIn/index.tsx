@@ -4,7 +4,7 @@ import { useInput, useLogin } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
-import { MainContainer } from './SignIn.style';
+import { MainContainer, MainWrapper, Title } from './SignIn.style';
 
 /**
  * @todo 화면의 로직과 로그인과 관련된 비즈니스 로직이 강하게 결합되어 있습니다. 결합도를 나추도록 합니다.
@@ -50,22 +50,24 @@ function SignIn() {
 
   return (
     <MainContainer>
-      <h1>Sign In</h1>
-      <Input
-        type="email"
-        onChange={changeEmail}
-        value={emailValue}
-        helperText={emailError}
-      />
-      <Input
-        type="password"
-        onChange={changePassword}
-        value={passwordValue}
-        helperText={passwordError}
-      />
-      <Button onClick={signIn} disabled={!emailValue && !passwordValue}>
-        Sign In
-      </Button>
+      <MainWrapper>
+        <Title>Sign In</Title>
+        <Input
+          type="email"
+          onChange={changeEmail}
+          value={emailValue}
+          helperText={emailError}
+        />
+        <Input
+          type="password"
+          onChange={changePassword}
+          value={passwordValue}
+          helperText={passwordError}
+        />
+        <Button onClick={signIn} disabled={!emailValue && !passwordValue}>
+          Sign In
+        </Button>
+      </MainWrapper>
     </MainContainer>
   );
 }
