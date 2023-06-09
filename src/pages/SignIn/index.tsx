@@ -1,6 +1,6 @@
 import { Button, Input } from '../../Components';
 import { signInAPI } from '../../api/authClient';
-import { useInput } from '../../hooks';
+import { useInput, useLogin } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ function SignIn() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const { setToken } = useLogin();
 
   const signIn = async () => {
     try {
@@ -27,7 +28,7 @@ function SignIn() {
 
       if (res?.success) {
         const { access_token } = res;
-        if (access_token) localStorage.setItem('token', `${access_token}`);
+        if (access_token) setToken(`${access_token}`);
         navigate(ROUTE_PATHS.CARDS);
       }
     } catch (error) {
