@@ -2,6 +2,8 @@ import { Global } from '@emotion/react';
 import GlobalStyle from '../styles/Reset';
 import { Navbar } from '../Components';
 import { Outlet } from 'react-router-dom';
+import styled from '@emotion/styled';
+import { Suspense } from 'react';
 
 /**
  * @see https://github.com/WANTED-TEAM03/pre-onboarding-10th-1-3/blob/main/src/routes/_globalLayout.tsx
@@ -11,9 +13,19 @@ function Layout() {
     <>
       <Global styles={GlobalStyle} />
       <Navbar />
-      <Outlet />
+      <MainContainer>
+        <Suspense fallback={<div>loading...</div>}>
+          <Outlet />
+        </Suspense>
+      </MainContainer>
     </>
   );
 }
+
+const MainContainer = styled.main`
+  max-width: 82.5rem;
+  margin: auto;
+  min-height: calc(100vh - 4rem);
+`;
 
 export default Layout;
