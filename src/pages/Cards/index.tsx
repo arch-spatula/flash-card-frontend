@@ -2,4 +2,4 @@ function Cards() {
   return <div>Cards</div>;
 }
 
-export { Cards };
+export default Cards;
