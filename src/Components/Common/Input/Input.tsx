@@ -5,6 +5,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   helperText?: string;
   hideHelper?: boolean;
+  customRef?: React.RefObject<HTMLInputElement>;
 };
 
 export function Input({
@@ -12,11 +13,17 @@ export function Input({
   value,
   helperText,
   hideHelper = false,
+  customRef,
   ...other
 }: InputProps) {
   return (
     <InputContainer>
-      <InputWrapper onChange={onChange} value={value} {...other} />
+      <InputWrapper
+        onChange={onChange}
+        value={value}
+        ref={customRef}
+        {...other}
+      />
       {!hideHelper && <HelperText>{helperText}</HelperText>}
     </InputContainer>
   );
