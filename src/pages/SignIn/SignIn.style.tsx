@@ -5,5 +5,5 @@ export const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 4rem);
+  min-height: inherit;
 `;
