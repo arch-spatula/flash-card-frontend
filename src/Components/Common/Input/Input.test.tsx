@@ -18,7 +18,7 @@ describe('Input', () => {
   it('should not render helper text when hideHelper is true', () => {
     const helperText = 'Test helper text';
 
-    const { queryByText } = render(
+    render(
       <Input
         value={'foo'}
         onChange={() => 0}
@@ -26,7 +26,7 @@ describe('Input', () => {
         hideHelper
       />
     );
-    const helperTextElement = queryByText(helperText);
+    const helperTextElement = screen.queryByText(helperText);
 
     expect(helperTextElement).not.toBeInTheDocument();
   });
