@@ -33,4 +33,17 @@ async function signUpAPI(email: string, password: string) {
   }
 }
 
-export { signInAPI, signUpAPI };
+async function signOutAPI() {
+  try {
+    const res: AxiosResponse<null> = await axiosClient.post(
+      BASE_URL + API_URLS.SIGN_OUT
+    );
+    return res;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+}
+
+export { signInAPI, signUpAPI, signOutAPI };
