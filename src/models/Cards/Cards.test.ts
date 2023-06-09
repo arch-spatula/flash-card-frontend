@@ -1,4 +1,4 @@
-import { CardCollection } from './Cards';
+import { CardCollection } from '.';
 
 describe('CardCollection', () => {
   let cardCollection: CardCollection;
