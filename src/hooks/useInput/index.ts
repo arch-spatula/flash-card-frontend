@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
 export function useInput() {
   const [inputVal, setInputVal] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const changeInputVal = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,9 +15,9 @@ export function useInput() {
     setInputVal('');
   }, []);
 
-  const focusInput = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.focus();
+  const focusInput = useCallback(() => {
+    inputRef.current?.focus();
   }, []);
 
-  return { inputVal, changeInputVal, resetInputVal, focusInput };
+  return { inputVal, changeInputVal, resetInputVal, focusInput, inputRef };
 }
