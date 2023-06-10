@@ -28,7 +28,7 @@ function SignIn() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const { setToken } = useLogin();
+  const { setTokens } = useLogin();
 
   const signIn = async () => {
     try {
@@ -42,8 +42,8 @@ function SignIn() {
         throw new Error('이메일이 없습니다.');
 
       if (res?.success) {
-        const { access_token } = res;
-        if (access_token) setToken(access_token);
+        const { access_token, refresh_token } = res;
+        if (access_token) setTokens(access_token, refresh_token);
         navigate(ROUTE_PATHS.CARDS);
       }
     } catch (error) {

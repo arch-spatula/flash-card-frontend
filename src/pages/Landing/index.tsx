@@ -4,13 +4,13 @@ import { ROUTE_PATHS } from '../../constant/config';
 import { useEffect } from 'react';
 
 function Landing() {
-  const { token } = useLogin();
+  const { isLoggedIn } = useLogin();
   const navigate = useNavigate();
   useEffect(() => {
-    if (token) {
+    if (isLoggedIn) {
       navigate(ROUTE_PATHS.CARDS);
     }
-  }, [token]);
+  }, [isLoggedIn]);
 
   return (
     <div>

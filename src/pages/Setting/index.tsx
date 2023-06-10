@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 
 function Setting() {
-  const { setToken } = useLogin();
+  const { emptyTokens } = useLogin();
   const navigate = useNavigate();
 
   const handelSignOut = () => {
-    setToken('');
+    emptyTokens();
     navigate(ROUTE_PATHS.SIGN_IN);
   };
 
