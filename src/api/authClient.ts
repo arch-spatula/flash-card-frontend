@@ -33,15 +33,4 @@ async function signUpAPI(email: string, password: string) {
   }
 }
 
-async function signOutAPI() {
-  try {
-    const res: AxiosResponse<null> = await authClient.post(API_URLS.SIGN_OUT);
-    return res;
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      return error.response?.data;
-    }
-  }
-}
-
-export { signInAPI, signUpAPI, signOutAPI };
+export { signInAPI, signUpAPI };
