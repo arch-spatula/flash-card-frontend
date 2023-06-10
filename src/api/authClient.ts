@@ -1,11 +1,11 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import axiosClient from './AxiosClient';
-import { API_URLS, BASE_URL } from '../constant/config';
+import { authClient } from './AxiosClient';
+import { API_URLS } from '../constant/config';
 
 async function signInAPI(email: string, password: string) {
   try {
-    const res: AxiosResponse<{ email: string }> = await axiosClient.post(
-      BASE_URL + API_URLS.SIGN_IN,
+    const res: AxiosResponse<{ email: string }> = await authClient.post(
+      API_URLS.SIGN_IN,
       {
         email,
         password,
@@ -21,7 +21,7 @@ async function signInAPI(email: string, password: string) {
 
 async function signUpAPI(email: string, password: string) {
   try {
-    const res = await axiosClient.post(BASE_URL + API_URLS.SIGN_UP, {
+    const res = await authClient.post(API_URLS.SIGN_UP, {
       email,
       password,
     });
@@ -35,9 +35,7 @@ async function signUpAPI(email: string, password: string) {
 
 async function signOutAPI() {
   try {
-    const res: AxiosResponse<null> = await axiosClient.post(
-      BASE_URL + API_URLS.SIGN_OUT
-    );
+    const res: AxiosResponse<null> = await authClient.post(API_URLS.SIGN_OUT);
     return res;
   } catch (error) {
     if (error instanceof AxiosError) {
