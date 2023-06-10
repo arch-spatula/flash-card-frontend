@@ -2,4 +2,4 @@ function Setting() {
   return <div>Setting</div>;
 }
 
-export { Setting };
+export default Setting;

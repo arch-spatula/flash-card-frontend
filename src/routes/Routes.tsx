@@ -1,15 +1,15 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './GlobalLayout';
-import {
-  Cards,
-  Deck,
-  Landing,
-  NotFound,
-  Setting,
-  SignIn,
-  SignUp,
-} from '../pages';
 import { ROUTE_PATHS } from '../constant/config';
+import { lazy } from 'react';
+
+const Landing = lazy(() => import('../pages/Landing'));
+const SignIn = lazy(() => import('../pages/SignIn'));
+const SignUp = lazy(() => import('../pages/SignUp'));
+const Cards = lazy(() => import('../pages/Cards'));
+const Deck = lazy(() => import('../pages/Deck'));
+const Setting = lazy(() => import('../pages/Setting'));
+const NotFound = lazy(() => import('../pages/NotFound'));
 
 /**
  * 참고 자료

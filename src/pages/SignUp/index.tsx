@@ -2,4 +2,4 @@ function SignUp() {
   return <div>Sign Up</div>;
 }
 
-export { SignUp };
+export default SignUp;

@@ -1,4 +1,4 @@
-import { SignIn } from '.';
+import SignIn from '.';
 import { render, screen } from '../../libs/test-utils';
 import { describe, it } from 'vitest';
 

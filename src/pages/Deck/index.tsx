@@ -2,4 +2,4 @@ function Deck() {
   return <div>Deck</div>;
 }
 
-export { Deck };
+export default Deck;
