@@ -19,7 +19,7 @@ describe('CardCollection', () => {
     expect(cardCollection.items[0].question).toBe(question);
     expect(cardCollection.items[0].answer).toBe(answer);
     expect(cardCollection.items[0].stackCount).toBe(count);
-    expect(cardCollection.items[0].submitDate).toBe(submitDate);
+    expect(cardCollection.items[0].submitDate).toStrictEqual(submitDate);
   });
 
   it('should delete a card from the collection', () => {
@@ -63,11 +63,11 @@ describe('CardCollection', () => {
     cardCollection.addCard(question, answer, count, submitDate, cardId);
 
     // Correct answer
-    cardCollection.checkAnswer(cardId, 'paris');
+    expect(cardCollection.checkAnswer(cardId, 'paris')).toBe(true);
     expect(cardCollection.items[0].stackCount).toBe(1);
 
     // Incorrect answer
-    cardCollection.checkAnswer(cardId, 'berlin');
+    expect(cardCollection.checkAnswer(cardId, 'berlin')).toBe(false);
     expect(cardCollection.items[0].stackCount).toBe(0);
   });
 });
