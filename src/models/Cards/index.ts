@@ -64,7 +64,10 @@ export class CardCollection {
   checkAnswer(id: string, submit: string) {
     const [card] = this.cardArr.filter((card) => card.id === id);
     const regex = new RegExp(card.answer, 'i');
-    regex.test(submit) ? this.#correct(id) : this.#wrong(id);
+
+    const isCorrect = regex.test(submit);
+    isCorrect ? this.#correct(id) : this.#wrong(id);
+    return isCorrect;
   }
 
   #correct(id: string) {
@@ -79,6 +82,6 @@ export class CardCollection {
   }
 
   get items() {
-    return this.cardArr;
+    return structuredClone(this.cardArr);
   }
 }
