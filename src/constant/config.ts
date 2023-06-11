@@ -4,7 +4,8 @@ export const API_URLS = {
   CARDS: '/card',
   SIGN_IN: '/auth/signin',
   SIGN_UP: '/auth/signup',
-};
+  SIGN_OUT: '/auth/signout',
+} as const;
 
 export const ROUTE_PATHS = {
   WELCOME: '/',
@@ -13,4 +14,4 @@ export const ROUTE_PATHS = {
   CARDS: '/cards',
   DECK: '/deck',
   SETTING: '/setting',
-};
+} as const;
