@@ -8,8 +8,8 @@ export const ButtonWrapper = styled.button`
     props.disabled ? props.theme.colors.gray400 : props.theme.colors.green};
   padding: 0.25rem 0.75rem;
   color: ${(props) => props.theme.colors.white};
-  height: 2.5rem;
-  min-width: 5.25rem;
+  height: 2.75rem;
+  width: min(5.25rem, auto);
   display: flex;
   align-items: center;
   justify-content: center;
