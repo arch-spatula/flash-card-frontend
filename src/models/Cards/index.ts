@@ -21,19 +21,11 @@ class CardRecord implements Card {
     this._id = id;
     this.userId = userId;
   }
-
-  get count() {
-    return this.stackCount;
-  }
-
-  get id() {
-    return this._id;
-  }
 }
 
 export class CardCollection {
-  private cardArr: CardRecord[];
-  constructor(...cards: CardRecord[]) {
+  private cardArr: Card[];
+  constructor(...cards: Card[]) {
     this.cardArr = [...cards];
   }
 
@@ -49,12 +41,12 @@ export class CardCollection {
   }
 
   deleteCard(id: string) {
-    this.cardArr = this.cardArr.filter((card) => card.id !== id);
+    this.cardArr = this.cardArr.filter((card) => card._id !== id);
   }
 
   editCard(id: string, question: string, answer: string) {
     this.cardArr.map((card) => {
-      if (card.id === id) {
+      if (card._id === id) {
         if (question) card.question = question;
         if (answer) card.answer = answer;
       } else return card;
@@ -62,7 +54,7 @@ export class CardCollection {
   }
 
   checkAnswer(id: string, submit: string) {
-    const [card] = this.cardArr.filter((card) => card.id === id);
+    const [card] = this.cardArr.filter((card) => card._id === id);
     const regex = new RegExp(card.answer, 'i');
 
     const isCorrect = regex.test(submit);
@@ -71,13 +63,13 @@ export class CardCollection {
   }
 
   #correct(id: string) {
-    const [card] = this.cardArr.filter((card) => card.id === id);
+    const [card] = this.cardArr.filter((card) => card._id === id);
     if (card.stackCount === -1) card.stackCount = 1;
     else card.stackCount += 1;
   }
 
   #wrong(id: string) {
-    const [card] = this.cardArr.filter((card) => card.id === id);
+    const [card] = this.cardArr.filter((card) => card._id === id);
     card.stackCount = 0;
   }
 
