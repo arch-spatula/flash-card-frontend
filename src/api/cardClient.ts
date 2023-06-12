@@ -4,18 +4,18 @@ import { axiosClient } from './AxiosClient';
 
 async function getCardsAPI() {
   try {
-    const res = await axiosClient.get(BASE_URL + API_URLS.CARDS);
-    return res;
+    const res = await axiosClient.get<{ documents: Card[] }>(API_URLS.CARDS);
+    return res.data.documents;
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error;
+      return error.message;
     }
   }
 }
 
-async function createCardsAPI(cards: any) {
+async function createCardsAPI(card: Card) {
   try {
-    const res = await axiosClient.post(BASE_URL + API_URLS.CARDS, cards);
+    const res = await axiosClient.post(BASE_URL + API_URLS.CARDS, card);
     return res;
   } catch (error) {
     if (error instanceof AxiosError) {
@@ -24,11 +24,11 @@ async function createCardsAPI(cards: any) {
   }
 }
 
-async function updateCardsAPI(id: string, cards: any) {
+async function updateCardsAPI(id: string, card: Card) {
   try {
     const res = await axiosClient.patch(
       `${BASE_URL + API_URLS.CARDS}/${id}`,
-      cards
+      card
     );
     return res;
   } catch (error) {
