@@ -1,9 +1,9 @@
-class CardRecord {
+class CardRecord implements Card {
   public question: string;
   public answer: string;
   public stackCount: number;
   public submitDate: Date;
-  private _id?: string;
+  readonly _id?: string;
   readonly userId?: string;
 
   constructor(
