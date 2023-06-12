@@ -23,6 +23,8 @@ declare module '@emotion/react' {
     fonts: {
       heading24Regular: string;
       heading24Bold: string;
+      heading20Regular: string;
+      heading20Bold: string;
       body16Regular: string;
       body16Bold: string;
       body14Regular: string;

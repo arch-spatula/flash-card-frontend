@@ -32,6 +32,20 @@ const theme = {
     font-size: 24px;
     line-height: 36px;
   `,
+    heading20Regular: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 36px;
+  `,
+    heading20Bold: `
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 36px;
+  `,
     body16Regular: `
     font-family: 'Spoqa Han Sans Neo', 'sans-serif';
     font-style: normal;
