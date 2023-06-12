@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
 import { MainContainer, MainWrapper, Title } from './SignIn.style';
+import { useMutation } from '@tanstack/react-query';
 
 /**
  * @todo 화면의 로직과 로그인과 관련된 비즈니스 로직이 강하게 결합되어 있습니다. 결합도를 나추도록 합니다.
  * @todo signIn 함수는 useLogin에서 호출하도록 설계합니다.
- * @todo tree shaking이 되는 Suspense 적용을 위해 named export에서 default export로 리팩토링합니다.
  */
 
 function SignIn() {
@@ -30,33 +30,42 @@ function SignIn() {
   const [passwordError, setPasswordError] = useState('');
   const { setTokens } = useLogin();
 
+  const { mutate, isLoading } = useMutation({
+    mutationFn: signInAPI,
+  });
+
   const signIn = async () => {
-    try {
-      setEmailError('');
-      setPasswordError('');
-      const res = await signInAPI(emailValue, passwordValue);
-
-      if (res?.msg === 'Error: 비밀번호가 일치하지 않습니다.')
-        throw new Error('비밀번호가 일치하지 않습니다.');
-      if (res?.msg === 'Error: 이메일이 없습니다.')
-        throw new Error('이메일이 없습니다.');
-
-      if (res?.success) {
-        const { access_token, refresh_token } = res;
-        if (access_token) setTokens(access_token, refresh_token);
-        navigate(ROUTE_PATHS.CARDS);
+    setEmailError('');
+    setPasswordError('');
+    mutate(
+      {
+        email: emailValue,
+        password: passwordValue,
+      },
+      {
+        onSuccess(data) {
+          const { success } = data;
+          if (success) {
+            const { access_token, refresh_token } = data;
+            setTokens(access_token, refresh_token);
+            navigate(ROUTE_PATHS.CARDS);
+          } else {
+            const { msg } = data;
+            if (msg === 'Error: 비밀번호가 일치하지 않습니다.') {
+              setPasswordError('비밀번호가 일치하지 않습니다.');
+              focusPassword();
+            }
+            if (msg === 'Error: 이메일이 없습니다.') {
+              setEmailError('이메일이 없습니다.');
+              focusEmail();
+            }
+          }
+        },
+        onError() {
+          setPasswordError('잠시 후 다시 시도해주세요');
+        },
       }
-    } catch (error) {
-      const err = error as Error;
-      if (err.message === '이메일이 없습니다.') {
-        setEmailError('이메일이 없습니다.');
-        focusEmail();
-      }
-      if (err.message === '비밀번호가 일치하지 않습니다.') {
-        setPasswordError('비밀번호가 일치하지 않습니다.');
-        focusPassword();
-      }
-    }
+    );
   };
 
   const disabled = [emailValue, passwordValue].some((elem) => !elem);
@@ -79,7 +88,7 @@ function SignIn() {
           helperText={passwordError}
           customRef={passwordRef}
         />
-        <Button onClick={signIn} disabled={disabled}>
+        <Button onClick={signIn} isLoading={isLoading} disabled={disabled}>
           Sign In
         </Button>
       </MainWrapper>
