@@ -17,7 +17,7 @@ export function Input({
   ...other
 }: InputProps) {
   return (
-    <InputContainer>
+    <InputContainer hideHelper={hideHelper}>
       <InputWrapper
         onChange={onChange}
         value={value}
