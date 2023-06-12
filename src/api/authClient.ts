@@ -2,15 +2,18 @@ import { AxiosError, AxiosResponse } from 'axios';
 import { authClient } from './AxiosClient';
 import { API_URLS } from '../constant/config';
 
-async function signInAPI(email: string, password: string) {
+type UserInput = {
+  email: string;
+  password: string;
+};
+
+async function signInAPI({ email, password }: UserInput) {
   try {
-    const res: AxiosResponse<{ email: string }> = await authClient.post(
-      API_URLS.SIGN_IN,
-      {
+    const res: AxiosResponse<{ access_token: string; refresh_token: string }> =
+      await authClient.post(API_URLS.SIGN_IN, {
         email,
         password,
-      }
-    );
+      });
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
