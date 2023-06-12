@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCardsAPI } from '../../api/cardClient';
-import { PageHeading } from '../../Components';
+import { Card, PageHeading } from '../../Components';
 import { PulseLoader } from 'react-spinners';
+import { CardContainer } from './Cards.style';
 
 function Cards() {
   const {
@@ -31,13 +32,11 @@ function Cards() {
       ) : (
         <>
           {cards ? (
-            <ul>
+            <CardContainer>
               {cards.map((card) => (
-                <li key={card._id}>
-                  <h3>{card.question}</h3>
-                </li>
+                <Card {...card} key={card._id} />
               ))}
-            </ul>
+            </CardContainer>
           ) : (
             <div>
               <p>카드가 없습니다.</p>
