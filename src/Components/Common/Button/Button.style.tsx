@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const ButtonWrapper = styled.button`
   ${(props) => props.theme.fonts.body16Regular}
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
   border: none;
   background-color: ${(props) =>
     props.disabled ? props.theme.colors.gray400 : props.theme.colors.green};
