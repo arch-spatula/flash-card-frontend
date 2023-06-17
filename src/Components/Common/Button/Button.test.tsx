@@ -33,4 +33,21 @@ describe('Button', () => {
     expect(btnElement).toBeDisabled();
     expect(mock).toHaveBeenCalledTimes(0);
   });
+
+  it('should not invoke the function while button is loading', async () => {
+    user.setup();
+    const btnText = 'Button';
+    const mock = vi.fn(() => 0);
+
+    render(
+      <Button onClick={mock} isLoading>
+        {btnText}
+      </Button>
+    );
+    const btnElement = screen.getByRole('button');
+    await user.click(btnElement);
+
+    expect(btnElement).toBeDisabled();
+    expect(mock).toHaveBeenCalledTimes(0);
+  });
 });
