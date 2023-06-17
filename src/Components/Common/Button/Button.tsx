@@ -11,12 +11,17 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export function Button({
   children,
   onClick,
-  isLoading,
+  isLoading = false,
   ...other
 }: ButtonProps) {
   return (
-    <ButtonWrapper onClick={onClick} {...other}>
-      <VisibilityWrapper visibility={!!isLoading}>
+    <ButtonWrapper
+      onClick={onClick}
+      disabled={isLoading}
+      isLoading={isLoading}
+      {...other}
+    >
+      <VisibilityWrapper visible={isLoading}>
         <PulseLoader
           color="#ffffff"
           loading
@@ -25,7 +30,7 @@ export function Button({
           speedMultiplier={0.5}
         />
       </VisibilityWrapper>
-      <VisibilityWrapper visibility={!isLoading}>{children}</VisibilityWrapper>
+      <VisibilityWrapper visible={!isLoading}>{children}</VisibilityWrapper>
     </ButtonWrapper>
   );
 }
