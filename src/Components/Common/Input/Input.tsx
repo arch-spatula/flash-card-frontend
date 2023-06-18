@@ -6,6 +6,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   helperText?: string;
   hideHelper?: boolean;
   customRef?: React.RefObject<HTMLInputElement>;
+  width?: number;
 };
 
 export function Input({
@@ -14,10 +15,11 @@ export function Input({
   helperText,
   hideHelper = false,
   customRef,
+  width = 0,
   ...other
 }: InputProps) {
   return (
-    <InputContainer hideHelper={hideHelper}>
+    <InputContainer hideHelper={hideHelper} width={width}>
       <InputWrapper
         onChange={onChange}
         value={value}

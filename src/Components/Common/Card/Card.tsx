@@ -31,7 +31,12 @@ export function Card({ question, answer }: Card) {
       <CardFrontContainer active={active}>
         <Question>{question}</Question>
         <SubmitForm onSubmit={handleSubmit}>
-          <Input value={inputVal} onChange={changeInputVal} hideHelper />
+          <Input
+            value={inputVal}
+            onChange={changeInputVal}
+            hideHelper
+            width={180}
+          />
           <Button disabled={!inputVal}>제출</Button>
         </SubmitForm>
       </CardFrontContainer>
