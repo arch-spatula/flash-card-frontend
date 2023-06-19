@@ -1,5 +1,6 @@
 import { Card, PageHeading } from '../../Components';
 import { useCards } from '../../hooks/useCard';
+import { MakeCardButton } from './Deck.style';
 
 function Deck() {
   const { cards, error } = useCards();
@@ -11,7 +12,7 @@ function Deck() {
   return (
     <div>
       <PageHeading>Deck</PageHeading>
-      <div>카드 생성하기</div>
+      <MakeCardButton>카드 생성하기</MakeCardButton>
       <>
         {cards ? (
           <>
