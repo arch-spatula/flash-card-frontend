@@ -19,7 +19,7 @@ export function Card({ question, answer }: Card) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setActive((prev) => !prev);
+    setActive(true);
   };
 
   const handleConform = () => {
