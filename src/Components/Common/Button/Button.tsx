@@ -1,4 +1,4 @@
-import { ButtonWrapper, VisibilityWrapper } from './Button.style';
+import { ButtonWrapper, TextWrapper, LoaderWrapper } from './Button.style';
 import { PulseLoader } from 'react-spinners';
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -21,16 +21,18 @@ export function Button({
       isLoading={isLoading}
       {...other}
     >
-      <VisibilityWrapper visible={isLoading}>
-        <PulseLoader
-          color="#ffffff"
-          loading
-          margin={4}
-          size={12}
-          speedMultiplier={0.5}
-        />
-      </VisibilityWrapper>
-      <VisibilityWrapper visible={!isLoading}>{children}</VisibilityWrapper>
+      <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
+      {isLoading && (
+        <LoaderWrapper>
+          <PulseLoader
+            color="#ffffff"
+            loading
+            margin={4}
+            size={12}
+            speedMultiplier={0.5}
+          />
+        </LoaderWrapper>
+      )}
     </ButtonWrapper>
   );
 }

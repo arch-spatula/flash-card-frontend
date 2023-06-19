@@ -12,16 +12,36 @@ export const ButtonWrapper = styled.button<{ isLoading: boolean }>`
       : props.theme.colors.green};
   color: ${(props) => props.theme.colors.white};
   height: 2.75rem;
-  min-width: 5.25rem;
   position: relative;
+  width: fit-content;
+  min-width: 5.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
 export const VisibilityWrapper = styled.div<{ visible: boolean }>`
-  visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
+  align-items: center;
+  justify-content: center;
+`;
+
+export const TextWrapper = styled.span<{ isLoading: boolean }>`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  color: ${(props) =>
+    props.isLoading ? 'transparent' : props.theme.colors.white};
+  margin: 0 1rem;
+`;
+
+export const LoaderWrapper = styled.div`
   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
