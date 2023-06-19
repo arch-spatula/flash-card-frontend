@@ -1,5 +1,6 @@
 import { Button, Input, PageHeading } from '../../Components';
 import { useInput } from '../../hooks';
+import { checkEmail, checkPassword } from '../../utils';
 import { MainContainer, MainWrapper } from './SignUp.style';
 
 function SignUp() {
@@ -9,8 +10,8 @@ function SignUp() {
     useInput();
 
   const disabled = [
-    email,
-    password,
+    checkEmail(email),
+    checkPassword(password),
     conformPassword,
     password === conformPassword,
   ].some((elem) => !elem);
@@ -29,7 +30,7 @@ function SignUp() {
           value={password}
           onChange={changePassword}
           type="password"
-          placeholder="8자리 이상 입력해주세요"
+          placeholder="8자리 이상 영어, 숫자 모두 입력해주세요"
         />
         <Input
           value={conformPassword}
