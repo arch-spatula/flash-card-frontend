@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import type { AxiosInstance } from 'axios';
-import { BASE_URL } from '../constant/config';
+import { API_URLS, BASE_URL } from '../constant/config';
 
 const axiosClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -31,6 +31,57 @@ axiosClient.interceptors.request.use(
     return configCopy;
   },
   (error) => Promise.reject(error)
+);
+
+async function refreshAccessAPI() {
+  try {
+    const sessionToken = sessionStorage.getItem('sessionToken');
+    if (!sessionToken) throw Error('sessionToken');
+
+    const {
+      data: { access_token },
+    } = await authClient.post<{
+      success: boolean;
+      access_token: string;
+    }>(API_URLS.REFRESH, null, {
+      headers: {
+        Authorization: `Bearer ${sessionToken.slice(
+          1,
+          sessionToken.length - 1
+        )}`,
+      },
+    });
+
+    localStorage.setItem('accessToken', `"${access_token}"`);
+
+    return access_token;
+  } catch (error) {
+    localStorage.clear();
+    sessionStorage.clear();
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+}
+
+axiosClient.interceptors.response.use(
+  (res) => res,
+  async (err) => {
+    const {
+      config,
+      response: { status },
+    } = err;
+    if (config.url === API_URLS.REFRESH || status !== 401 || config.sent) {
+      return Promise.reject(err);
+    }
+
+    config.sent = true;
+    const accessToken = await refreshAccessAPI();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return axiosClient(config);
+  }
 );
 
 export { axiosClient, authClient };
