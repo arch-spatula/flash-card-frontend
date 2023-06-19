@@ -44,7 +44,6 @@ const CardSize = styled.div`
 
 export const CardWrapper = styled(CardSize)`
   position: relative;
-  background-color: ${(props) => props.theme.colors.white};
 `;
 
 export const CardContainer = styled(CardSize)<{ active: boolean }>`
@@ -54,6 +53,7 @@ export const CardContainer = styled(CardSize)<{ active: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
+  background-color: ${(props) => props.theme.colors.white};
   border-radius: 1rem;
   padding: 1.25rem;
   animation-duration: 0.3s;
