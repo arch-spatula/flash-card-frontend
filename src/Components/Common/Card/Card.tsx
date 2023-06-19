@@ -13,7 +13,7 @@ import {
  * @todo 카드 앞면과 뒷면 관심사 분리하기
  */
 
-export function Card({ question, answer }: Card) {
+export function Card({ question, answer, submitDate }: Card) {
   const { inputVal, changeInputVal } = useInput();
   const [active, setActive] = useState(false);
 
@@ -26,9 +26,18 @@ export function Card({ question, answer }: Card) {
     setActive(false);
   };
 
+  const formatter = new Intl.RelativeTimeFormat('ko');
+  const diff = +new Date() - +new Date(submitDate);
+
+  const showDate = formatter.format(
+    Math.round(diff / (1000 * 60 * 60 * 24)),
+    'days'
+  );
+
   return (
     <CardWrapper>
       <CardFrontContainer active={active}>
+        <p>{`${showDate}`}</p>
         <Question>{question}</Question>
         <SubmitForm onSubmit={handleSubmit}>
           <Input
