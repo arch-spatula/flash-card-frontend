@@ -1,6 +1,5 @@
 import { Button, Card, Input, PageHeading } from '../../Components';
-import { useInput } from '../../hooks';
-import { useCards } from '../../hooks/useCard';
+import { useCards, useInput } from '../../hooks';
 import { AddCardContainer } from './Deck.style';
 
 function Deck() {
@@ -15,10 +14,14 @@ function Deck() {
     return <div>{`${error}`}</div>;
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
+
   return (
     <div>
       <PageHeading>Deck</PageHeading>
-      <AddCardContainer>
+      <AddCardContainer onSubmit={handleSubmit}>
         <h3>문제</h3>
         <Input
           value={questionVal}

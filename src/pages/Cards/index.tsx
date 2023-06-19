@@ -1,7 +1,7 @@
 import { Card, PageHeading } from '../../Components';
 import { PulseLoader } from 'react-spinners';
 import { CardContainer } from './Cards.style';
-import { useCards } from '../../hooks/useCard';
+import { useCards } from '../../hooks';
 
 function Cards() {
   const { cards, isLoading, error } = useCards();
