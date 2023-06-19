@@ -1,4 +1,4 @@
-import { ButtonWrapper } from './Button.style';
+import { ButtonWrapper, TextWrapper, LoaderWrapper } from './Button.style';
 import { PulseLoader } from 'react-spinners';
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -7,24 +7,31 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
 };
 
+/** loader는 텍스트 너비가 필요해서 2개의 VisibilityWrapper 활용 */
 export function Button({
   children,
   onClick,
-  isLoading,
+  isLoading = false,
   ...other
 }: ButtonProps) {
   return (
-    <ButtonWrapper onClick={onClick} {...other}>
-      {isLoading ? (
-        <PulseLoader
-          color="#ffffff"
-          loading
-          margin={4}
-          size={12}
-          speedMultiplier={0.5}
-        />
-      ) : (
-        children
+    <ButtonWrapper
+      onClick={onClick}
+      disabled={isLoading}
+      isLoading={isLoading}
+      {...other}
+    >
+      <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
+      {isLoading && (
+        <LoaderWrapper>
+          <PulseLoader
+            color="#ffffff"
+            loading
+            margin={4}
+            size={12}
+            speedMultiplier={0.5}
+          />
+        </LoaderWrapper>
       )}
     </ButtonWrapper>
   );

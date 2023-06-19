@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
 
-export const InputContainer = styled.div<{ hideHelper: boolean }>`
+export const InputContainer = styled.div<{
+  hideHelper: boolean;
+  width?: number;
+}>`
   display: flex;
   flex-direction: column;
   justify-content: left;
   gap: 0.5rem;
   height: ${(props) => (props.hideHelper ? '2.75rem' : '4.75rem')};
-  flex-grow: 1;
+  ${(props) => (props.width === 0 ? 'flex-grow: 1' : `width: ${props.width}px`)}
 `;
 
 export const InputWrapper = styled.input`
@@ -15,6 +18,7 @@ export const InputWrapper = styled.input`
   padding: 0.5rem 0.75rem;
   box-shadow: 0 0 0 1px ${(props) => props.theme.colors.gray300} inset;
   border-radius: 0.5rem;
+  flex-grow: 1;
   :hover {
     box-shadow: 0 0 0 1px ${(props) => props.theme.colors.gray400} inset;
   }
