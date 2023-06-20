@@ -4,7 +4,7 @@ import { useInput } from '../../hooks';
 import { checkEmail, checkPassword } from '../../utils';
 import { ButtonWrapper, MainContainer, MainWrapper } from './SignUp.style';
 import { signUpAPI } from '../../api/authClient';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
 
@@ -47,8 +47,8 @@ function SignUp() {
           } else {
             const { msg } = data as { success: boolean; msg: string };
             if (msg.startsWith('Error: 이미 가입한 아이디입니다.')) {
-              focusEmail();
               setEmailHelper('이미 가입한 Email입니다.');
+              focusEmail();
             }
           }
         },
@@ -87,7 +87,7 @@ function SignUp() {
           <Button disabled={disabled} isLoading={isLoading} width={'grow'}>
             회원가입
           </Button>
-          <Button type="button" href={ROUTE_PATHS.SIGN_IN} width={'grow'}>
+          <Button href={ROUTE_PATHS.SIGN_IN} width={'grow'}>
             로그인
           </Button>
         </ButtonWrapper>
