@@ -18,6 +18,10 @@ export const ButtonWrapper = styled.button<{ isLoading: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  a {
+    text-decoration: none;
+    color: ${(props) => props.theme.colors.white};
+  }
 `;
 
 export const VisibilityWrapper = styled.div<{ visible: boolean }>`

@@ -1,8 +1,10 @@
-import { ButtonWrapper, TextWrapper, LoaderWrapper } from './Button.style';
+import { Link } from 'react-router-dom';
+import { ButtonWrapper, LoaderWrapper, TextWrapper } from './Button.style';
 import { PulseLoader } from 'react-spinners';
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
+  href?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
 };
@@ -12,6 +14,7 @@ export function Button({
   children,
   onClick,
   isLoading = false,
+  href,
   ...other
 }: ButtonProps) {
   return (
@@ -21,7 +24,13 @@ export function Button({
       isLoading={isLoading}
       {...other}
     >
-      <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
+      {href ? (
+        <TextWrapper isLoading={isLoading}>
+          <Link to={href}>{children}</Link>
+        </TextWrapper>
+      ) : (
+        <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
+      )}
       {isLoading && (
         <LoaderWrapper>
           <PulseLoader

@@ -2,9 +2,9 @@ import { useMutation } from '@tanstack/react-query';
 import { Button, Input, PageHeading } from '../../Components';
 import { useInput } from '../../hooks';
 import { checkEmail, checkPassword } from '../../utils';
-import { MainContainer, MainWrapper } from './SignUp.style';
+import { ButtonWrapper, MainContainer, MainWrapper } from './SignUp.style';
 import { signUpAPI } from '../../api/authClient';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
 
@@ -83,9 +83,14 @@ function SignUp() {
           type="password"
           placeholder="동일하게 입력해주세요"
         />
-        <Button disabled={disabled} isLoading={isLoading}>
-          회원가입
-        </Button>
+        <ButtonWrapper>
+          <Button disabled={disabled} isLoading={isLoading}>
+            회원가입
+          </Button>
+          <Button type="button" href={ROUTE_PATHS.SIGN_IN}>
+            로그인
+          </Button>
+        </ButtonWrapper>
       </MainWrapper>
     </MainContainer>
   );
