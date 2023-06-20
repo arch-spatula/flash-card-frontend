@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { formatDate, intervalDate } from '.';
+import { formatDate, getNextIntervalDate } from '.';
 
 describe('formatDate', () => {
   const baseDateStr = '2023-06-01T00:00:00';
@@ -69,26 +69,26 @@ describe('intervalDate', () => {
   const baseDate = new Date('2023-06-01T00:00:00');
 
   it('should return the same date when count is negative', () => {
-    const result = intervalDate(baseDate, -1);
+    const result = getNextIntervalDate(baseDate, -1);
     expect(result).toStrictEqual(baseDate);
   });
 
   it('should return the correct date when count is within range', () => {
-    const result = intervalDate(baseDate, 0);
+    const result = getNextIntervalDate(baseDate, 0);
     expect(result).toStrictEqual(new Date('2023-06-01T00:10:00'));
 
-    const result2 = intervalDate(baseDate, 3);
+    const result2 = getNextIntervalDate(baseDate, 3);
     expect(result2).toStrictEqual(new Date('2023-06-03T00:00:00'));
 
-    const result3 = intervalDate(baseDate, 7);
+    const result3 = getNextIntervalDate(baseDate, 7);
     expect(result3).toStrictEqual(new Date('2023-06-15T00:00:00'));
   });
 
   it('should return the date with incremented year when count exceeds the range', () => {
-    const result = intervalDate(baseDate, 12);
+    const result = getNextIntervalDate(baseDate, 12);
     expect(result).toStrictEqual(new Date('2024-06-01T00:00:00'));
 
-    const result2 = intervalDate(baseDate, 15);
+    const result2 = getNextIntervalDate(baseDate, 15);
     expect(result2).toStrictEqual(new Date('2024-06-01T00:00:00'));
   });
 });

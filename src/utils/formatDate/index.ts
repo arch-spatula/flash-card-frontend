@@ -7,7 +7,7 @@ export function formatDate(
   now = new Date()
 ) {
   const diff = Math.max(
-    +intervalDate(new Date(submitDate), stackCount) - +now,
+    +getNextIntervalDate(new Date(submitDate), stackCount) - +now,
     0
   );
 
@@ -51,7 +51,7 @@ export function formatDate(
 /**
  * 제출일과 맞은 횟수를 기준으로 다음 풀이까지 남은 시간을 구합니다.
  */
-export function intervalDate(date: Date, count: number) {
+export function getNextIntervalDate(date: Date, count: number) {
   const newDate = new Date(date);
 
   const intervalMap = [
