@@ -32,7 +32,7 @@ export function Button({
       <LinkWrapper
         to={href}
         disabled={isLoading}
-        isLoading={isLoading}
+        // isLoading={isLoading}
         width={width}
         hierarchy={hierarchy}
       >

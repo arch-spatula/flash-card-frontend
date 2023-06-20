@@ -38,7 +38,7 @@ export const ButtonWrapper = styled.button<{
 `;
 
 export const LinkWrapper = styled(Link)<{
-  isLoading: boolean;
+  // isLoading: boolean;
   width?: number | 'grow';
   disabled?: boolean;
   hierarchy: 'primary' | 'secondary';
@@ -58,7 +58,7 @@ export const LinkWrapper = styled(Link)<{
 
   /* disabled 이면 gray가 되고 loading이면 green을 유지 */
   background-color: ${(props) => {
-    if (props.disabled && !props.isLoading) return props.theme.colors.gray400;
+    // if (props.disabled && !props.isLoading) return props.theme.colors.gray400;
     return props.theme.colors.green;
   }};
   color: ${(props) => props.theme.colors.white};
