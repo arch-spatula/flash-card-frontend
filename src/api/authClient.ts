@@ -36,4 +36,39 @@ async function signUpAPI(email: string, password: string) {
   }
 }
 
-export { signInAPI, signUpAPI };
+/**
+ * - access_token을 갱신하는 함수
+ * - API 명세의 요구에 맞춰 authClient 중 유일하게 header를 활용하고 refresh token으로 설정
+ */
+async function refreshAccessAPI() {
+  try {
+    const sessionToken = sessionStorage.getItem('sessionToken');
+    if (!sessionToken) throw Error('sessionToken');
+
+    const {
+      data: { access_token },
+    } = await authClient.post<{
+      success: boolean;
+      access_token: string;
+    }>(API_URLS.REFRESH, null, {
+      headers: {
+        Authorization: `Bearer ${sessionToken.slice(
+          1,
+          sessionToken.length - 1
+        )}`,
+      },
+    });
+
+    localStorage.setItem('accessToken', `"${access_token}"`);
+
+    return access_token;
+  } catch (error) {
+    localStorage.clear();
+    sessionStorage.clear();
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+}
+
+export { signInAPI, signUpAPI, refreshAccessAPI };
