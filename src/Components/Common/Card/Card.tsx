@@ -8,12 +8,13 @@ import {
   Question,
   SubmitForm,
 } from './Card.style';
+import { formatDate } from '../../../utils';
 
 /**
  * @todo 카드 앞면과 뒷면 관심사 분리하기
  */
 
-export function Card({ question, answer, submitDate }: Card) {
+export function Card({ question, answer, submitDate, stackCount }: Card) {
   const { inputVal, changeInputVal } = useInput();
   const [active, setActive] = useState(false);
 
@@ -26,13 +27,7 @@ export function Card({ question, answer, submitDate }: Card) {
     setActive(false);
   };
 
-  const formatter = new Intl.RelativeTimeFormat('ko');
-  const diff = +new Date() - +new Date(submitDate);
-
-  const showDate = formatter.format(
-    Math.round(diff / (1000 * 60 * 60 * 24)),
-    'days'
-  );
+  const showDate = formatDate(submitDate, stackCount);
 
   return (
     <CardWrapper>
