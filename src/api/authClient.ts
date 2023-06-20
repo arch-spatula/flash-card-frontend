@@ -22,7 +22,13 @@ async function signInAPI({ email, password }: UserInput) {
   }
 }
 
-async function signUpAPI(email: string, password: string) {
+async function signUpAPI({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
   try {
     const res = await authClient.post(API_URLS.SIGN_UP, {
       email,
