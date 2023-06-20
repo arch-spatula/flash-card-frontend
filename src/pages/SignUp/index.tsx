@@ -84,10 +84,10 @@ function SignUp() {
           placeholder="동일하게 입력해주세요"
         />
         <ButtonWrapper>
-          <Button disabled={disabled} isLoading={isLoading}>
+          <Button disabled={disabled} isLoading={isLoading} width={'grow'}>
             회원가입
           </Button>
-          <Button type="button" href={ROUTE_PATHS.SIGN_IN}>
+          <Button type="button" href={ROUTE_PATHS.SIGN_IN} width={'grow'}>
             로그인
           </Button>
         </ButtonWrapper>

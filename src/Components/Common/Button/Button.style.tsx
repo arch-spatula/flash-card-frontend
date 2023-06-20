@@ -1,9 +1,18 @@
 import styled from '@emotion/styled';
 
-export const ButtonWrapper = styled.button<{ isLoading: boolean }>`
+export const ButtonWrapper = styled.button<{
+  isLoading: boolean;
+  width?: number | 'grow';
+}>`
   all: unset;
   ${(props) => props.theme.fonts.body16Regular}
   border-radius: 0.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
   border: none;
   /* disabled 이면 gray가 되고 loading이면 green을 유지 */
   background-color: ${(props) =>
@@ -12,13 +21,18 @@ export const ButtonWrapper = styled.button<{ isLoading: boolean }>`
       : props.theme.colors.green};
   color: ${(props) => props.theme.colors.white};
   height: 2.75rem;
-  position: relative;
-  width: fit-content;
+
+  width: ${(props) => {
+    // 숫자 입력시 숫자만큼 채우기
+    if (!props.width) return 'fit-content';
+    if (props.width !== 'grow') return `${props.width / 16}rem`;
+    return 'fit-content';
+  }};
+  ${(props) => (props.width === 'grow' ? 'flex-grow: 1;' : null)}
   min-width: 5.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
   a {
+    /* a 태그 스타일링 초기화 */
     text-decoration: none;
     color: ${(props) => props.theme.colors.white};
   }

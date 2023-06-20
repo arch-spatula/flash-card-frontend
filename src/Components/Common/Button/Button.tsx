@@ -4,6 +4,7 @@ import { PulseLoader } from 'react-spinners';
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   children: React.ReactNode;
+  width?: number | 'grow';
   href?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
@@ -15,6 +16,7 @@ export function Button({
   onClick,
   isLoading = false,
   href,
+  width,
   ...other
 }: ButtonProps) {
   return (
@@ -22,6 +24,7 @@ export function Button({
       onClick={onClick}
       disabled={isLoading}
       isLoading={isLoading}
+      width={width}
       {...other}
     >
       {href ? (
