@@ -76,3 +76,9 @@ export const SubmitForm = styled.form`
   gap: 0.5rem;
   height: 2.75rem;
 `;
+
+export const NextIntervalDate = styled.p`
+  ${(props) => props.theme.fonts.caption12Regular}
+  color: ${(props) => props.theme.colors.gray400};
+  text-align: right;
+`;

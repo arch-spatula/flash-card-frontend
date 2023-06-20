@@ -5,6 +5,7 @@ import {
   CardBackContainer,
   CardFrontContainer,
   CardWrapper,
+  NextIntervalDate,
   Question,
   SubmitForm,
 } from './Card.style';
@@ -32,7 +33,7 @@ export function Card({ question, answer, submitDate, stackCount }: Card) {
   return (
     <CardWrapper>
       <CardFrontContainer active={active}>
-        <p>{`${showDate}`}</p>
+        <NextIntervalDate>{`${showDate}`}</NextIntervalDate>
         <Question>{question}</Question>
         <SubmitForm onSubmit={handleSubmit}>
           <Input
