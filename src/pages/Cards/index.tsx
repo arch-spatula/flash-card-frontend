@@ -1,18 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { getCardsAPI } from '../../api/cardClient';
 import { Card, PageHeading } from '../../Components';
 import { PulseLoader } from 'react-spinners';
 import { CardContainer } from './Cards.style';
+import { useCards } from '../../hooks';
 
 function Cards() {
-  const {
-    data: cards,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['cards'],
-    queryFn: getCardsAPI,
-  });
+  const { cards, isLoading, error } = useCards();
 
   if (typeof cards === 'string' || error) {
     return <div>{`${error}`}</div>;
