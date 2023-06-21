@@ -6,6 +6,7 @@ import {
   LoaderContainer,
 } from './Cards.style';
 import { useCards } from '../../hooks';
+import theme from '../../styles/theme';
 
 function Cards() {
   const { cards, isLoading, error } = useCards();
@@ -20,7 +21,7 @@ function Cards() {
       {isLoading ? (
         <LoaderContainer>
           <PulseLoader
-            color="#10B981"
+            color={theme.colors.green}
             loading
             margin={4}
             size={20}
