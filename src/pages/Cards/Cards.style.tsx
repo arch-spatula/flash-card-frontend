@@ -4,6 +4,7 @@ export const CardPageContainer = styled.div`
   min-height: inherit;
   display: flex;
   flex-direction: column;
+  padding: 3rem 0;
 `;
 
 export const CardContainer = styled.div`
