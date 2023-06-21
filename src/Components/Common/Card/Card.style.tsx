@@ -71,6 +71,15 @@ export const CardBackContainer = styled(CardContainer)<{ isCorrect: boolean }>`
   animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
 `;
 
+export const AnswerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  flex-grow: 1;
+`;
+
 export const SubmitForm = styled.form`
   display: flex;
   flex-direction: row;

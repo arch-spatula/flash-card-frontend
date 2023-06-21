@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Input } from '..';
 import { useInput } from '../../../hooks';
 import {
+  AnswerContainer,
   CardBackContainer,
   CardFrontContainer,
   CardWrapper,
@@ -66,10 +67,10 @@ export function Card({ question, answer, _id, stackCount }: Card) {
         </SubmitForm>
       </CardFrontContainer>
       <CardBackContainer active={active} isCorrect={isCorrect}>
-        <div>
+        <AnswerContainer>
           <p>정답: {answer}</p>
           <p>풀이: {inputVal}</p>
-        </div>
+        </AnswerContainer>
         <Button onClick={handleConform}>확인</Button>
       </CardBackContainer>
     </CardWrapper>
