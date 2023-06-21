@@ -23,7 +23,7 @@ export const InputWrapper = styled.input`
     box-shadow: 0 0 0 1px ${(props) => props.theme.colors.gray400} inset;
   }
   :focus {
-    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.green} inset;
+    box-shadow: 0 0 0 2px ${(props) => props.theme.colors.green500} inset;
   }
 `;
 
