@@ -24,7 +24,7 @@ async function createCardsAPI(card: Card) {
   }
 }
 
-async function updateCardsAPI(id: string, card: Card) {
+async function updateCardsAPI({ id, card }: { id: string; card: Card }) {
   try {
     const res = await axiosClient.patch(`${API_URLS.CARDS}/${id}`, card);
     return res;
