@@ -80,6 +80,10 @@ export const AnswerContainer = styled.div`
   flex-grow: 1;
 `;
 
+export const Paragraph = styled.p`
+  ${(props) => props.theme.fonts.body16Regular}
+`;
+
 export const SubmitForm = styled.form`
   display: flex;
   flex-direction: row;

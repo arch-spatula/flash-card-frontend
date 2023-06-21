@@ -6,6 +6,7 @@ import {
   CardBackContainer,
   CardFrontContainer,
   CardWrapper,
+  Paragraph,
   Question,
   SubmitForm,
 } from './Card.style';
@@ -68,8 +69,8 @@ export function Card({ question, answer, _id, stackCount }: Card) {
       </CardFrontContainer>
       <CardBackContainer active={active} isCorrect={isCorrect}>
         <AnswerContainer>
-          <p>정답: {answer}</p>
-          <p>풀이: {inputVal}</p>
+          <Paragraph>정답: {answer}</Paragraph>
+          <Paragraph>풀이: {inputVal}</Paragraph>
         </AnswerContainer>
         <Button onClick={handleConform}>확인</Button>
       </CardBackContainer>
