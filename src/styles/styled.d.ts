@@ -38,5 +38,8 @@ declare module '@emotion/react' {
       caption12Regular: string;
       caption12Bold: string;
     };
+    shadow: {
+      boxShadow: string;
+    };
   }
 }

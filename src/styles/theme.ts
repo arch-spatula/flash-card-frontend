@@ -95,6 +95,9 @@ const theme = {
     line-height: 20px;
   `,
   },
+  shadow: {
+    boxShadow: `box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);`,
+  },
 };
 
 export default theme;
