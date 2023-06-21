@@ -20,4 +20,9 @@ export const List = styled.ul`
   gap: 1.25rem;
 `;
 
-export const ListItem = styled.li``;
+export const ListItem = styled.li`
+  text-decoration: none;
+  a {
+    color: ${(props) => props.theme.colors.black};
+  }
+`;
