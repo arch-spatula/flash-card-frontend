@@ -18,7 +18,6 @@ export const InputWrapper = styled.input`
   padding: 0.5rem 0.75rem;
   box-shadow: 0 0 0 1px ${(props) => props.theme.colors.gray300} inset;
   border-radius: 0.5rem;
-  flex-grow: 1;
   :hover {
     box-shadow: 0 0 0 1px ${(props) => props.theme.colors.gray400} inset;
   }
