@@ -1,7 +1,12 @@
 import { Card, PageHeading } from '../../Components';
 import { PulseLoader } from 'react-spinners';
-import { CardContainer } from './Cards.style';
+import {
+  CardContainer,
+  CardPageContainer,
+  LoaderContainer,
+} from './Cards.style';
 import { useCards } from '../../hooks';
+import theme from '../../styles/theme';
 
 function Cards() {
   const { cards, isLoading, error } = useCards();
@@ -11,16 +16,18 @@ function Cards() {
   }
 
   return (
-    <div>
+    <CardPageContainer>
       <PageHeading>Cards</PageHeading>
       {isLoading ? (
-        <PulseLoader
-          color="#10B981"
-          loading
-          margin={4}
-          size={20}
-          speedMultiplier={0.5}
-        />
+        <LoaderContainer>
+          <PulseLoader
+            color={theme.colors.green}
+            loading
+            margin={4}
+            size={20}
+            speedMultiplier={0.5}
+          />
+        </LoaderContainer>
       ) : (
         <>
           {cards ? (
@@ -36,7 +43,7 @@ function Cards() {
           )}
         </>
       )}
-    </div>
+    </CardPageContainer>
   );
 }
 
