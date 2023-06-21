@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import theme from '../../../styles/theme';
 import {
+  Anchor,
   DropdownMenuContainer,
   DropdownOpen,
+  MenuButton,
+  MenuItem,
   MenuList,
 } from './DropdownMenu.style';
 
@@ -32,20 +35,23 @@ export function DropdownMenu({ menuItem }: DropdownMenuProps) {
       <DropdownOpen type="button" onClick={handleOpenMenu} isOpen={isOpen}>
         <Icon />
       </DropdownOpen>
-      {isOpen && (
-        <MenuList>
-          {menuItem.map((item, idx) => (
-            <li key={idx}>
-              {'href' in item ? (
-                <a href={item.href}>{item.label}</a>
-              ) : (
-                <button onClick={item.cb}>{item.label}</button>
-              )}
-            </li>
-          ))}
-        </MenuList>
-      )}
+      {isOpen && <Menu menuItem={menuItem} />}
     </DropdownMenuContainer>
+  );
+}
+
+function Menu({ menuItem }: { menuItem: (LinkItem | ButtonItem)[] }) {
+  return (
+    <MenuList>
+      {menuItem.map((item, idx) => (
+        <MenuItem key={idx}>
+          {'href' in item && <Anchor to={item.href}>{item.label}</Anchor>}
+          {'cb' in item && (
+            <MenuButton onClick={item.cb}>{item.label}</MenuButton>
+          )}
+        </MenuItem>
+      ))}
+    </MenuList>
   );
 }
 
