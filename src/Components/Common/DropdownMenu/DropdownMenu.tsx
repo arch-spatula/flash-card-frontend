@@ -1,4 +1,10 @@
-import { DropdownMenuContainer } from './DropdownMenu.style';
+import { useState } from 'react';
+import theme from '../../../styles/theme';
+import {
+  DropdownMenuContainer,
+  DropdownOpen,
+  MenuList,
+} from './DropdownMenu.style';
 
 type LinkItem = {
   label: string;
@@ -11,25 +17,33 @@ type ButtonItem = {
 };
 
 type DropdownMenuProps = {
-  open: boolean;
   menuItem: (LinkItem | ButtonItem)[];
 };
 
-export function DropdownMenu({ open, menuItem }: DropdownMenuProps) {
+export function DropdownMenu({ menuItem }: DropdownMenuProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   return (
     <DropdownMenuContainer>
-      <button type="button">
+      <DropdownOpen type="button" onClick={handleOpenMenu} isOpen={isOpen}>
         <Icon />
-      </button>
-      {open && (
-        <ul>
-          <li>
-            <a href="">???</a>
-          </li>
-          <li>
-            <button type="button">???</button>
-          </li>
-        </ul>
+      </DropdownOpen>
+      {isOpen && (
+        <MenuList>
+          {menuItem.map((item, idx) => (
+            <li key={idx}>
+              {'href' in item ? (
+                <a href={item.href}>{item.label}</a>
+              ) : (
+                <button onClick={item.cb}>{item.label}</button>
+              )}
+            </li>
+          ))}
+        </MenuList>
       )}
     </DropdownMenuContainer>
   );
@@ -42,11 +56,11 @@ function Icon() {
       width="24"
       height="24"
       viewBox="0 0 24 24"
-      stroke-width="2"
-      stroke="currentColor"
+      strokeWidth="2"
+      stroke={theme.colors.gray700}
       fill="none"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
       <path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
