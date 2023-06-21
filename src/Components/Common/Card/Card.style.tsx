@@ -52,7 +52,7 @@ export const CardContainer = styled(CardSize)<{ active: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
+  ${(props) => props.theme.shadow.boxShadow}
   background-color: ${(props) => props.theme.colors.white};
   border-radius: 1rem;
   padding: 1.25rem;
