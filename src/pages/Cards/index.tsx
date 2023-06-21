@@ -8,9 +8,7 @@ import {
 import { useCards } from '../../hooks';
 
 function Cards() {
-  // const { cards, isLoading, error } = useCards();
-  const { cards, error } = useCards();
-  const isLoading = true;
+  const { cards, isLoading, error } = useCards();
 
   if (typeof cards === 'string' || error) {
     return <div>{`${error}`}</div>;
