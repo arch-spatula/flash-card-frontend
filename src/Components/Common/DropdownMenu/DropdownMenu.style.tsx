@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 
 export const DropdownMenuContainer = styled.div`
   z-index: 2;
-  background-color: ${(props) => props.theme.colors.white};
 `;
 
 export const DropdownOpen = styled.button<{ isOpen: boolean }>`
   all: unset;
-  background-color: ${(props) => props.theme.colors.white};
+  background-color: transparent;
   border-radius: 0.5rem;
   width: 3rem;
   height: 3rem;
