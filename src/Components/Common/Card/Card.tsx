@@ -4,12 +4,14 @@ import { useInput } from '../../../hooks';
 import {
   AnswerContainer,
   CardBackContainer,
+  BackCardEditContainer,
   CardFrontContainer,
   CardWrapper,
   MenuWrapper,
   Paragraph,
   Question,
   SubmitForm,
+  FrontCardEditContainer,
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
@@ -29,6 +31,17 @@ export function Card({ question, answer, _id, stackCount }: Card) {
 
   const [isCorrect, setIsCorrect] = useState(false);
 
+  const {
+    inputVal: questionVal,
+    changeInputVal: changeQuestion,
+    resetInputVal: resetQuestion,
+  } = useInput(question);
+  const {
+    inputVal: answerVal,
+    changeInputVal: changeAnswer,
+    resetInputVal: resetAnswer,
+  } = useInput(answer);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setActive(true);
@@ -37,12 +50,12 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     setIsCorrect(() => regex.test(inputVal));
   };
 
+  const submitDate = new Date();
   const handleConform = () => {
     setActive(false);
     resetInputVal();
 
     if (_id) {
-      const submitDate = new Date();
       if (isCorrect) {
         updateCard({
           id: _id,
@@ -65,29 +78,98 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     setIsEditing(true);
   }, []);
 
+  const handleSave = () => {
+    setIsEditing(false);
+    if (_id) {
+      updateCard({
+        id: _id,
+        card: {
+          question: questionVal,
+          answer: answerVal,
+          submitDate,
+          stackCount,
+        },
+      });
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    resetAnswer();
+    resetQuestion();
+  };
+
+  const disabled = false;
+
   return (
     <CardWrapper>
-      <CardFrontContainer active={active}>
-        <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
-        <Question>{question}</Question>
-        <SubmitForm onSubmit={handleSubmit}>
+      {isEditing ? (
+        <FrontCardEditContainer active={active}>
+          <h3>문제</h3>
           <Input
-            value={inputVal}
-            onChange={changeInputVal}
+            value={questionVal}
+            onChange={changeQuestion}
+            placeholder={question}
             hideHelper
-            width={180}
           />
-          <Button disabled={!inputVal}>제출</Button>
-        </SubmitForm>
-      </CardFrontContainer>
-      <CardBackContainer active={active} isCorrect={isCorrect}>
-        <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
-        <AnswerContainer>
-          <Paragraph>정답: {answer}</Paragraph>
-          <Paragraph>풀이: {inputVal}</Paragraph>
-        </AnswerContainer>
-        <Button onClick={handleConform}>확인</Button>
-      </CardBackContainer>
+          <h3>정답</h3>
+          <Input
+            value={answerVal}
+            onChange={changeAnswer}
+            placeholder={answer}
+            hideHelper
+          />
+          <Button disabled={disabled} onClick={handleSave}>
+            저장
+          </Button>
+          <Button onClick={handleCancel}>취소</Button>
+        </FrontCardEditContainer>
+      ) : (
+        <CardFrontContainer active={active}>
+          <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
+          <Question>{question}</Question>
+          <SubmitForm onSubmit={handleSubmit}>
+            <Input
+              value={inputVal}
+              onChange={changeInputVal}
+              hideHelper
+              width={180}
+            />
+            <Button disabled={!inputVal}>제출</Button>
+          </SubmitForm>
+        </CardFrontContainer>
+      )}
+      {isEditing ? (
+        <BackCardEditContainer active={active}>
+          <h3>문제</h3>
+          <Input
+            value={questionVal}
+            onChange={changeQuestion}
+            placeholder={question}
+            hideHelper
+          />
+          <h3>정답</h3>
+          <Input
+            value={answerVal}
+            onChange={changeAnswer}
+            placeholder={answer}
+            hideHelper
+          />
+          <Button disabled={disabled} onClick={handleSave}>
+            저장
+          </Button>
+          <Button onClick={handleCancel}>취소</Button>
+        </BackCardEditContainer>
+      ) : (
+        <CardBackContainer active={active} isCorrect={isCorrect}>
+          <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
+          <AnswerContainer>
+            <Paragraph>정답: {answer}</Paragraph>
+            <Paragraph>풀이: {inputVal}</Paragraph>
+          </AnswerContainer>
+          <Button onClick={handleConform}>확인</Button>
+        </CardBackContainer>
+      )}
     </CardWrapper>
   );
 }
