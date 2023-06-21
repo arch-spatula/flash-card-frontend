@@ -71,6 +71,14 @@ export const CardBackContainer = styled(CardContainer)<{ isCorrect: boolean }>`
   animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
 `;
 
+export const FrontCardEditContainer = styled(CardContainer)`
+  animation-name: ${(props) => (props.active ? rotate : rotateInverse)};
+`;
+
+export const BackCardEditContainer = styled(CardContainer)`
+  animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
+`;
+
 export const AnswerContainer = styled.div`
   display: flex;
   flex-direction: column;
