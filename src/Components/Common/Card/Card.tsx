@@ -21,9 +21,14 @@ export function Card({ question, answer, _id, stackCount }: Card) {
 
   const { mutate } = useMutation({ mutationFn: updateCardsAPI });
 
+  const [isCorrect, setIsCorrect] = useState<boolean>(false);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setActive(true);
+
+    const regex = new RegExp(answer, 'i');
+    setIsCorrect(() => regex.test(inputVal));
   };
 
   const handleConform = () => {
@@ -32,8 +37,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
 
     if (_id) {
       const submitDate = new Date();
-      const regex = new RegExp(answer, 'i');
-      const isCorrect = regex.test(inputVal);
       if (isCorrect) {
         mutate({
           id: _id,
@@ -62,9 +65,11 @@ export function Card({ question, answer, _id, stackCount }: Card) {
           <Button disabled={!inputVal}>제출</Button>
         </SubmitForm>
       </CardFrontContainer>
-      <CardBackContainer active={active}>
-        <p>{answer}</p>
-        <p>{inputVal}</p>
+      <CardBackContainer active={active} isCorrect={isCorrect}>
+        <div>
+          <p>정답: {answer}</p>
+          <p>풀이: {inputVal}</p>
+        </div>
         <Button onClick={handleConform}>확인</Button>
       </CardBackContainer>
     </CardWrapper>

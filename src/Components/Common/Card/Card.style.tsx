@@ -65,7 +65,9 @@ export const CardFrontContainer = styled(CardContainer)`
   animation-name: ${(props) => (props.active ? rotate : rotateInverse)};
 `;
 
-export const CardBackContainer = styled(CardContainer)`
+export const CardBackContainer = styled(CardContainer)<{ isCorrect: boolean }>`
+  background-color: ${(props) =>
+    props.isCorrect ? props.theme.colors.green050 : props.theme.colors.red050};
   animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
 `;
 
