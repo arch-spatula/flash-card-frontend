@@ -25,9 +25,11 @@ export const DropdownOpen = styled.button<{ isOpen: boolean }>`
   position: relative;
 `;
 
-export const MenuList = styled.ul`
+export const MenuList = styled.ul<{ direction: 'left' | 'right' }>`
+  ${(props) => (props.direction === 'left' ? 'left:0' : 'right: 0')};
   z-index: 2;
   position: absolute;
+  top: 3rem;
   border-radius: 0.5rem;
   background-color: ${(props) => props.theme.colors.white};
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
@@ -52,6 +54,7 @@ const shareItem = css`
   cursor: pointer;
   border-radius: 0.5rem;
   padding: 0 1.25rem;
+  white-space: nowrap;
 `;
 
 export const MenuButton = styled.button`

@@ -21,9 +21,13 @@ type ButtonItem = {
 
 type DropdownMenuProps = {
   menuItem: (LinkItem | ButtonItem)[];
+  direction?: 'left' | 'right';
 };
 
-export function DropdownMenu({ menuItem }: DropdownMenuProps) {
+export function DropdownMenu({
+  menuItem,
+  direction = 'left',
+}: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenMenu = () => {
@@ -35,14 +39,14 @@ export function DropdownMenu({ menuItem }: DropdownMenuProps) {
       <DropdownOpen type="button" onClick={handleOpenMenu} isOpen={isOpen}>
         <Icon />
       </DropdownOpen>
-      {isOpen && <Menu menuItem={menuItem} />}
+      {isOpen && <Menu menuItem={menuItem} direction={direction} />}
     </DropdownMenuContainer>
   );
 }
 
-function Menu({ menuItem }: { menuItem: (LinkItem | ButtonItem)[] }) {
+function Menu({ menuItem, direction = 'left' }: DropdownMenuProps) {
   return (
-    <MenuList>
+    <MenuList direction={direction}>
       {menuItem.map((item, idx) => (
         <MenuItem key={idx}>
           {'href' in item && <Anchor to={item.href}>{item.label}</Anchor>}
