@@ -1,6 +1,6 @@
 import { Global } from '@emotion/react';
 import GlobalStyle from '../styles/Reset';
-import { Navbar } from '../Components';
+import { Footer, Navbar } from '../Components';
 import { Outlet } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Suspense } from 'react';
@@ -31,6 +31,7 @@ function Layout() {
           <Outlet />
         </Suspense>
       </MainContainer>
+      <Footer />
     </>
   );
 }
