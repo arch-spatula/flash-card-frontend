@@ -34,6 +34,7 @@ axiosClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
+/** @see https://gusrb3164.github.io/web/2022/08/07/refresh-with-axios-for-client/ */
 axiosClient.interceptors.response.use(
   (res) => res,
   async (err) => {

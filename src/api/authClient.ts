@@ -39,6 +39,7 @@ async function signUpAPI(email: string, password: string) {
 /**
  * - access_token을 갱신하는 함수
  * - API 명세의 요구에 맞춰 authClient 중 유일하게 header를 활용하고 refresh token으로 설정
+ * - Jotai Storage로 set할 때는 큰따옴표(`"`)로 감싸기 때문에 slice가 필요함
  */
 async function refreshAccessAPI() {
   try {
