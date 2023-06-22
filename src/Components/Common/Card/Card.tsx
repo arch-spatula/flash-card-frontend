@@ -99,7 +99,11 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     resetQuestion();
   };
 
-  const disabled = false;
+  const disabled = [
+    answerVal === '',
+    questionVal === '',
+    questionVal === question && answerVal === answer,
+  ].some(Boolean);
 
   return (
     <CardWrapper>
