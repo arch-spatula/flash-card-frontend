@@ -35,31 +35,31 @@ describe('formatDate', () => {
     const result6 = formatDate(baseDate, 5, now6);
     expect(result6).toBe('3일 후');
 
-    const now7 = new Date('2023-06-01T00:00:00'); // 7일 후
+    const now7 = new Date(baseDateStr); // 7일 후
     const result7 = formatDate(baseDate, 6, now7);
     expect(result7).toBe('1주 후');
 
-    const now8 = new Date('2023-06-01T00:00:00'); // 14일 후
+    const now8 = new Date(baseDateStr); // 14일 후
     const result8 = formatDate(baseDate, 7, now8);
     expect(result8).toBe('2주 후');
 
-    const now9 = new Date('2023-06-01T00:00:00'); // 1달 후
+    const now9 = new Date(baseDateStr); // 1달 후
     const result9 = formatDate(baseDate, 8, now9);
     expect(result9).toBe('1개월 후');
 
-    const now10 = new Date('2023-06-01T00:00:00'); // 2달 후
+    const now10 = new Date(baseDateStr); // 2달 후
     const result10 = formatDate(baseDate, 9, now10);
     expect(result10).toBe('2개월 후');
 
-    const now11 = new Date('2023-06-01T00:00:00'); // 3달 후
+    const now11 = new Date(baseDateStr); // 3달 후
     const result11 = formatDate(baseDate, 10, now11);
     expect(result11).toBe('3개월 후');
 
-    const now12 = new Date('2023-06-01T00:00:00'); // 6달 후
+    const now12 = new Date(baseDateStr); // 6달 후
     const result12 = formatDate(baseDate, 11, now12);
     expect(result12).toBe('6개월 후');
 
-    const now13 = new Date('2023-06-01T00:00:00'); // 1년 후
+    const now13 = new Date(baseDateStr); // 1년 후
     const result13 = formatDate(baseDate, 12, now13);
     expect(result13).toBe('1년 후');
   });
