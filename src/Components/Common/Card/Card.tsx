@@ -49,12 +49,12 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     setIsCorrect(() => regex.test(inputVal));
   };
 
-  const submitDate = new Date();
   const handleConform = () => {
     setActive(false);
     resetInputVal();
 
     if (_id) {
+      const submitDate = new Date();
       if (isCorrect) {
         updateCard({
           id: _id,
@@ -80,6 +80,7 @@ export function Card({ question, answer, _id, stackCount }: Card) {
   const handleSave = () => {
     setIsEditing(false);
     if (_id) {
+      const submitDate = new Date();
       updateCard({
         id: _id,
         card: {
