@@ -116,19 +116,15 @@ export function Card({ question, answer, _id, stackCount }: Card) {
           handleCancel={handleCancel}
         />
       ) : (
-        <CardFrontContainer active={active}>
-          <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
-          <Question>{question}</Question>
-          <SubmitForm onSubmit={handleSubmit}>
-            <Input
-              value={inputVal}
-              onChange={changeInputVal}
-              hideHelper
-              width={180}
-            />
-            <Button disabled={!inputVal}>제출</Button>
-          </SubmitForm>
-        </CardFrontContainer>
+        <CardFront
+          active={active}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          handleSubmit={handleSubmit}
+          inputVal={inputVal}
+          changeInputVal={changeInputVal}
+          question={question}
+        />
       )}
       {isEditing ? (
         <EditCard
@@ -144,16 +140,84 @@ export function Card({ question, answer, _id, stackCount }: Card) {
           handleCancel={handleCancel}
         />
       ) : (
-        <CardBackContainer active={active} isCorrect={isCorrect}>
-          <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
-          <AnswerContainer>
-            <Paragraph>정답: {answer}</Paragraph>
-            <Paragraph>풀이: {inputVal}</Paragraph>
-          </AnswerContainer>
-          <Button onClick={handleConform}>확인</Button>
-        </CardBackContainer>
+        <CardBack
+          active={active}
+          isCorrect={isCorrect}
+          handleDelete={handleDelete}
+          handleEdit={handleEdit}
+          answer={answer}
+          inputVal={inputVal}
+          handleConform={handleConform}
+        />
       )}
     </CardWrapper>
+  );
+}
+
+type CardBackProps = {
+  active: boolean;
+  isCorrect: boolean;
+  handleDelete: () => void;
+  handleEdit: () => void;
+  answer: string;
+  handleConform: () => void;
+  inputVal: string;
+};
+
+function CardBack({
+  active,
+  isCorrect,
+  handleDelete,
+  handleEdit,
+  answer,
+  inputVal,
+  handleConform,
+}: CardBackProps) {
+  return (
+    <CardBackContainer active={active} isCorrect={isCorrect}>
+      <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
+      <AnswerContainer>
+        <Paragraph>정답: {answer}</Paragraph>
+        <Paragraph>풀이: {inputVal}</Paragraph>
+      </AnswerContainer>
+      <Button onClick={handleConform}>확인</Button>
+    </CardBackContainer>
+  );
+}
+
+type CardFrontProps = {
+  active: boolean;
+  handleDelete: () => void;
+  handleEdit: () => void;
+  question: string;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  inputVal: string;
+  changeInputVal: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+function CardFront({
+  active,
+  handleDelete,
+  handleEdit,
+  question,
+  handleSubmit,
+  inputVal,
+  changeInputVal,
+}: CardFrontProps) {
+  return (
+    <CardFrontContainer active={active}>
+      <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
+      <Question>{question}</Question>
+      <SubmitForm onSubmit={handleSubmit}>
+        <Input
+          value={inputVal}
+          onChange={changeInputVal}
+          hideHelper
+          width={180}
+        />
+        <Button disabled={!inputVal}>제출</Button>
+      </SubmitForm>
+    </CardFrontContainer>
   );
 }
 
