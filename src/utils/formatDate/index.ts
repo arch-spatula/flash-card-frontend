@@ -11,40 +11,38 @@ export function formatDate(
     0
   );
 
-  if (diff === 0) {
-    return '지금';
-  }
+  if (diff === 0) return '지금';
 
-  const diffInSeconds = Math.floor(diff / 1000);
-  const diffInMinutes = Math.floor(diff / (1000 * 60));
-  const diffInHours = Math.floor(diff / (1000 * 60 * 60));
-  const diffInDays = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const diffInWeeks = Math.floor(diff / (1000 * 60 * 60 * 24 * 7));
-  const diffInMonths = Math.floor(diff / (1000 * 60 * 60 * 24 * 30.4375)); // 평균 월 수 (365.25 / 12)
-  const diffInQuarters = Math.floor(diff / (1000 * 60 * 60 * 24 * 91.3125)); // 평균 분기 수 (365.25 / 4)
-  const diffInHalfYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 182.625)); // 평균 반년 수 (365.25 / 2)
-  const diffInFullYears = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+  const diffInUnits: {
+    value: number;
+    unit: Intl.RelativeTimeFormatUnit;
+  }[] = [
+    { unit: 'second', value: 1 },
+    { unit: 'minute', value: 60 },
+    { unit: 'hour', value: 60 * 60 },
+    { unit: 'day', value: 60 * 60 * 24 },
+    { unit: 'week', value: 60 * 60 * 24 * 7 },
+    { unit: 'month', value: 60 * 60 * 24 * 30.4375 }, // 평균 월 수 (365.25 / 12)
+    { unit: 'quarter', value: 60 * 60 * 24 * 91.3125 }, // 평균 분기 수 (365.25 / 4)
+    { unit: 'quarter', value: 60 * 60 * 24 * 182.625 }, // 평균 반년 수 (365.25 / 2)
+    { unit: 'year', value: 60 * 60 * 24 * 365.25 },
+  ];
 
   const formatter = new Intl.RelativeTimeFormat('ko');
 
-  if (diffInSeconds < 60) {
-    return formatter.format(diffInSeconds, 'second');
-  } else if (diffInMinutes < 60) {
-    return formatter.format(diffInMinutes, 'minute');
-  } else if (diffInHours < 24) {
-    return formatter.format(diffInHours, 'hour');
-  } else if (diffInDays < 7) {
-    return formatter.format(diffInDays, 'day');
-  } else if (diffInWeeks < 4) {
-    return formatter.format(diffInWeeks, 'week');
-  } else if (diffInMonths < 12) {
-    return formatter.format(diffInMonths, 'month');
-  } else if (diffInQuarters < 4) {
-    return formatter.format(diffInQuarters, 'quarter');
-  } else if (diffInHalfYears < 2) {
-    return formatter.format(diffInHalfYears, 'quarter');
-  } else {
-    return formatter.format(diffInFullYears, 'years');
+  const duration = [60, 60, 24, 7, 4, 12, 4, 2];
+
+  let idx = 0;
+
+  while (idx < diffInUnits.length - 1 && getDiffValue(idx) >= duration[idx]) {
+    idx += 1;
+  }
+  const diffValue = getDiffValue(idx);
+
+  return formatter.format(diffValue, diffInUnits[idx].unit);
+
+  function getDiffValue(idx: number) {
+    return Math.floor(diff / (1000 * diffInUnits[idx].value));
   }
 }
 
