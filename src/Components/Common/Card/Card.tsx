@@ -99,12 +99,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     resetQuestion();
   };
 
-  const disabled = [
-    answerVal === '',
-    questionVal === '',
-    questionVal === question && answerVal === answer,
-  ].some(Boolean);
-
   return (
     <CardWrapper>
       {isEditing ? (
@@ -116,7 +110,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
           answer={answer}
           answerVal={answerVal}
           changeAnswer={changeAnswer}
-          disabled={disabled}
           handleSave={handleSave}
           handleCancel={handleCancel}
         />
@@ -140,7 +133,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
           answer={answer}
           answerVal={answerVal}
           changeAnswer={changeAnswer}
-          disabled={disabled}
           handleSave={handleSave}
           handleCancel={handleCancel}
         />
@@ -234,7 +226,6 @@ type EditCardProps = {
   answerVal: string;
   changeAnswer: (e: React.ChangeEvent<HTMLInputElement>) => void;
   answer: string;
-  disabled: boolean;
   handleSave: () => void;
   handleCancel: () => void;
 };
@@ -247,10 +238,15 @@ function EditCard({
   answerVal,
   changeAnswer,
   answer,
-  disabled,
   handleSave,
   handleCancel,
 }: EditCardProps) {
+  const disabled = [
+    answerVal === '',
+    questionVal === '',
+    questionVal === question && answerVal === answer,
+  ].some(Boolean);
+
   return (
     <CardEditContainer active={!active}>
       <h3>문제</h3>
