@@ -242,8 +242,8 @@ function EditCard({
   handleCancel,
 }: EditCardProps) {
   const disabled = [
-    answerVal === '',
-    questionVal === '',
+    !answerVal,
+    !questionVal,
     questionVal === question && answerVal === answer,
   ].some(Boolean);
 
