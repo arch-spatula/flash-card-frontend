@@ -4,7 +4,12 @@ import { useInput, useLogin } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
-import { MainContainer, MainWrapper, Title } from './SignIn.style';
+import {
+  ButtonWrapper,
+  MainContainer,
+  MainWrapper,
+  Title,
+} from './SignIn.style';
 import { useMutation } from '@tanstack/react-query';
 
 /**
@@ -88,9 +93,19 @@ function SignIn() {
           helperText={passwordError}
           customRef={passwordRef}
         />
-        <Button onClick={signIn} isLoading={isLoading} disabled={disabled}>
-          Sign In
-        </Button>
+        <ButtonWrapper>
+          <Button
+            onClick={signIn}
+            isLoading={isLoading}
+            disabled={disabled}
+            width={'grow'}
+          >
+            로그인
+          </Button>
+          <Button href={ROUTE_PATHS.SIGN_UP} width={'grow'}>
+            회원가입
+          </Button>
+        </ButtonWrapper>
       </MainWrapper>
     </MainContainer>
   );

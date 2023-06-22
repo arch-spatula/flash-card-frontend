@@ -13,3 +13,8 @@ export const MainWrapper = styled.form`
   width: 22.5rem;
   padding: 0 2rem;
 `;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
