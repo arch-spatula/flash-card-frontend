@@ -4,14 +4,13 @@ import { useInput } from '../../../hooks';
 import {
   AnswerContainer,
   CardBackContainer,
-  BackCardEditContainer,
   CardFrontContainer,
   CardWrapper,
   MenuWrapper,
   Paragraph,
   Question,
   SubmitForm,
-  FrontCardEditContainer,
+  CardEditContainer,
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
@@ -104,26 +103,18 @@ export function Card({ question, answer, _id, stackCount }: Card) {
   return (
     <CardWrapper>
       {isEditing ? (
-        <FrontCardEditContainer active={active}>
-          <h3>문제</h3>
-          <Input
-            value={questionVal}
-            onChange={changeQuestion}
-            placeholder={question}
-            hideHelper
-          />
-          <h3>정답</h3>
-          <Input
-            value={answerVal}
-            onChange={changeAnswer}
-            placeholder={answer}
-            hideHelper
-          />
-          <Button disabled={disabled} onClick={handleSave}>
-            저장
-          </Button>
-          <Button onClick={handleCancel}>취소</Button>
-        </FrontCardEditContainer>
+        <EditCard
+          active={active}
+          question={question}
+          questionVal={questionVal}
+          changeQuestion={changeQuestion}
+          answer={answer}
+          answerVal={answerVal}
+          changeAnswer={changeAnswer}
+          disabled={disabled}
+          handleSave={handleSave}
+          handleCancel={handleCancel}
+        />
       ) : (
         <CardFrontContainer active={active}>
           <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
@@ -140,26 +131,18 @@ export function Card({ question, answer, _id, stackCount }: Card) {
         </CardFrontContainer>
       )}
       {isEditing ? (
-        <BackCardEditContainer active={active}>
-          <h3>문제</h3>
-          <Input
-            value={questionVal}
-            onChange={changeQuestion}
-            placeholder={question}
-            hideHelper
-          />
-          <h3>정답</h3>
-          <Input
-            value={answerVal}
-            onChange={changeAnswer}
-            placeholder={answer}
-            hideHelper
-          />
-          <Button disabled={disabled} onClick={handleSave}>
-            저장
-          </Button>
-          <Button onClick={handleCancel}>취소</Button>
-        </BackCardEditContainer>
+        <EditCard
+          active={!active}
+          question={question}
+          questionVal={questionVal}
+          changeQuestion={changeQuestion}
+          answer={answer}
+          answerVal={answerVal}
+          changeAnswer={changeAnswer}
+          disabled={disabled}
+          handleSave={handleSave}
+          handleCancel={handleCancel}
+        />
       ) : (
         <CardBackContainer active={active} isCorrect={isCorrect}>
           <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
@@ -171,6 +154,55 @@ export function Card({ question, answer, _id, stackCount }: Card) {
         </CardBackContainer>
       )}
     </CardWrapper>
+  );
+}
+
+type EditCardProps = {
+  active: boolean;
+  questionVal: string;
+  changeQuestion: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  question: string;
+  answerVal: string;
+  changeAnswer: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  answer: string;
+  disabled: boolean;
+  handleSave: () => void;
+  handleCancel: () => void;
+};
+
+function EditCard({
+  active,
+  questionVal,
+  changeQuestion,
+  question,
+  answerVal,
+  changeAnswer,
+  answer,
+  disabled,
+  handleSave,
+  handleCancel,
+}: EditCardProps) {
+  return (
+    <CardEditContainer active={!active}>
+      <h3>문제</h3>
+      <Input
+        value={questionVal}
+        onChange={changeQuestion}
+        placeholder={question}
+        hideHelper
+      />
+      <h3>정답</h3>
+      <Input
+        value={answerVal}
+        onChange={changeAnswer}
+        placeholder={answer}
+        hideHelper
+      />
+      <Button disabled={disabled} onClick={handleSave}>
+        저장
+      </Button>
+      <Button onClick={handleCancel}>취소</Button>
+    </CardEditContainer>
   );
 }
 
