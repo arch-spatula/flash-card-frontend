@@ -71,7 +71,7 @@ export function getNextIntervalDate(date: Date, count: number) {
 
   if (count < 0) return newDate;
 
-  if (count > 11) {
+  if (count > intervalMap.length - 1) {
     newDate.setFullYear(newDate.getFullYear() + 1);
     return newDate;
   }
