@@ -1,7 +1,8 @@
-import { Button } from '../../Components';
+import { Button, PageHeading } from '../../Components';
 import { useLogin } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
+import { SettingContainer, SettingWrapper } from './Setting.style';
 
 function Setting() {
   const { emptyTokens } = useLogin();
@@ -13,10 +14,12 @@ function Setting() {
   };
 
   return (
-    <div>
-      <h1>Setting</h1>
-      <Button onClick={handelSignOut}>Sign out</Button>
-    </div>
+    <SettingContainer>
+      <SettingWrapper>
+        <PageHeading>Setting</PageHeading>
+        <Button onClick={handelSignOut}>Sign out</Button>
+      </SettingWrapper>
+    </SettingContainer>
   );
 }
 
