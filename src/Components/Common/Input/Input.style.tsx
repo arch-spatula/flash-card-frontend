@@ -33,11 +33,27 @@ export const InputWrapper = styled.input`
   }
 `;
 
-export const HelperText = styled.p`
+export const HelperText = styled.p<{
+  helperTextColor: 'warning' | 'success' | 'information' | 'normal';
+}>`
   ${(props) => props.theme.fonts.body14Regular}
+  color: ${(props) => {
+    switch (props.helperTextColor) {
+      case 'normal':
+        return props.theme.colors.black;
+      case 'success':
+        return props.theme.colors.green;
+      case 'warning':
+        return props.theme.colors.red;
+      case 'information':
+        return props.theme.colors.blue;
+      default:
+        return props.theme.colors.black;
+    }
+  }};
   min-height: 1.5rem;
 `;
 
 export const InputLabel = styled.label`
-  ${(props) => props.theme.fonts.caption12Regular}// 20px + 8px
+  ${(props) => props.theme.fonts.caption12Regular}
 `;
