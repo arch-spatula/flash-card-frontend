@@ -14,7 +14,7 @@ import {
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom, useSetAtom } from 'jotai';
 
 /**
  * @todo 카드 앞면과 뒷면 관심사 분리하기
@@ -32,17 +32,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
   const [isCorrect, setIsCorrect] = useState(false);
-
-  const {
-    inputVal: questionVal,
-    changeInputVal: changeQuestion,
-    resetInputVal: resetQuestion,
-  } = useInput(question);
-  const {
-    inputVal: answerVal,
-    changeInputVal: changeAnswer,
-    resetInputVal: resetAnswer,
-  } = useInput(answer);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -80,42 +69,20 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     setIsEditing(true);
   }, [setIsEditing]);
 
-  const handleSave = () => {
-    setIsEditing(false);
-    if (_id) {
-      const submitDate = new Date();
-      updateCard({
-        id: _id,
-        card: {
-          question: questionVal,
-          answer: answerVal,
-          submitDate,
-          stackCount,
-        },
-      });
-    }
-  };
-
-  const handleCancel = () => {
-    setIsEditing(false);
-    resetAnswer();
-    resetQuestion();
-  };
-
   return (
     <CardWrapper>
       {isEditing ? (
-        <EditCard
-          active={active}
-          question={question}
-          questionVal={questionVal}
-          changeQuestion={changeQuestion}
-          answer={answer}
-          answerVal={answerVal}
-          changeAnswer={changeAnswer}
-          handleSave={handleSave}
-          handleCancel={handleCancel}
-        />
+        <>
+          {_id && (
+            <EditCard
+              _id={_id}
+              active={active}
+              question={question}
+              answer={answer}
+              stackCount={stackCount}
+            />
+          )}
+        </>
       ) : (
         <CardFront
           active={active}
@@ -128,17 +95,17 @@ export function Card({ question, answer, _id, stackCount }: Card) {
         />
       )}
       {isEditing ? (
-        <EditCard
-          active={!active}
-          question={question}
-          questionVal={questionVal}
-          changeQuestion={changeQuestion}
-          answer={answer}
-          answerVal={answerVal}
-          changeAnswer={changeAnswer}
-          handleSave={handleSave}
-          handleCancel={handleCancel}
-        />
+        <>
+          {_id && (
+            <EditCard
+              _id={_id}
+              active={!active}
+              question={question}
+              answer={answer}
+              stackCount={stackCount}
+            />
+          )}
+        </>
       ) : (
         <CardBack
           active={active}
@@ -222,28 +189,57 @@ function CardFront({
 }
 
 type EditCardProps = {
+  _id: string;
   active: boolean;
-  questionVal: string;
-  changeQuestion: (e: React.ChangeEvent<HTMLInputElement>) => void;
   question: string;
-  answerVal: string;
-  changeAnswer: (e: React.ChangeEvent<HTMLInputElement>) => void;
   answer: string;
-  handleSave: () => void;
-  handleCancel: () => void;
+  stackCount: number;
 };
 
 function EditCard({
+  _id,
   active,
-  questionVal,
-  changeQuestion,
   question,
-  answerVal,
-  changeAnswer,
   answer,
-  handleSave,
-  handleCancel,
+  stackCount,
 }: EditCardProps) {
+  const setIsEditing = useSetAtom(editingAtom);
+
+  const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
+
+  const {
+    inputVal: questionVal,
+    changeInputVal: changeQuestion,
+    resetInputVal: resetQuestion,
+  } = useInput(question);
+  const {
+    inputVal: answerVal,
+    changeInputVal: changeAnswer,
+    resetInputVal: resetAnswer,
+  } = useInput(answer);
+
+  const handleSave = () => {
+    setIsEditing(false);
+    if (_id) {
+      const submitDate = new Date();
+      updateCard({
+        id: _id,
+        card: {
+          question: questionVal,
+          answer: answerVal,
+          submitDate,
+          stackCount,
+        },
+      });
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    resetAnswer();
+    resetQuestion();
+  };
+
   const disabled = [
     !answerVal,
     !questionVal,
@@ -251,7 +247,7 @@ function EditCard({
   ].some(Boolean);
 
   return (
-    <CardEditContainer active={!active}>
+    <CardEditContainer active={active}>
       <h3>문제</h3>
       <Input
         value={questionVal}
