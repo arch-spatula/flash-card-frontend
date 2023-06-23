@@ -1,4 +1,9 @@
-import { InputWrapper, HelperText, InputContainer } from './Input.style';
+import {
+  InputWrapper,
+  HelperText,
+  InputContainer,
+  InputLabel,
+} from './Input.style';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   value: string;
@@ -7,6 +12,7 @@ type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   hideHelper?: boolean;
   customRef?: React.RefObject<HTMLInputElement>;
   width?: number;
+  inputLabel?: string;
 };
 
 export function Input({
@@ -16,14 +22,21 @@ export function Input({
   hideHelper = false,
   customRef,
   width = 0,
+  inputLabel,
   ...other
 }: InputProps) {
   return (
-    <InputContainer hideHelper={hideHelper} width={width}>
+    <InputContainer
+      hideHelper={hideHelper}
+      width={width}
+      inputLabel={inputLabel}
+    >
+      {inputLabel && <InputLabel htmlFor={inputLabel}>{inputLabel}</InputLabel>}
       <InputWrapper
         onChange={onChange}
         value={value}
         ref={customRef}
+        id={inputLabel}
         {...other}
       />
       {!hideHelper && <HelperText>{helperText}</HelperText>}
