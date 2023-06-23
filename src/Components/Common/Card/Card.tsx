@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { Button, DropdownMenu, Input } from '..';
 import { useInput } from '../../../hooks';
 import {
@@ -21,17 +21,17 @@ import { atom, useAtom, useSetAtom } from 'jotai';
  */
 const activeAtom = atom(false);
 const editingAtom = atom(false);
+const correctAtom = atom(false);
 
 export function Card({ question, answer, _id, stackCount }: Card) {
   const { inputVal, changeInputVal, resetInputVal } = useInput();
 
   const [active, setActive] = useAtom(activeAtom);
   const [isEditing, setIsEditing] = useAtom(editingAtom);
+  const [isCorrect, setIsCorrect] = useAtom(correctAtom);
 
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
-
-  const [isCorrect, setIsCorrect] = useState(false);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
