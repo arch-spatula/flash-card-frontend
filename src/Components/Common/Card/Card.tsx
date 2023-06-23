@@ -14,19 +14,22 @@ import {
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
+import { atom, useAtom } from 'jotai';
 
 /**
  * @todo 카드 앞면과 뒷면 관심사 분리하기
  */
+const activeAtom = atom(false);
+const editingAtom = atom(false);
 
 export function Card({ question, answer, _id, stackCount }: Card) {
   const { inputVal, changeInputVal, resetInputVal } = useInput();
-  const [active, setActive] = useState(false);
+
+  const [active, setActive] = useAtom(activeAtom);
+  const [isEditing, setIsEditing] = useAtom(editingAtom);
 
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
-
-  const [isEditing, setIsEditing] = useState(false);
 
   const [isCorrect, setIsCorrect] = useState(false);
 
@@ -75,7 +78,7 @@ export function Card({ question, answer, _id, stackCount }: Card) {
 
   const handleEdit = useCallback(() => {
     setIsEditing(true);
-  }, []);
+  }, [setIsEditing]);
 
   const handleSave = () => {
     setIsEditing(false);

@@ -2,6 +2,7 @@ import { Card, PageHeading } from '../../Components';
 import { PulseLoader } from 'react-spinners';
 import { CardContainer } from './Cards.style';
 import { useCards } from '../../hooks';
+import { Provider } from 'jotai';
 
 function Cards() {
   const { cards, isLoading, error } = useCards();
@@ -26,7 +27,9 @@ function Cards() {
           {cards ? (
             <CardContainer>
               {cards.map((card) => (
-                <Card {...card} key={card._id} />
+                <Provider>
+                  <Card {...card} key={card._id} />
+                </Provider>
               ))}
             </CardContainer>
           ) : (
