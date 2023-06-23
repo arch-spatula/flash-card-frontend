@@ -1,4 +1,23 @@
 /**
+ * @todo 유저의 복습 기간을 설정하게 되면 이동하기 바랍니다.
+ * 가독성을 위해 계산 과정을 보여줍니다.
+ */
+const intervalMap = [
+  10, // 0 틀림 10분
+  60, // 1번 맞춤 1시간
+  60 * 24, // 2번 맞춤 내일
+  60 * 24 * 2,
+  60 * 24 * 3,
+  60 * 24 * 4,
+  60 * 24 * 7, // 6번 맞춤 다음주
+  60 * 24 * 14, // 7번 맞춤 다다음주
+  60 * 24 * 30.4375, // 8번 맞춤 다음달
+  60 * 24 * 30.4375 * 2, // 9번 다다음달
+  60 * 24 * 91.3125, // 10번 맞춤 다음분기
+  60 * 24 * 182.625, // 11번 맞춤 다음반기
+];
+
+/**
  * 다음 풀이까지 남은 시간을 포멧팅하고 표시합니다.
  */
 export function formatDate(
@@ -7,7 +26,7 @@ export function formatDate(
   now = new Date()
 ) {
   const diff = Math.max(
-    +getNextIntervalDate(new Date(submitDate), stackCount) - +now,
+    +getNextIntervalDate(new Date(submitDate), stackCount, intervalMap) - +now,
     0
   );
 
@@ -49,23 +68,12 @@ export function formatDate(
 /**
  * 제출일과 맞은 횟수를 기준으로 다음 풀이까지 남은 시간을 구합니다.
  */
-export function getNextIntervalDate(date: Date, count: number) {
+export function getNextIntervalDate(
+  date: Date,
+  count: number,
+  intervalMap: number[]
+) {
   const newDate = new Date(date);
-
-  const intervalMap = [
-    10, // 0 틀림 10분
-    60, // 1번 맞춤 1시간
-    60 * 24, // 2번 맞춤 내일
-    60 * 24 * 2,
-    60 * 24 * 3,
-    60 * 24 * 4,
-    60 * 24 * 7, // 6번 맞춤 다음주
-    60 * 24 * 14, // 7번 맞춤 다다음주
-    60 * 24 * 30.4375, // 8번 맞춤 다음달
-    60 * 24 * 30.4375 * 2, // 9번 다다음달
-    60 * 24 * 91.3125, // 10번 맞춤 다음분기
-    60 * 24 * 182.625, // 11번 맞춤 다음반기
-  ];
 
   if (count < 0) return newDate;
 
