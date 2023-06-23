@@ -88,6 +88,7 @@ function SignIn() {
           value={emailValue}
           helperText={emailError}
           customRef={emailRef}
+          placeholder="user@email.com"
         />
         <Input
           type="password"
@@ -95,6 +96,7 @@ function SignIn() {
           value={passwordValue}
           helperText={passwordError}
           customRef={passwordRef}
+          placeholder="password"
         />
         <ButtonWrapper>
           <Button
