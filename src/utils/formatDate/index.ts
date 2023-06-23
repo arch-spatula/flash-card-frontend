@@ -1,6 +1,6 @@
 /**
- * @todo 유저의 복습 기간을 설정하게 되면 이동하기 바랍니다.
- * 가독성을 위해 계산 과정을 보여줍니다.
+ * @todo 유저의 복습 기간을 설정하게 되면 이동하기 바람
+ * 가독성을 위해 계산 과정을 보여줌
  */
 const intervalMap = [
   10, // 0 틀림 10분
@@ -18,8 +18,25 @@ const intervalMap = [
 ];
 
 /**
- * 다음 풀이까지 남은 시간을 포멧팅하고 표시합니다.
+ * - 읽기 전용 배열
+ * - 1회 계산만을 위해 모듈 스코프에서 정의하고 그 외 상황에서는 참조만 할 것
  */
+const diffInUnits: {
+  value: number;
+  unit: Intl.RelativeTimeFormatUnit;
+}[] = [
+  { unit: 'second', value: 1 },
+  { unit: 'minute', value: 60 },
+  { unit: 'hour', value: 60 * 60 },
+  { unit: 'day', value: 60 * 60 * 24 },
+  { unit: 'week', value: 60 * 60 * 24 * 7 },
+  { unit: 'month', value: 60 * 60 * 24 * 30.4375 }, // 평균 월 수 (365.25 / 12)
+  { unit: 'quarter', value: 60 * 60 * 24 * 91.3125 }, // 평균 분기 수 (365.25 / 4)
+  { unit: 'quarter', value: 60 * 60 * 24 * 182.625 }, // 평균 반년 수 (365.25 / 2)
+  { unit: 'year', value: 60 * 60 * 24 * 365.25 },
+];
+
+/** 다음 풀이까지 남은 시간을 포멧팅하고 표시 */
 export function formatDate(
   submitDate: Date | string | number,
   stackCount: number,
@@ -32,28 +49,16 @@ export function formatDate(
 
   if (diff === 0) return '지금';
 
-  const diffInUnits: {
-    value: number;
-    unit: Intl.RelativeTimeFormatUnit;
-  }[] = [
-    { unit: 'second', value: 1 },
-    { unit: 'minute', value: 60 },
-    { unit: 'hour', value: 60 * 60 },
-    { unit: 'day', value: 60 * 60 * 24 },
-    { unit: 'week', value: 60 * 60 * 24 * 7 },
-    { unit: 'month', value: 60 * 60 * 24 * 30.4375 }, // 평균 월 수 (365.25 / 12)
-    { unit: 'quarter', value: 60 * 60 * 24 * 91.3125 }, // 평균 분기 수 (365.25 / 4)
-    { unit: 'quarter', value: 60 * 60 * 24 * 182.625 }, // 평균 반년 수 (365.25 / 2)
-    { unit: 'year', value: 60 * 60 * 24 * 365.25 },
-  ];
-
   const formatter = new Intl.RelativeTimeFormat('ko');
 
-  const duration = [60, 60, 24, 7, 4, 12, 4, 2];
+  const nextInterval = [60, 60, 24, 7, 4, 12, 4, 2];
 
   let idx = 0;
 
-  while (idx < diffInUnits.length - 1 && getDiffValue(idx) >= duration[idx]) {
+  while (
+    idx < diffInUnits.length - 1 &&
+    getDiffValue(idx) >= nextInterval[idx]
+  ) {
     idx += 1;
   }
   const diffValue = getDiffValue(idx);
@@ -65,9 +70,7 @@ export function formatDate(
   }
 }
 
-/**
- * 제출일과 맞은 횟수를 기준으로 다음 풀이까지 남은 시간을 구합니다.
- */
+/** 제출일과 맞은 횟수를 기준으로 다음 풀이까지 남은 시간을 구함 */
 export function getNextIntervalDate(
   date: Date,
   count: number,
