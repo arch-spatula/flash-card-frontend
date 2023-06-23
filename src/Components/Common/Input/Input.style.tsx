@@ -39,9 +39,9 @@ export const HelperText = styled.p<{
   color: ${(props) => {
     const colorMap = {
       normal: props.theme.colors.black,
-      success: props.theme.colors.green,
-      warning: props.theme.colors.red,
-      information: props.theme.colors.blue,
+      success: props.theme.colors.green500,
+      warning: props.theme.colors.red500,
+      information: props.theme.colors.blue500,
     } as const;
 
     return colorMap[props.helperTextColor];
