@@ -30,34 +30,12 @@ export function Card({ question, answer, _id, stackCount }: Card) {
   const isEditing = useAtomValue(editingAtom);
   const [isCorrect, setIsCorrect] = useAtom(correctAtom);
 
-  const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setActive(true);
 
     const regex = new RegExp(answer, 'i');
     setIsCorrect(() => regex.test(inputVal));
-  };
-
-  const handleConform = () => {
-    setActive(false);
-    resetInputVal();
-
-    if (_id) {
-      const submitDate = new Date();
-      if (isCorrect) {
-        updateCard({
-          id: _id,
-          card: { question, answer, submitDate, stackCount: stackCount + 1 },
-        });
-      } else {
-        updateCard({
-          id: _id,
-          card: { question, answer, submitDate, stackCount: 0 },
-        });
-      }
-    }
   };
 
   return (
@@ -81,7 +59,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               _id={_id}
               active={active}
               question={question}
-              // handleEdit={handleEdit}
               handleSubmit={handleSubmit}
               inputVal={inputVal}
               changeInputVal={changeInputVal}
@@ -110,8 +87,9 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               active={active}
               isCorrect={isCorrect}
               inputVal={inputVal}
-              // handleEdit={handleEdit}
-              handleConform={handleConform}
+              question={question}
+              stackCount={stackCount}
+              resetInputVal={resetInputVal}
             />
           )}
         </>
@@ -125,8 +103,10 @@ type CardBackProps = {
   active: boolean;
   isCorrect: boolean;
   answer: string;
-  handleConform: () => void;
+  question: string;
+  stackCount: number;
   inputVal: string;
+  resetInputVal: () => void;
 };
 
 function CardBack({
@@ -134,12 +114,36 @@ function CardBack({
   active,
   isCorrect,
   answer,
+  question,
+  stackCount,
   inputVal,
-  handleConform,
+  resetInputVal,
 }: CardBackProps) {
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
+  const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
 
   const setIsEditing = useSetAtom(editingAtom);
+  const setActive = useSetAtom(activeAtom);
+
+  const handleConform = () => {
+    setActive(false);
+    resetInputVal();
+
+    if (_id) {
+      const submitDate = new Date();
+      if (isCorrect) {
+        updateCard({
+          id: _id,
+          card: { question, answer, submitDate, stackCount: stackCount + 1 },
+        });
+      } else {
+        updateCard({
+          id: _id,
+          card: { question, answer, submitDate, stackCount: 0 },
+        });
+      }
+    }
+  };
 
   const handleDelete = useCallback(() => {
     if (_id) deleteCard(_id);
