@@ -14,7 +14,7 @@ import {
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
-import { atom, useAtom, useSetAtom } from 'jotai';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 /**
  * @todo 카드 앞면과 뒷면 관심사 분리하기
@@ -27,7 +27,7 @@ export function Card({ question, answer, _id, stackCount }: Card) {
   const { inputVal, changeInputVal, resetInputVal } = useInput();
 
   const [active, setActive] = useAtom(activeAtom);
-  const [isEditing, setIsEditing] = useAtom(editingAtom);
+  const isEditing = useAtomValue(editingAtom);
   const [isCorrect, setIsCorrect] = useAtom(correctAtom);
 
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
@@ -60,10 +60,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     }
   };
 
-  const handleEdit = useCallback(() => {
-    setIsEditing(true);
-  }, [setIsEditing]);
-
   return (
     <CardWrapper>
       {isEditing ? (
@@ -85,7 +81,7 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               _id={_id}
               active={active}
               question={question}
-              handleEdit={handleEdit}
+              // handleEdit={handleEdit}
               handleSubmit={handleSubmit}
               inputVal={inputVal}
               changeInputVal={changeInputVal}
@@ -114,7 +110,7 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               active={active}
               isCorrect={isCorrect}
               inputVal={inputVal}
-              handleEdit={handleEdit}
+              // handleEdit={handleEdit}
               handleConform={handleConform}
             />
           )}
@@ -128,7 +124,6 @@ type CardBackProps = {
   _id: string;
   active: boolean;
   isCorrect: boolean;
-  handleEdit: () => void;
   answer: string;
   handleConform: () => void;
   inputVal: string;
@@ -138,16 +133,21 @@ function CardBack({
   _id,
   active,
   isCorrect,
-  handleEdit,
   answer,
   inputVal,
   handleConform,
 }: CardBackProps) {
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
+  const setIsEditing = useSetAtom(editingAtom);
+
   const handleDelete = useCallback(() => {
     if (_id) deleteCard(_id);
   }, [deleteCard, _id]);
+
+  const handleEdit = useCallback(() => {
+    setIsEditing(true);
+  }, [setIsEditing]);
 
   return (
     <CardBackContainer active={active} isCorrect={isCorrect}>
@@ -164,7 +164,6 @@ function CardBack({
 type CardFrontProps = {
   _id: string;
   active: boolean;
-  handleEdit: () => void;
   question: string;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   inputVal: string;
@@ -174,7 +173,6 @@ type CardFrontProps = {
 function CardFront({
   _id,
   active,
-  handleEdit,
   question,
   handleSubmit,
   inputVal,
@@ -182,9 +180,15 @@ function CardFront({
 }: CardFrontProps) {
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
+  const setIsEditing = useSetAtom(editingAtom);
+
   const handleDelete = useCallback(() => {
     if (_id) deleteCard(_id);
   }, [deleteCard, _id]);
+
+  const handleEdit = useCallback(() => {
+    setIsEditing(true);
+  }, [setIsEditing]);
 
   return (
     <CardFrontContainer active={active}>
