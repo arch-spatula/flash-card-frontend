@@ -31,7 +31,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
   const [isCorrect, setIsCorrect] = useAtom(correctAtom);
 
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
-  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,10 +60,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
     }
   };
 
-  const handleDelete = useCallback(() => {
-    if (_id) deleteCard(_id);
-  }, [deleteCard, _id]);
-
   const handleEdit = useCallback(() => {
     setIsEditing(true);
   }, [setIsEditing]);
@@ -84,47 +79,55 @@ export function Card({ question, answer, _id, stackCount }: Card) {
           )}
         </>
       ) : (
-        <CardFront
-          active={active}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          handleSubmit={handleSubmit}
-          inputVal={inputVal}
-          changeInputVal={changeInputVal}
-          question={question}
-        />
+        <>
+          {_id && (
+            <CardFront
+              _id={_id}
+              active={active}
+              question={question}
+              handleEdit={handleEdit}
+              handleSubmit={handleSubmit}
+              inputVal={inputVal}
+              changeInputVal={changeInputVal}
+            />
+          )}
+        </>
       )}
       {isEditing ? (
         <>
           {_id && (
             <EditCard
               _id={_id}
-              active={!active}
               question={question}
               answer={answer}
               stackCount={stackCount}
+              active={!active}
             />
           )}
         </>
       ) : (
-        <CardBack
-          active={active}
-          isCorrect={isCorrect}
-          handleDelete={handleDelete}
-          handleEdit={handleEdit}
-          answer={answer}
-          inputVal={inputVal}
-          handleConform={handleConform}
-        />
+        <>
+          {_id && (
+            <CardBack
+              _id={_id}
+              answer={answer}
+              active={active}
+              isCorrect={isCorrect}
+              inputVal={inputVal}
+              handleEdit={handleEdit}
+              handleConform={handleConform}
+            />
+          )}
+        </>
       )}
     </CardWrapper>
   );
 }
 
 type CardBackProps = {
+  _id: string;
   active: boolean;
   isCorrect: boolean;
-  handleDelete: () => void;
   handleEdit: () => void;
   answer: string;
   handleConform: () => void;
@@ -132,14 +135,20 @@ type CardBackProps = {
 };
 
 function CardBack({
+  _id,
   active,
   isCorrect,
-  handleDelete,
   handleEdit,
   answer,
   inputVal,
   handleConform,
 }: CardBackProps) {
+  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
+
+  const handleDelete = useCallback(() => {
+    if (_id) deleteCard(_id);
+  }, [deleteCard, _id]);
+
   return (
     <CardBackContainer active={active} isCorrect={isCorrect}>
       <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
@@ -153,8 +162,8 @@ function CardBack({
 }
 
 type CardFrontProps = {
+  _id: string;
   active: boolean;
-  handleDelete: () => void;
   handleEdit: () => void;
   question: string;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -163,14 +172,20 @@ type CardFrontProps = {
 };
 
 function CardFront({
+  _id,
   active,
-  handleDelete,
   handleEdit,
   question,
   handleSubmit,
   inputVal,
   changeInputVal,
 }: CardFrontProps) {
+  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
+
+  const handleDelete = useCallback(() => {
+    if (_id) deleteCard(_id);
+  }, [deleteCard, _id]);
+
   return (
     <CardFrontContainer active={active}>
       <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
