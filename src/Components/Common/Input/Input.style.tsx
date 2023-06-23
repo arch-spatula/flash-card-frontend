@@ -38,18 +38,14 @@ export const HelperText = styled.p<{
 }>`
   ${(props) => props.theme.fonts.body14Regular}
   color: ${(props) => {
-    switch (props.helperTextColor) {
-      case 'normal':
-        return props.theme.colors.black;
-      case 'success':
-        return props.theme.colors.green;
-      case 'warning':
-        return props.theme.colors.red;
-      case 'information':
-        return props.theme.colors.blue;
-      default:
-        return props.theme.colors.black;
-    }
+    const colorMap = {
+      normal: props.theme.colors.black,
+      success: props.theme.colors.green,
+      warning: props.theme.colors.red,
+      information: props.theme.colors.blue,
+    } as const;
+
+    return colorMap[props.helperTextColor];
   }};
   min-height: 1.5rem;
 `;
