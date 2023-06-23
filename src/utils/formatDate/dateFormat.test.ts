@@ -67,28 +67,42 @@ describe('formatDate', () => {
 
 describe('intervalDate', () => {
   const baseDate = new Date('2023-06-01T00:00:00');
+  const intervalMap = [
+    10, // 0 틀림 10분
+    60, // 1번 맞춤 1시간
+    60 * 24, // 2번 맞춤 내일
+    60 * 24 * 2,
+    60 * 24 * 3,
+    60 * 24 * 4,
+    60 * 24 * 7, // 6번 맞춤 다음주
+    60 * 24 * 14, // 7번 맞춤 다다음주
+    60 * 24 * 30.4375, // 8번 맞춤 다음달
+    60 * 24 * 30.4375 * 2, // 9번 다다음달
+    60 * 24 * 91.3125, // 10번 맞춤 다음분기
+    60 * 24 * 182.625, // 11번 맞춤 다음반기
+  ];
 
   it('should return the same date when count is negative', () => {
-    const result = getNextIntervalDate(baseDate, -1);
+    const result = getNextIntervalDate(baseDate, -1, intervalMap);
     expect(result).toStrictEqual(baseDate);
   });
 
   it('should return the correct date when count is within range', () => {
-    const result = getNextIntervalDate(baseDate, 0);
+    const result = getNextIntervalDate(baseDate, 0, intervalMap);
     expect(result).toStrictEqual(new Date('2023-06-01T00:10:00'));
 
-    const result2 = getNextIntervalDate(baseDate, 3);
+    const result2 = getNextIntervalDate(baseDate, 3, intervalMap);
     expect(result2).toStrictEqual(new Date('2023-06-03T00:00:00'));
 
-    const result3 = getNextIntervalDate(baseDate, 7);
+    const result3 = getNextIntervalDate(baseDate, 7, intervalMap);
     expect(result3).toStrictEqual(new Date('2023-06-15T00:00:00'));
   });
 
   it('should return the date with incremented year when count exceeds the range', () => {
-    const result = getNextIntervalDate(baseDate, 12);
+    const result = getNextIntervalDate(baseDate, 12, intervalMap);
     expect(result).toStrictEqual(new Date('2024-06-01T00:00:00'));
 
-    const result2 = getNextIntervalDate(baseDate, 15);
+    const result2 = getNextIntervalDate(baseDate, 15, intervalMap);
     expect(result2).toStrictEqual(new Date('2024-06-01T00:00:00'));
   });
 });
