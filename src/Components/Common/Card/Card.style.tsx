@@ -52,7 +52,7 @@ export const CardContainer = styled(CardSize)<{ active: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
+  ${(props) => props.theme.shadow.boxShadow}
   background-color: ${(props) => props.theme.colors.white};
   border-radius: 1rem;
   padding: 1.25rem;
@@ -65,8 +65,27 @@ export const CardFrontContainer = styled(CardContainer)`
   animation-name: ${(props) => (props.active ? rotate : rotateInverse)};
 `;
 
-export const CardBackContainer = styled(CardContainer)`
+export const CardBackContainer = styled(CardContainer)<{ isCorrect: boolean }>`
+  background-color: ${(props) =>
+    props.isCorrect ? props.theme.colors.green050 : props.theme.colors.red050};
   animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
+`;
+
+export const CardEditContainer = styled(CardContainer)`
+  animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
+`;
+
+export const AnswerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  flex-grow: 1;
+`;
+
+export const Paragraph = styled.p`
+  ${(props) => props.theme.fonts.body16Regular}
 `;
 
 export const SubmitForm = styled.form`
@@ -75,4 +94,11 @@ export const SubmitForm = styled.form`
   justify-content: space-between;
   gap: 0.5rem;
   height: 2.75rem;
+`;
+
+export const MenuWrapper = styled.div`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1;
 `;
