@@ -41,8 +41,6 @@ function useAtomInput() {
  * @todo 카드 앞면과 뒷면 관심사 분리하기
  */
 export function Card({ question, answer, _id, stackCount }: Card) {
-  const { inputVal, changeInputVal, resetInputVal } = useAtomInput();
-
   const active = useAtomValue(activeAtom);
   const isEditing = useAtomValue(editingAtom);
   const isCorrect = useAtomValue(correctAtom);
@@ -69,8 +67,6 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               active={active}
               question={question}
               answer={answer}
-              inputVal={inputVal}
-              changeInputVal={changeInputVal}
             />
           )}
         </>
@@ -95,10 +91,8 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               answer={answer}
               active={active}
               isCorrect={isCorrect}
-              inputVal={inputVal}
               question={question}
               stackCount={stackCount}
-              resetInputVal={resetInputVal}
             />
           )}
         </>
@@ -114,8 +108,6 @@ type CardBackProps = {
   answer: string;
   question: string;
   stackCount: number;
-  inputVal: string;
-  resetInputVal: () => void;
 };
 
 function CardBack({
@@ -125,14 +117,14 @@ function CardBack({
   answer,
   question,
   stackCount,
-  inputVal,
-  resetInputVal,
 }: CardBackProps) {
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
 
   const setIsEditing = useSetAtom(editingAtom);
   const setActive = useSetAtom(activeAtom);
+
+  const { inputVal, resetInputVal } = useAtomInput();
 
   const handleConform = () => {
     setActive(false);
@@ -179,23 +171,16 @@ type CardFrontProps = {
   active: boolean;
   question: string;
   answer: string;
-  inputVal: string;
-  changeInputVal: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function CardFront({
-  _id,
-  active,
-  question,
-  inputVal,
-  answer,
-  changeInputVal,
-}: CardFrontProps) {
+function CardFront({ _id, active, question, answer }: CardFrontProps) {
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
   const setIsEditing = useSetAtom(editingAtom);
   const setActive = useSetAtom(activeAtom);
   const setIsCorrect = useSetAtom(correctAtom);
+
+  const { inputVal, changeInputVal } = useAtomInput();
 
   const handleDelete = useCallback(() => {
     if (_id) deleteCard(_id);
