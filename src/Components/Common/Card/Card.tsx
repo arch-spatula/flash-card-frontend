@@ -26,17 +26,9 @@ const correctAtom = atom(false);
 export function Card({ question, answer, _id, stackCount }: Card) {
   const { inputVal, changeInputVal, resetInputVal } = useInput();
 
-  const [active, setActive] = useAtom(activeAtom);
+  const active = useAtomValue(activeAtom);
   const isEditing = useAtomValue(editingAtom);
-  const [isCorrect, setIsCorrect] = useAtom(correctAtom);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setActive(true);
-
-    const regex = new RegExp(answer, 'i');
-    setIsCorrect(() => regex.test(inputVal));
-  };
+  const isCorrect = useAtomValue(correctAtom);
 
   return (
     <CardWrapper>
@@ -59,7 +51,7 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               _id={_id}
               active={active}
               question={question}
-              handleSubmit={handleSubmit}
+              answer={answer}
               inputVal={inputVal}
               changeInputVal={changeInputVal}
             />
@@ -169,7 +161,7 @@ type CardFrontProps = {
   _id: string;
   active: boolean;
   question: string;
-  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  answer: string;
   inputVal: string;
   changeInputVal: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -178,13 +170,15 @@ function CardFront({
   _id,
   active,
   question,
-  handleSubmit,
   inputVal,
+  answer,
   changeInputVal,
 }: CardFrontProps) {
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
   const setIsEditing = useSetAtom(editingAtom);
+  const setActive = useSetAtom(activeAtom);
+  const setIsCorrect = useSetAtom(correctAtom);
 
   const handleDelete = useCallback(() => {
     if (_id) deleteCard(_id);
@@ -193,6 +187,14 @@ function CardFront({
   const handleEdit = useCallback(() => {
     setIsEditing(true);
   }, [setIsEditing]);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setActive(true);
+
+    const regex = new RegExp(answer, 'i');
+    setIsCorrect(() => regex.test(inputVal));
+  };
 
   return (
     <CardFrontContainer active={active}>
