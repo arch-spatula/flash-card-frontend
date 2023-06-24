@@ -14,17 +14,34 @@ import {
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
-import { atom, useAtomValue, useSetAtom } from 'jotai';
+import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+
+const activeAtom = atom(false);
+const editingAtom = atom(false);
+const correctAtom = atom(false);
+const inputAtom = atom('');
+
+function useAtomInput() {
+  const [inputVal, setInputVal] = useAtom(inputAtom);
+  const changeInputVal = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputVal(e.target.value);
+    },
+    [setInputVal]
+  );
+
+  const resetInputVal = useCallback(() => {
+    setInputVal('');
+  }, [setInputVal]);
+
+  return { inputVal, changeInputVal, resetInputVal };
+}
 
 /**
  * @todo 카드 앞면과 뒷면 관심사 분리하기
  */
-const activeAtom = atom(false);
-const editingAtom = atom(false);
-const correctAtom = atom(false);
-
 export function Card({ question, answer, _id, stackCount }: Card) {
-  const { inputVal, changeInputVal, resetInputVal } = useInput();
+  const { inputVal, changeInputVal, resetInputVal } = useAtomInput();
 
   const active = useAtomValue(activeAtom);
   const isEditing = useAtomValue(editingAtom);
