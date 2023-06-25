@@ -118,7 +118,6 @@ function CardBack({
   question,
   stackCount,
 }: CardBackProps) {
-  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
 
   const setIsEditing = useSetAtom(editingAtom);
@@ -146,17 +145,13 @@ function CardBack({
     }
   };
 
-  const handleDelete = useCallback(() => {
-    if (_id) deleteCard(_id);
-  }, [deleteCard, _id]);
-
   const handleEdit = useCallback(() => {
     setIsEditing(true);
   }, [setIsEditing]);
 
   return (
     <CardBackContainer active={active} isCorrect={isCorrect}>
-      <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
+      <CardSetting _id={_id} handleEdit={handleEdit} />
       <AnswerContainer>
         <Paragraph>정답: {answer}</Paragraph>
         <Paragraph>풀이: {inputVal}</Paragraph>
@@ -174,17 +169,11 @@ type CardFrontProps = {
 };
 
 function CardFront({ _id, active, question, answer }: CardFrontProps) {
-  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
-
   const setIsEditing = useSetAtom(editingAtom);
   const setActive = useSetAtom(activeAtom);
   const setIsCorrect = useSetAtom(correctAtom);
 
   const { inputVal, changeInputVal } = useAtomInput();
-
-  const handleDelete = useCallback(() => {
-    if (_id) deleteCard(_id);
-  }, [deleteCard, _id]);
 
   const handleEdit = useCallback(() => {
     setIsEditing(true);
@@ -200,7 +189,7 @@ function CardFront({ _id, active, question, answer }: CardFrontProps) {
 
   return (
     <CardFrontContainer active={active}>
-      <CardSetting handleDelete={handleDelete} handleEdit={handleEdit} />
+      <CardSetting _id={_id} handleEdit={handleEdit} />
       <Question>{question}</Question>
       <SubmitForm onSubmit={handleSubmit}>
         <Input
@@ -298,12 +287,16 @@ function EditCard({
 }
 
 function CardSetting({
-  handleDelete,
   handleEdit,
+  _id,
 }: {
-  handleDelete: () => void;
+  _id: string;
   handleEdit: () => void;
 }) {
+  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
+  const handleDelete = useCallback(() => {
+    if (_id) deleteCard(_id);
+  }, [deleteCard, _id]);
   return (
     <MenuWrapper>
       <DropdownMenu
