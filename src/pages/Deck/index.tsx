@@ -3,6 +3,7 @@ import { Button, Card, Input, PageHeading } from '../../Components';
 import { useCards, useInput } from '../../hooks';
 import { AddCardContainer } from './Deck.style';
 import { createCardsAPI } from '../../api/cardClient';
+import { Provider } from 'jotai';
 
 function Deck() {
   const { cards, error } = useCards();
@@ -62,7 +63,9 @@ function Deck() {
         {cards ? (
           <>
             {cards.map((card) => (
-              <Card {...card} key={card._id} />
+              <Provider key={card._id}>
+                <Card {...card} key={card._id} />
+              </Provider>
             ))}
           </>
         ) : (

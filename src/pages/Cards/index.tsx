@@ -27,7 +27,7 @@ function Cards() {
           {cards ? (
             <CardContainer>
               {cards.map((card) => (
-                <Provider>
+                <Provider key={card._id}>
                   <Card {...card} key={card._id} />
                 </Provider>
               ))}
