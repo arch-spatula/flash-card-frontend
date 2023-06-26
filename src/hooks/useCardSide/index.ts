@@ -4,8 +4,7 @@ import { useCallback } from 'react';
 type CardSide = 'front' | 'back' | 'edit';
 const cardSideAtom = atom<CardSide>('front');
 
-const prevCache = new Map<'cache', CardSide>();
-prevCache.set('cache', 'front');
+const prevCache = new Map<'cache', CardSide>([['cache', 'front']]);
 
 /**
  * - card 컴포넌트에서만 호출하는 hook
