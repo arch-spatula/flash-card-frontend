@@ -1,5 +1,5 @@
 import { Button, Input } from '..';
-import { useCardSide, useInput } from '../../../hooks';
+import { useCardSide, useInput, useAtomInput } from '../../../hooks';
 import {
   AnswerContainer,
   CardBackContainer,
@@ -12,11 +12,15 @@ import {
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { updateCardsAPI } from '../../../api/cardClient';
-import { atom, useAtomValue, useSetAtom } from 'jotai';
+import { atom, useAtom } from 'jotai';
 import { CardSetting } from './CardSetting';
-import { useAtomInput } from '../../../hooks/useAtomInput';
 
 const correctAtom = atom(false);
+
+function useCorrect() {
+  const [isCorrect, setIsCorrect] = useAtom(correctAtom);
+  return { isCorrect, setIsCorrect };
+}
 
 export function Card({ question, answer, _id, stackCount }: Card) {
   return (
@@ -53,7 +57,7 @@ function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
   const { cardSide, toggleFront } = useCardSide();
 
-  const isCorrect = useAtomValue(correctAtom);
+  const { isCorrect } = useCorrect();
   const { inputVal, resetInputVal } = useAtomInput();
 
   const handleConform = () => {
@@ -96,7 +100,7 @@ type CardFrontProps = {
 
 function CardFront({ _id, question, answer }: CardFrontProps) {
   const { cardSide, toggleBack } = useCardSide();
-  const setIsCorrect = useSetAtom(correctAtom);
+  const { setIsCorrect } = useCorrect();
 
   const { inputVal, changeInputVal } = useAtomInput();
 
