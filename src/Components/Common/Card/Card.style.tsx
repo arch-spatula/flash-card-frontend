@@ -62,17 +62,23 @@ export const CardContainer = styled(CardSize)<{ active: boolean }>`
 `;
 
 export const CardFrontContainer = styled(CardContainer)`
-  animation-name: ${(props) => (props.active ? rotate : rotateInverse)};
+  animation-name: ${(props) => {
+    return props.active ? rotateInverse : rotate;
+  }};
 `;
 
 export const CardBackContainer = styled(CardContainer)<{ isCorrect: boolean }>`
   background-color: ${(props) =>
     props.isCorrect ? props.theme.colors.green050 : props.theme.colors.red050};
-  animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
+  animation-name: ${(props) => {
+    return props.active ? rotateInverse : rotate;
+  }};
 `;
 
 export const CardEditContainer = styled(CardContainer)`
-  animation-name: ${(props) => (props.active ? rotateInverse : rotate)};
+  animation-name: ${(props) => {
+    return props.active ? rotateInverse : rotate;
+  }};
 `;
 
 export const AnswerContainer = styled.div`
