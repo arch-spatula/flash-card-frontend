@@ -1,13 +1,13 @@
 import { useMutation } from '@tanstack/react-query';
-import { useAtomInput, useCardSide, useCorrect } from '../../../../hooks';
-import { updateCardsAPI } from '../../../../api/cardClient';
+import { useAtomInput, useCardSide, useCorrect } from '../../../../../hooks';
+import { updateCardsAPI } from '../../../../../api/cardClient';
 import {
   AnswerContainer,
   CardBackContainer,
   Paragraph,
 } from './CardBack.style';
 import { CardSetting } from '../CardSetting';
-import { Button } from '../..';
+import { Button } from '../../..';
 
 type CardBackProps = {
   _id: string;

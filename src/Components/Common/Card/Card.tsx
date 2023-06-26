@@ -1,8 +1,6 @@
 import { CardWrapper } from './Card.style';
-import { CardFront } from './CardFront';
-import { CardBack } from './CardBack';
-import { EditCard } from './EditCard';
 import { Provider } from 'jotai';
+import { CardBack, CardFront, EditCard } from './subcomponents';
 
 export function Card({ question, answer, _id, stackCount }: Card) {
   return (

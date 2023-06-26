@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { useCardSide, useInput } from '../../../../hooks';
-import { updateCardsAPI } from '../../../../api/cardClient';
-import { Button, Input } from '../..';
+import { useCardSide, useInput } from '../../../../../hooks';
+import { updateCardsAPI } from '../../../../../api/cardClient';
+import { Button, Input } from '../../..';
 import { CardEditContainer } from './EditCard.style';
 
 type EditCardProps = {

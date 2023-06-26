@@ -1,5 +1,5 @@
-import { Button, Input } from '../..';
-import { useAtomInput, useCardSide, useCorrect } from '../../../../hooks';
+import { Button, Input } from '../../..';
+import { useAtomInput, useCardSide, useCorrect } from '../../../../../hooks';
 import { CardSetting } from '../CardSetting';
 import { CardFrontContainer, Question, SubmitForm } from './CardFront.style';
 

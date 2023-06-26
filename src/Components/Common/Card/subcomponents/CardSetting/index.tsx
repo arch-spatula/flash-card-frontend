@@ -1,9 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
-import { useCardSide } from '../../../../hooks';
+import { useCardSide } from '../../../../../hooks';
 import { useCallback } from 'react';
-import { DropdownMenu } from '../..';
+import { DropdownMenu } from '../../..';
 import { MenuWrapper } from './CardSetting.style';
-import { deleteCardsAPI } from '../../../../api/cardClient';
+import { deleteCardsAPI } from '../../../../../api/cardClient';
 
 export function CardSetting({ _id }: { _id: string }) {
   const { toggleEdit } = useCardSide();
