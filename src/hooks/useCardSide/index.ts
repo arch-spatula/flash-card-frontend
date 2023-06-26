@@ -3,7 +3,9 @@ import { useCallback } from 'react';
 
 type CardSide = 'front' | 'back' | 'edit';
 const cardSideAtom = atom<CardSide>('front');
-const prevCache: { cache: CardSide } = { cache: 'front' };
+
+const prevCache = new Map<'cache', CardSide>();
+prevCache.set('cache', 'front');
 
 /**
  * - card 컴포넌트에서만 호출하는 hook
@@ -16,7 +18,7 @@ export function useCardSide() {
   const toggleTo = useCallback(
     (side: CardSide) => {
       if (cardSide !== side) {
-        prevCache.cache = cardSide;
+        prevCache.set('cache', cardSide);
         setCardSide(side);
       }
     },
@@ -24,7 +26,7 @@ export function useCardSide() {
   );
 
   const togglePrev = useCallback(() => {
-    setCardSide(prevCache.cache);
+    setCardSide(prevCache.get('cache') ?? 'front');
   }, [setCardSide]);
 
   return { togglePrev, cardSide, toggleTo };
