@@ -16,12 +16,9 @@ import { useMutation } from '@tanstack/react-query';
 import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 
-type CardSide = 'front' | 'back' | 'edit';
-
-const activeAtom = atom(false);
-const editingAtom = atom(false);
 const correctAtom = atom(false);
 
+type CardSide = 'front' | 'back' | 'edit';
 const cardSideAtom = atom<CardSide>('front');
 const prevCache: { cache: CardSide } = { cache: 'front' };
 
@@ -78,83 +75,41 @@ function useAtomInput() {
  * @todo 카드 앞면과 뒷면 관심사 분리하기
  */
 export function Card({ question, answer, _id, stackCount }: Card) {
-  const active = useAtomValue(activeAtom);
-  const isCorrect = useAtomValue(correctAtom);
-
   return (
     <CardWrapper>
-      <>
-        {_id && (
-          <EditCard
-            _id={_id}
-            active={active}
-            question={question}
-            answer={answer}
-            stackCount={stackCount}
-          />
-        )}
-      </>
-      <>
-        {_id && (
-          <CardFront
-            _id={_id}
-            active={active}
-            question={question}
-            answer={answer}
-          />
-        )}
-      </>
-      <>
-        {_id && (
+      {_id && (
+        <>
           <EditCard
             _id={_id}
             question={question}
             answer={answer}
             stackCount={stackCount}
-            active={!active}
           />
-        )}
-      </>
-      <>
-        {_id && (
+          <CardFront _id={_id} question={question} answer={answer} />
           <CardBack
             _id={_id}
             answer={answer}
-            active={active}
-            isCorrect={isCorrect}
             question={question}
             stackCount={stackCount}
           />
-        )}
-      </>
+        </>
+      )}
     </CardWrapper>
   );
 }
 
 type CardBackProps = {
   _id: string;
-  active: boolean;
-  isCorrect: boolean;
   answer: string;
   question: string;
   stackCount: number;
 };
 
-function CardBack({
-  _id,
-  active,
-  isCorrect,
-  answer,
-  question,
-  stackCount,
-}: CardBackProps) {
+function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
   const { cardSide, toggleFront, toggleEdit } = useCardSide();
 
-  const setIsEditing = useSetAtom(editingAtom);
-  const setActive = useSetAtom(activeAtom);
-  // const [cardSide, setCardSide] = useAtom(cardSideAtom);
-
+  const isCorrect = useAtomValue(correctAtom);
   const { inputVal, resetInputVal } = useAtomInput();
 
   const handleConform = () => {
@@ -195,18 +150,13 @@ function CardBack({
 
 type CardFrontProps = {
   _id: string;
-  active: boolean;
   question: string;
   answer: string;
 };
 
-function CardFront({ _id, active, question, answer }: CardFrontProps) {
-  // const setIsEditing = useSetAtom(editingAtom);
+function CardFront({ _id, question, answer }: CardFrontProps) {
   const { cardSide, toggleBack, toggleEdit } = useCardSide();
-  const setActive = useSetAtom(activeAtom);
   const setIsCorrect = useSetAtom(correctAtom);
-
-  // const [cardSide, setCardSide] = useAtom(cardSideAtom);
 
   const { inputVal, changeInputVal } = useAtomInput();
 
@@ -216,7 +166,6 @@ function CardFront({ _id, active, question, answer }: CardFrontProps) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setActive(true);
     toggleBack();
 
     const regex = new RegExp(answer, 'i');
@@ -242,23 +191,13 @@ function CardFront({ _id, active, question, answer }: CardFrontProps) {
 
 type EditCardProps = {
   _id: string;
-  active: boolean;
   question: string;
   answer: string;
   stackCount: number;
 };
 
-function EditCard({
-  _id,
-  active,
-  question,
-  answer,
-  stackCount,
-}: EditCardProps) {
-  const setIsEditing = useSetAtom(editingAtom);
-
+function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
   const { cardSide, togglePrev } = useCardSide();
-  // const [cardSide, setCardSide] = useAtom(cardSideAtom);
 
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
 
@@ -274,7 +213,6 @@ function EditCard({
   } = useInput(answer);
 
   const handleSave = () => {
-    setIsEditing(false);
     togglePrev();
     if (_id) {
       const submitDate = new Date();
