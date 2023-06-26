@@ -6,15 +6,15 @@ import {
   CardBackContainer,
   CardFrontContainer,
   CardWrapper,
-  MenuWrapper,
   Paragraph,
   Question,
   SubmitForm,
   CardEditContainer,
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
-import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
+import { updateCardsAPI } from '../../../api/cardClient';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { CardSetting } from './CardSetting';
 
 const correctAtom = atom(false);
 
@@ -218,30 +218,5 @@ function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
       </Button>
       <Button onClick={handleCancel}>취소</Button>
     </CardEditContainer>
-  );
-}
-
-function CardSetting({ _id }: { _id: string }) {
-  const { toggleEdit } = useCardSide();
-  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
-
-  const handleDelete = useCallback(() => {
-    if (_id) deleteCard(_id);
-  }, [deleteCard, _id]);
-
-  const handleEdit = useCallback(() => {
-    toggleEdit();
-  }, [toggleEdit]);
-
-  return (
-    <MenuWrapper>
-      <DropdownMenu
-        menuItem={[
-          { label: '편집', cb: handleEdit },
-          { label: '삭제', cb: handleDelete },
-        ]}
-        direction="right"
-      />
-    </MenuWrapper>
   );
 }
