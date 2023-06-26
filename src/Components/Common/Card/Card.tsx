@@ -107,7 +107,7 @@ type CardBackProps = {
 
 function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
-  const { cardSide, toggleFront, toggleEdit } = useCardSide();
+  const { cardSide, toggleFront } = useCardSide();
 
   const isCorrect = useAtomValue(correctAtom);
   const { inputVal, resetInputVal } = useAtomInput();
@@ -132,13 +132,9 @@ function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
     }
   };
 
-  const handleEdit = useCallback(() => {
-    toggleEdit();
-  }, [toggleEdit]);
-
   return (
     <CardBackContainer active={cardSide === 'back'} isCorrect={isCorrect}>
-      <CardSetting _id={_id} handleEdit={handleEdit} />
+      <CardSetting _id={_id} />
       <AnswerContainer>
         <Paragraph>정답: {answer}</Paragraph>
         <Paragraph>풀이: {inputVal}</Paragraph>
@@ -155,14 +151,10 @@ type CardFrontProps = {
 };
 
 function CardFront({ _id, question, answer }: CardFrontProps) {
-  const { cardSide, toggleBack, toggleEdit } = useCardSide();
+  const { cardSide, toggleBack } = useCardSide();
   const setIsCorrect = useSetAtom(correctAtom);
 
   const { inputVal, changeInputVal } = useAtomInput();
-
-  const handleEdit = useCallback(() => {
-    toggleEdit();
-  }, [toggleEdit]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -174,7 +166,7 @@ function CardFront({ _id, question, answer }: CardFrontProps) {
 
   return (
     <CardFrontContainer active={cardSide === 'front'}>
-      <CardSetting _id={_id} handleEdit={handleEdit} />
+      <CardSetting _id={_id} />
       <Question>{question}</Question>
       <SubmitForm onSubmit={handleSubmit}>
         <Input
@@ -264,18 +256,17 @@ function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
   );
 }
 
-function CardSetting({
-  handleEdit,
-  _id,
-}: {
-  _id: string;
-  handleEdit: () => void;
-}) {
+function CardSetting({ _id }: { _id: string }) {
+  const { toggleEdit } = useCardSide();
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
   const handleDelete = useCallback(() => {
     if (_id) deleteCard(_id);
   }, [deleteCard, _id]);
+
+  const handleEdit = useCallback(() => {
+    toggleEdit();
+  }, [toggleEdit]);
 
   return (
     <MenuWrapper>
