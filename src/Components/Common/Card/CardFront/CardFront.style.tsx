@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro';
+import styled from '@emotion/styled';
 import { CardContainer, rotate, rotateInverse } from '../Card.style';
 
 export const CardFrontContainer = styled(CardContainer)`
