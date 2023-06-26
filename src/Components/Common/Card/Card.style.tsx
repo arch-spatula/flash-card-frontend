@@ -49,15 +49,3 @@ export const CardContainer = styled(CardSize)<{ active: boolean }>`
   animation-fill-mode: forwards;
   backface-visibility: hidden;
 `;
-
-export const CardFrontContainer = styled(CardContainer)`
-  animation-name: ${(props) => {
-    return props.active ? rotateInverse : rotate;
-  }};
-`;
-
-export const CardEditContainer = styled(CardContainer)`
-  animation-name: ${(props) => {
-    return props.active ? rotateInverse : rotate;
-  }};
-`;

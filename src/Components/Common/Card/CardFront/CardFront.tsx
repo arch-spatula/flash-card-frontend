@@ -1,8 +1,7 @@
 import { Button, Input } from '../..';
 import { useAtomInput, useCardSide, useCorrect } from '../../../../hooks';
-import { CardFrontContainer } from '../Card.style';
 import { CardSetting } from '../CardSetting';
-import { Question, SubmitForm } from './CardFront.style';
+import { CardFrontContainer, Question, SubmitForm } from './CardFront.style';
 
 type CardFrontProps = {
   _id: string;
