@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Button, DropdownMenu, Input } from '..';
-import { useInput } from '../../../hooks';
+import { useCardSide, useInput } from '../../../hooks';
 import {
   AnswerContainer,
   CardBackContainer,
@@ -17,41 +17,6 @@ import { deleteCardsAPI, updateCardsAPI } from '../../../api/cardClient';
 import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
 
 const correctAtom = atom(false);
-
-type CardSide = 'front' | 'back' | 'edit';
-const cardSideAtom = atom<CardSide>('front');
-const prevCache: { cache: CardSide } = { cache: 'front' };
-
-function useCardSide() {
-  const [cardSide, setCardSide] = useAtom(cardSideAtom);
-
-  const toggleFront = useCallback(() => {
-    if (cardSide !== 'front') {
-      prevCache.cache = cardSide;
-      setCardSide('front');
-    }
-  }, [cardSide, setCardSide]);
-
-  const toggleBack = useCallback(() => {
-    if (cardSide !== 'back') {
-      prevCache.cache = cardSide;
-      setCardSide('back');
-    }
-  }, [cardSide, setCardSide]);
-
-  const toggleEdit = useCallback(() => {
-    if (cardSide !== 'edit') {
-      prevCache.cache = cardSide;
-      setCardSide('edit');
-    }
-  }, [cardSide, setCardSide]);
-
-  const togglePrev = useCallback(() => {
-    setCardSide(prevCache.cache);
-  }, [setCardSide]);
-
-  return { toggleFront, toggleBack, toggleEdit, togglePrev, cardSide };
-}
 
 const inputAtom = atom('');
 
