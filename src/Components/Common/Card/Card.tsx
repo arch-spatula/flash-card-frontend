@@ -1,5 +1,4 @@
-import { useCallback } from 'react';
-import { Button, DropdownMenu, Input } from '..';
+import { Button, Input } from '..';
 import { useCardSide, useInput } from '../../../hooks';
 import {
   AnswerContainer,
@@ -13,32 +12,12 @@ import {
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { updateCardsAPI } from '../../../api/cardClient';
-import { atom, useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { atom, useAtomValue, useSetAtom } from 'jotai';
 import { CardSetting } from './CardSetting';
+import { useAtomInput } from '../../../hooks/useAtomInput';
 
 const correctAtom = atom(false);
 
-const inputAtom = atom('');
-
-function useAtomInput() {
-  const [inputVal, setInputVal] = useAtom(inputAtom);
-  const changeInputVal = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputVal(e.target.value);
-    },
-    [setInputVal]
-  );
-
-  const resetInputVal = useCallback(() => {
-    setInputVal('');
-  }, [setInputVal]);
-
-  return { inputVal, changeInputVal, resetInputVal };
-}
-
-/**
- * @todo 카드 앞면과 뒷면 관심사 분리하기
- */
 export function Card({ question, answer, _id, stackCount }: Card) {
   return (
     <CardWrapper>
