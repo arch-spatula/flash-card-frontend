@@ -10,14 +10,14 @@ type CardFrontProps = {
 };
 
 export function CardFront({ _id, question, answer }: CardFrontProps) {
-  const { cardSide, toggleBack } = useCardSide();
+  const { cardSide, toggleTo } = useCardSide();
   const { setIsCorrect } = useCorrect();
 
   const { inputVal, changeInputVal } = useAtomInput();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toggleBack();
+    toggleTo('back');
 
     const regex = new RegExp(answer, 'i');
     setIsCorrect(() => regex.test(inputVal));

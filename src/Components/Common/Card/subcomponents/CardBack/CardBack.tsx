@@ -18,14 +18,14 @@ type CardBackProps = {
 
 export function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
   const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
-  const { cardSide, toggleFront } = useCardSide();
+  const { cardSide, toggleTo } = useCardSide();
 
   const { isCorrect } = useCorrect();
   const { inputVal, resetInputVal } = useAtomInput();
 
   const handleConform = () => {
     resetInputVal();
-    toggleFront();
+    toggleTo('front');
 
     if (_id) {
       const submitDate = new Date();

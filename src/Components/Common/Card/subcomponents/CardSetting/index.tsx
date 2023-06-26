@@ -6,7 +6,7 @@ import { MenuWrapper } from './CardSetting.style';
 import { deleteCardsAPI } from '../../../../../api/cardClient';
 
 export function CardSetting({ _id }: { _id: string }) {
-  const { toggleEdit } = useCardSide();
+  const { toggleTo } = useCardSide();
   const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
 
   const handleDelete = useCallback(() => {
@@ -14,8 +14,8 @@ export function CardSetting({ _id }: { _id: string }) {
   }, [deleteCard, _id]);
 
   const handleEdit = useCallback(() => {
-    toggleEdit();
-  }, [toggleEdit]);
+    toggleTo('edit');
+  }, [toggleTo]);
 
   return (
     <MenuWrapper>

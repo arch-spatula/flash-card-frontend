@@ -13,30 +13,19 @@ const prevCache: { cache: CardSide } = { cache: 'front' };
 export function useCardSide() {
   const [cardSide, setCardSide] = useAtom(cardSideAtom);
 
-  const toggleFront = useCallback(() => {
-    if (cardSide !== 'front') {
-      prevCache.cache = cardSide;
-      setCardSide('front');
-    }
-  }, [cardSide, setCardSide]);
-
-  const toggleBack = useCallback(() => {
-    if (cardSide !== 'back') {
-      prevCache.cache = cardSide;
-      setCardSide('back');
-    }
-  }, [cardSide, setCardSide]);
-
-  const toggleEdit = useCallback(() => {
-    if (cardSide !== 'edit') {
-      prevCache.cache = cardSide;
-      setCardSide('edit');
-    }
-  }, [cardSide, setCardSide]);
+  const toggleTo = useCallback(
+    (side: CardSide) => {
+      if (cardSide !== side) {
+        prevCache.cache = cardSide;
+        setCardSide(side);
+      }
+    },
+    [setCardSide, cardSide]
+  );
 
   const togglePrev = useCallback(() => {
     setCardSide(prevCache.cache);
   }, [setCardSide]);
 
-  return { toggleFront, toggleBack, toggleEdit, togglePrev, cardSide };
+  return { togglePrev, cardSide, toggleTo };
 }
