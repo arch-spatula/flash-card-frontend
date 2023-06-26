@@ -8,16 +8,14 @@ import {
 import {
   AnswerContainer,
   CardBackContainer,
-  CardFrontContainer,
   CardWrapper,
   Paragraph,
-  Question,
-  SubmitForm,
   CardEditContainer,
 } from './Card.style';
 import { useMutation } from '@tanstack/react-query';
 import { updateCardsAPI } from '../../../api/cardClient';
 import { CardSetting } from './CardSetting';
+import { CardFront } from './CardFront';
 
 export function Card({ question, answer, _id, stackCount }: Card) {
   return (
@@ -86,43 +84,6 @@ function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
       </AnswerContainer>
       <Button onClick={handleConform}>확인</Button>
     </CardBackContainer>
-  );
-}
-
-type CardFrontProps = {
-  _id: string;
-  question: string;
-  answer: string;
-};
-
-function CardFront({ _id, question, answer }: CardFrontProps) {
-  const { cardSide, toggleBack } = useCardSide();
-  const { setIsCorrect } = useCorrect();
-
-  const { inputVal, changeInputVal } = useAtomInput();
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    toggleBack();
-
-    const regex = new RegExp(answer, 'i');
-    setIsCorrect(() => regex.test(inputVal));
-  };
-
-  return (
-    <CardFrontContainer active={cardSide === 'front'}>
-      <CardSetting _id={_id} />
-      <Question>{question}</Question>
-      <SubmitForm onSubmit={handleSubmit}>
-        <Input
-          value={inputVal}
-          onChange={changeInputVal}
-          hideHelper
-          width={180}
-        />
-        <Button disabled={!inputVal}>제출</Button>
-      </SubmitForm>
-    </CardFrontContainer>
   );
 }
 

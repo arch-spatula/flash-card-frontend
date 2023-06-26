@@ -1,7 +1,7 @@
 import { keyframes } from '@emotion/react';
 import styled from '@emotion/styled';
 
-const rotate = keyframes`
+export const rotate = keyframes`
   0% {
     transform: rotateY(0);
   }
@@ -13,7 +13,7 @@ const rotate = keyframes`
   }
 `;
 
-const rotateInverse = keyframes`
+export const rotateInverse = keyframes`
   0% {
     transform: rotateY(180deg);
   }
@@ -23,17 +23,6 @@ const rotateInverse = keyframes`
   100% {
     transform: rotateY(0);
   }
-`;
-
-export const Question = styled.h3`
-  ${(props) => props.theme.fonts.heading20Bold}
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  text-align: center;
-  word-break: keep-all;
-  word-wrap: break-word;
 `;
 
 /** relative를 적용하기 위해서는 사이즈가 필요함 */
@@ -92,12 +81,4 @@ export const AnswerContainer = styled.div`
 
 export const Paragraph = styled.p`
   ${(props) => props.theme.fonts.body16Regular}
-`;
-
-export const SubmitForm = styled.form`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 0.5rem;
-  height: 2.75rem;
 `;
