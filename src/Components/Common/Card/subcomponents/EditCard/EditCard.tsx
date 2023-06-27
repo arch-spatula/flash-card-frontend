@@ -49,11 +49,7 @@ export function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
     resetQuestion();
   };
 
-  const disabled = [
-    !answerVal,
-    !questionVal,
-    questionVal === question && answerVal === answer,
-  ].some(Boolean);
+  const disabled = checkDisabled(answer, answerVal, question, questionVal);
 
   return (
     <CardEditContainer active={cardSide === 'edit'}>
@@ -76,5 +72,20 @@ export function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
       </Button>
       <Button onClick={handleCancel}>취소</Button>
     </CardEditContainer>
+  );
+}
+
+/** EditCard 전용 helper 함수 */
+function checkDisabled(
+  answer: string,
+  answerVal: string,
+  question: string,
+  questionVal: string
+) {
+  return (
+    !!answerVal &&
+    !!questionVal &&
+    questionVal === question &&
+    answerVal === answer
   );
 }
