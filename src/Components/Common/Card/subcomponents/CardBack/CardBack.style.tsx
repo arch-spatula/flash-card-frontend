@@ -2,8 +2,11 @@ import styled from '@emotion/styled';
 import { CardContainer, rotate, rotateInverse } from '../../Card.style';
 
 export const CardBackContainer = styled(CardContainer)<{ isCorrect: boolean }>`
-  background-color: ${(props) =>
-    props.isCorrect ? props.theme.colors.green050 : props.theme.colors.red050};
+  background-color: ${(props) => {
+    return props.isCorrect
+      ? props.theme.colors.green050
+      : props.theme.colors.red050;
+  }};
   animation-name: ${(props) => {
     return props.active ? rotateInverse : rotate;
   }};
