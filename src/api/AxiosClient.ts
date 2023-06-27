@@ -22,11 +22,7 @@ axiosClient.interceptors.request.use(
     const token = localStorage.getItem('accessToken');
 
     const configCopy = { ...config };
-    if (token)
-      configCopy.headers.Authorization = `Bearer ${token.slice(
-        1,
-        token.length - 1
-      )}`;
+    if (token) configCopy.headers.Authorization = `Bearer ${token}`;
     else throw new Error('token이 없습니다.');
 
     return configCopy;

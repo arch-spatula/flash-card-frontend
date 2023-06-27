@@ -59,14 +59,11 @@ async function refreshAccessAPI() {
       access_token: string;
     }>(API_URLS.REFRESH, null, {
       headers: {
-        Authorization: `Bearer ${sessionToken.slice(
-          1,
-          sessionToken.length - 1
-        )}`,
+        Authorization: `Bearer ${sessionToken}`,
       },
     });
 
-    localStorage.setItem('accessToken', `"${access_token}"`);
+    localStorage.setItem('accessToken', `${access_token}`);
 
     return access_token;
   } catch (error) {
