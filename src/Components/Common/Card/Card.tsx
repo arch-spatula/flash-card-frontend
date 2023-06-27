@@ -5,17 +5,15 @@ import {
   CardBackContainer,
   CardFrontContainer,
   CardWrapper,
-  NextIntervalDate,
   Question,
   SubmitForm,
 } from './Card.style';
-import { formatDate } from '../../../utils';
 
 /**
  * @todo 카드 앞면과 뒷면 관심사 분리하기
  */
 
-export function Card({ question, answer, submitDate, stackCount }: Card) {
+export function Card({ question, answer }: Card) {
   const { inputVal, changeInputVal } = useInput();
   const [active, setActive] = useState(false);
 
@@ -28,12 +26,9 @@ export function Card({ question, answer, submitDate, stackCount }: Card) {
     setActive(false);
   };
 
-  const showDate = formatDate(submitDate, stackCount);
-
   return (
     <CardWrapper>
       <CardFrontContainer active={active}>
-        <NextIntervalDate>{`${showDate}`}</NextIntervalDate>
         <Question>{question}</Question>
         <SubmitForm onSubmit={handleSubmit}>
           <Input
