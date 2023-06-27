@@ -28,6 +28,7 @@ const routes = createBrowserRouter([
       { path: ROUTE_PATHS.CARDS, element: <Cards /> },
       { path: ROUTE_PATHS.DECK, element: <Deck /> },
       { path: ROUTE_PATHS.SETTING, element: <Setting /> },
+      { path: '*', element: <NotFound /> },
     ],
     errorElement: <NotFound />,
   },
