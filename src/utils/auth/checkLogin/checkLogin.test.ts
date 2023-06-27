@@ -3,9 +3,10 @@ import { describe, it } from 'vitest';
 import { checkLogin } from '.';
 
 describe('checkLogin', () => {
-  it('should be have both token', () => {
-    sessionStorage.setItem(STORAGE_KEY.SESSION_TOKEN, 'value');
-    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, 'value');
+  it('should have both token', () => {
+    const token = 'token';
+    sessionStorage.setItem(STORAGE_KEY.SESSION_TOKEN, token);
+    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, token);
 
     expect(checkLogin()).toBe(true);
   });
