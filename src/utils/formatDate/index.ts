@@ -35,6 +35,7 @@ const diffInUnits: {
   { unit: 'quarter', value: 60 * 60 * 24 * 182.625 }, // 평균 반년 수 (365.25 / 2)
   { unit: 'year', value: 60 * 60 * 24 * 365.25 },
 ];
+Object.freeze(diffInUnits);
 
 /** 다음 풀이까지 남은 시간을 포멧팅하고 표시 */
 export function formatDate(
