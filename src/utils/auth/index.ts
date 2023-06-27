@@ -1,2 +1,2 @@
 export * from './checkLogin';
-export * from './queryLogin';
+export * from './loaderQuery';
