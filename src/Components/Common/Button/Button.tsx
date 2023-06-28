@@ -2,6 +2,9 @@ import {
   ButtonWrapper,
   LinkWrapper,
   LoaderWrapper,
+  NewButtonButton,
+  NewButtonLink,
+  NewButtonWrapper,
   TextWrapper,
 } from './Button.style';
 import { PulseLoader } from 'react-spinners';
@@ -62,5 +65,46 @@ export function Button({
         </LoaderWrapper>
       )}
     </ButtonWrapper>
+  );
+}
+
+export function NewButton({
+  children,
+  onClick,
+  isLoading = false,
+  href,
+  width,
+  hierarchy = 'primary',
+  disabled,
+}: ButtonProps) {
+  return (
+    <NewButtonWrapper
+      width={width}
+      disabled={disabled}
+      hierarchy={hierarchy}
+      isLoading={isLoading}
+    >
+      {href && (
+        <NewButtonLink to={href}>
+          <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
+        </NewButtonLink>
+      )}
+      {onClick && (
+        <NewButtonButton onClick={onClick} disabled={disabled}>
+          <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
+        </NewButtonButton>
+      )}
+      {isLoading && (
+        <LoaderWrapper>
+          <PulseLoader
+            color="#ffffff"
+            loading
+            margin={4}
+            size={12}
+            speedMultiplier={0.5}
+          />
+        </LoaderWrapper>
+      )}
+    </NewButtonWrapper>
   );
 }

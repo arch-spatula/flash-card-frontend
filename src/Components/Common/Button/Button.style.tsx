@@ -1,6 +1,75 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 
+type NewButtonWrapperProps = {
+  width?: number | 'grow';
+  disabled?: boolean;
+  hierarchy: 'primary' | 'secondary';
+  isLoading: boolean;
+};
+
+export const NewButtonWrapper = styled.div<NewButtonWrapperProps>`
+  background-color: ${(props) =>
+    props.disabled && !props.isLoading
+      ? props.theme.colors.gray400
+      : props.theme.colors.green500};
+  border-radius: 0.5rem;
+  height: 2.75rem;
+  min-width: 5.25rem;
+
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: ${(props) => {
+    // 숫자 입력시 숫자만큼 채우기
+    if (!props.width) return 'fit-content';
+    if (props.width !== 'grow') return (props.width / 16).toString() + 'rem';
+    return 'fit-content';
+  }};
+
+  ${(props) => props.width === 'grow' && 'flex: 1 1 0px;'}
+
+  button,
+  a {
+    all: unset;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5rem;
+    ${(props) => props.theme.fonts.body16Regular}
+    ${(props) => !props.disabled && 'cursor: pointer;'}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    ${(props) => props.disabled && 'pointer-events: none;'}
+
+    :focus-visible {
+      box-shadow: 0 0 0 0.25rem
+        ${(props) => {
+          if (props.disabled) return props.theme.colors.gray400;
+          return props.theme.colors.green200;
+        }}
+        inset;
+    }
+
+    :active {
+      box-shadow: 0 0 0 0.25rem
+        ${(props) => {
+          if (props.disabled) return props.theme.colors.gray400;
+          return props.theme.colors.green200;
+        }}
+        inset;
+    }
+  }
+`;
+
+export const NewButtonLink = styled(Link)``;
+
+export const NewButtonButton = styled.button``;
+
 export const ButtonWrapper = styled.button<{
   isLoading: boolean;
   width?: number | 'grow';
