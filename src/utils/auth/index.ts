@@ -1,2 +1,2 @@
 export * from './checkLogin';
-export * from './loaderQuery';
+export * from './protectRoutes';
