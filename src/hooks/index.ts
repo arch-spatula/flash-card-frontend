@@ -4,3 +4,4 @@ export * from './useCards';
 export * from './useCardSide';
 export * from './useAtomInput';
 export * from './useCorrect';
+export * from './useOutsideClick';

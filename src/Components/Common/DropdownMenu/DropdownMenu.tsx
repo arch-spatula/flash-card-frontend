@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import {
   Anchor,
   DropdownMenuContainer,
@@ -8,6 +8,7 @@ import {
   MenuList,
 } from './DropdownMenu.style';
 import { Icon } from './Icon';
+import { useOutsideClick } from '@/hooks';
 
 type LinkItem = {
   label: string;
@@ -48,28 +49,6 @@ export function DropdownMenu({
       {isOpen && <Menu menuItem={menuItem} direction={direction} />}
     </DropdownMenuContainer>
   );
-}
-
-function useOutsideClick<T extends HTMLElement>(handlerCallback: () => void) {
-  const customRef = useRef<T>(null);
-
-  const handleClick = useCallback(
-    (e: MouseEvent) => {
-      if (customRef.current?.contains(e.target as Node) === false) {
-        handlerCallback();
-      }
-    },
-    [handlerCallback]
-  );
-
-  useEffect(() => {
-    window.addEventListener('mousedown', handleClick);
-    return () => {
-      window.removeEventListener('mousedown', handleClick);
-    };
-  }, [handleClick]);
-
-  return { customRef };
 }
 
 function Menu({ menuItem, direction = 'left' }: DropdownMenuProps) {
