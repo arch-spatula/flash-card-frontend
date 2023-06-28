@@ -2,9 +2,9 @@ import { redirect } from 'react-router-dom';
 import { checkLogin } from '..';
 import { ROUTE_PATHS } from '@/constant/config';
 
-export function protectRoutes(direct: 'signin' | 'cards') {
+export function protectRoutes(direction: 'signin' | 'cards') {
   return () => {
-    switch (direct) {
+    switch (direction) {
       case 'cards':
         if (checkLogin()) throw redirect(ROUTE_PATHS.CARDS);
         break;
