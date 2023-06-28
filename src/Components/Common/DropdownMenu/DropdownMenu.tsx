@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Anchor,
   DropdownMenuContainer,
@@ -30,13 +30,31 @@ export function DropdownMenu({
 }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpenMenu = () => {
+  const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
+  const dropDownButtonRef = useRef<HTMLDivElement>(null);
+
+  const handleClick = useCallback(
+    (e: MouseEvent) => {
+      if (dropDownButtonRef.current?.contains(e.target as Node) === false) {
+        setIsOpen(false);
+      }
+    },
+    [setIsOpen]
+  );
+
+  useEffect(() => {
+    window.addEventListener('mousedown', handleClick);
+    return () => {
+      window.removeEventListener('mousedown', handleClick);
+    };
+  }, [handleClick]);
+
   return (
-    <DropdownMenuContainer>
-      <DropdownOpen type="button" onClick={handleOpenMenu} isOpen={isOpen}>
+    <DropdownMenuContainer ref={dropDownButtonRef}>
+      <DropdownOpen type="button" onClick={toggleMenu} isOpen={isOpen}>
         <Icon />
       </DropdownOpen>
       {isOpen && <Menu menuItem={menuItem} direction={direction} />}
