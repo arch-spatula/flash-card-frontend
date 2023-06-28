@@ -34,15 +34,32 @@ export function DropdownMenu({
     setIsOpen((prev) => !prev);
   };
 
-  const dropDownButtonRef = useRef<HTMLDivElement>(null);
+  const toggleClose = () => {
+    setIsOpen(false);
+  };
+
+  const { customRef } = useOutsideClick<HTMLDivElement>(toggleClose);
+
+  return (
+    <DropdownMenuContainer ref={customRef}>
+      <DropdownOpen type="button" onClick={toggleMenu} isOpen={isOpen}>
+        <Icon />
+      </DropdownOpen>
+      {isOpen && <Menu menuItem={menuItem} direction={direction} />}
+    </DropdownMenuContainer>
+  );
+}
+
+function useOutsideClick<T extends HTMLElement>(handlerCallback: () => void) {
+  const customRef = useRef<T>(null);
 
   const handleClick = useCallback(
     (e: MouseEvent) => {
-      if (dropDownButtonRef.current?.contains(e.target as Node) === false) {
-        setIsOpen(false);
+      if (customRef.current?.contains(e.target as Node) === false) {
+        handlerCallback();
       }
     },
-    [setIsOpen]
+    [handlerCallback]
   );
 
   useEffect(() => {
@@ -52,14 +69,7 @@ export function DropdownMenu({
     };
   }, [handleClick]);
 
-  return (
-    <DropdownMenuContainer ref={dropDownButtonRef}>
-      <DropdownOpen type="button" onClick={toggleMenu} isOpen={isOpen}>
-        <Icon />
-      </DropdownOpen>
-      {isOpen && <Menu menuItem={menuItem} direction={direction} />}
-    </DropdownMenuContainer>
-  );
+  return { customRef };
 }
 
 function Menu({ menuItem, direction = 'left' }: DropdownMenuProps) {
