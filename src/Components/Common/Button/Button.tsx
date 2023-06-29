@@ -1,9 +1,9 @@
 import theme from '@/styles/theme';
 import {
   LoaderWrapper,
-  NewButtonButton,
-  NewButtonLink,
-  NewButtonWrapper,
+  CustomButton,
+  CustomLink,
+  ButtonWrapper,
   TextWrapper,
 } from './Button.style';
 import { PulseLoader } from 'react-spinners';
@@ -38,7 +38,7 @@ export function Button({
     }
   };
   return (
-    <NewButtonWrapper
+    <ButtonWrapper
       width={width}
       disabled={disabled}
       hierarchy={hierarchy}
@@ -46,7 +46,7 @@ export function Button({
       color={color}
     >
       {href && (
-        <NewButtonLink
+        <CustomLink
           to={href}
           {...(disabled && { tabIndex: -1 })}
           disabled={disabled}
@@ -59,10 +59,10 @@ export function Button({
           >
             {children}
           </TextWrapper>
-        </NewButtonLink>
+        </CustomLink>
       )}
       {onClick && (
-        <NewButtonButton
+        <CustomButton
           onClick={onClick}
           disabled={disabled || isLoading}
           {...(disabled && { tabIndex: -1 })}
@@ -75,7 +75,7 @@ export function Button({
           >
             {children}
           </TextWrapper>
-        </NewButtonButton>
+        </CustomButton>
       )}
       {isLoading && (
         <LoaderWrapper>
@@ -88,6 +88,6 @@ export function Button({
           />
         </LoaderWrapper>
       )}
-    </NewButtonWrapper>
+    </ButtonWrapper>
   );
 }

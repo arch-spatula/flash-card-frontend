@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 type HierarchyType = 'primary' | 'secondary' | 'ghost';
 type ColorType = 'green' | 'red' | 'neutral';
 
-type NewButtonWrapperProps = {
+type ButtonWrapperProps = {
   width?: number | 'grow';
   disabled?: boolean;
   hierarchy: HierarchyType;
@@ -12,7 +12,7 @@ type NewButtonWrapperProps = {
   color: ColorType;
 };
 
-export const NewButtonWrapper = styled.div<NewButtonWrapperProps>`
+export const ButtonWrapper = styled.div<ButtonWrapperProps>`
   border-radius: 0.5rem;
   height: 2.75rem;
   min-width: 5.25rem;
@@ -122,13 +122,15 @@ export const NewButtonWrapper = styled.div<NewButtonWrapperProps>`
   }
 `;
 
-export const NewButtonLink = styled(Link)<{ disabled: boolean }>`
+type CustomLinkProps = Pick<ButtonWrapperProps, 'disabled'>;
+
+export const CustomLink = styled(Link)<CustomLinkProps>`
   ${(props) => !props.disabled && 'cursor: pointer;'}
 `;
 
-export const NewButtonButton = styled.button``;
+export const CustomButton = styled.button``;
 
-type TextWrapperProps = Omit<NewButtonWrapperProps, 'width'>;
+type TextWrapperProps = Omit<ButtonWrapperProps, 'width'>;
 
 export const TextWrapper = styled.span<TextWrapperProps>`
   white-space: nowrap;
