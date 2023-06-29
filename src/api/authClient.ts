@@ -1,6 +1,7 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { authClient } from './AxiosClient';
-import { API_URLS, STORAGE_KEY } from '../constant/config';
+import { API_URLS, ROUTE_PATHS, STORAGE_KEY } from '../constant/config';
+import { redirect } from 'react-router-dom';
 
 type UserInput = {
   email: string;
@@ -69,6 +70,7 @@ async function refreshAccessAPI() {
   } catch (error) {
     localStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
     sessionStorage.removeItem(STORAGE_KEY.SESSION_TOKEN);
+    redirect(ROUTE_PATHS.SIGN_IN);
     if (error instanceof AxiosError) {
       return error.response?.data;
     }
