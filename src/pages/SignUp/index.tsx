@@ -34,7 +34,7 @@ function SignUp() {
     password === conformPassword,
   ].some((elem) => !elem);
 
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setEmailHelper('');
 
@@ -61,7 +61,7 @@ function SignUp() {
 
   return (
     <MainContainer>
-      <MainWrapper onSubmit={handleSignUp}>
+      <MainWrapper>
         <PageHeading>Sign Up</PageHeading>
         <Input
           value={email}
@@ -84,7 +84,13 @@ function SignUp() {
           placeholder="동일하게 입력해주세요"
         />
         <ButtonWrapper>
-          <Button disabled={disabled} isLoading={isLoading} width={'grow'}>
+          <Button
+            type="button"
+            disabled={disabled}
+            onClick={handleSignUp}
+            isLoading={isLoading}
+            width={'grow'}
+          >
             회원가입
           </Button>
           <Button type="button" href={ROUTE_PATHS.SIGN_IN} width={'grow'}>
