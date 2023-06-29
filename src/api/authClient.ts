@@ -43,7 +43,7 @@ async function signUpAPI({
   }
 }
 
-/** - API 명세의 요구사항 때문에 authClient 중 유일하게 header를 활용해야함 */
+/** - API 명세의 요구사항 때문에 authClient 중 유일하게 header를 활용해야 함 */
 async function refreshAccessAPI() {
   try {
     const sessionToken = sessionStorage.getItem(STORAGE_KEY.SESSION_TOKEN);
