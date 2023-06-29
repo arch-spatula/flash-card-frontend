@@ -50,4 +50,13 @@ describe('Button', () => {
     expect(btnElement).toBeDisabled();
     expect(mock).toHaveBeenCalledTimes(0);
   });
+
+  it('should render a tag when href props is provided', () => {
+    const btnText = 'Button;';
+
+    render(<Button href="#">{btnText}</Button>);
+    const btnElement = screen.getByRole('link');
+
+    expect(btnElement).toBeInTheDocument();
+  });
 });
