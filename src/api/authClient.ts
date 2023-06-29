@@ -43,11 +43,7 @@ async function signUpAPI({
   }
 }
 
-/**
- * - access_token을 갱신하는 함수
- * - API 명세의 요구에 맞춰 authClient 중 유일하게 header를 활용하고 refresh token으로 설정
- * - Jotai Storage로 set하고 난 후에는 큰따옴표(`"`)로 감싸져있기 때문에 slice가 필요
- */
+/** - API 명세의 요구사항 때문에 authClient 중 유일하게 header를 활용해야함 */
 async function refreshAccessAPI() {
   try {
     const sessionToken = sessionStorage.getItem(STORAGE_KEY.SESSION_TOKEN);
