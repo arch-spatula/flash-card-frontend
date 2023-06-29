@@ -75,13 +75,10 @@ export const NewButtonWrapper = styled.div<NewButtonWrapperProps>`
       inset;
 
     ${(props) => props.theme.fonts.body16Regular}
-    ${(props) => !props.disabled && 'cursor: pointer;'}
 
     display: flex;
     justify-content: center;
     align-items: center;
-
-    ${(props) => props.disabled && 'pointer-events: none;'}
 
     :focus-visible {
       box-shadow: 0 0 0 0.25rem
@@ -95,6 +92,7 @@ export const NewButtonWrapper = styled.div<NewButtonWrapperProps>`
 
     :hover {
       background-color: ${(props) => {
+        if (props.disabled) return props.theme.colors.gray400;
         if (props.hierarchy === 'primary') {
           if (props.color === 'green') return props.theme.colors.green400;
           if (props.color === 'red') return props.theme.colors.red400;
@@ -109,6 +107,7 @@ export const NewButtonWrapper = styled.div<NewButtonWrapperProps>`
 
     :active {
       background-color: ${(props) => {
+        if (props.disabled) return props.theme.colors.gray400;
         if (props.hierarchy === 'primary') {
           if (props.color === 'green') return props.theme.colors.green600;
           if (props.color === 'red') return props.theme.colors.red600;
@@ -123,7 +122,9 @@ export const NewButtonWrapper = styled.div<NewButtonWrapperProps>`
   }
 `;
 
-export const NewButtonLink = styled(Link)``;
+export const NewButtonLink = styled(Link)<{ disabled: boolean }>`
+  ${(props) => !props.disabled && 'cursor: pointer;'}
+`;
 
 export const NewButtonButton = styled.button``;
 
