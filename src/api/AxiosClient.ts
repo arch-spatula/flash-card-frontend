@@ -1,6 +1,7 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
-import { BASE_URL } from '../constant/config';
+import { API_URLS, BASE_URL } from '../constant/config';
+import { refreshAccessAPI } from './authClient';
 
 const axiosClient: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -31,6 +32,29 @@ axiosClient.interceptors.request.use(
     return configCopy;
   },
   (error) => Promise.reject(error)
+);
+
+/** @see https://gusrb3164.github.io/web/2022/08/07/refresh-with-axios-for-client/ */
+axiosClient.interceptors.response.use(
+  (res) => res,
+  async (err) => {
+    const {
+      config,
+      response: { status },
+    } = err;
+
+    if (config.url === API_URLS.REFRESH || status !== 401 || config.sent) {
+      return Promise.reject(err);
+    }
+
+    config.sent = true;
+    const accessToken = await refreshAccessAPI();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+
+    return axiosClient(config);
+  }
 );
 
 export { axiosClient, authClient };

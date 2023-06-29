@@ -4,7 +4,7 @@ export const API_URLS = {
   CARDS: '/card',
   SIGN_IN: '/auth/signin',
   SIGN_UP: '/auth/signup',
-  SIGN_OUT: '/auth/signout',
+  REFRESH: '/auth/refresh',
 } as const;
 
 export const ROUTE_PATHS = {

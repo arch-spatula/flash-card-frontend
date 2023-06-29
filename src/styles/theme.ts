@@ -1,9 +1,15 @@
 const theme = {
   colors: {
-    red: '#EF4444',
-    yellow: '#F59E0B',
-    green: '#10B981',
-    blue: '#3B82F6',
+    red050: '#FEF2F2',
+    red100: '#FEE2E2',
+    red200: '#FECACA',
+    red500: '#EF4444',
+    yellow500: '#F59E0B',
+    green050: '#ECFDF5',
+    green100: '#D1FAE5',
+    green200: '#A7F3D0',
+    green500: '#10B981',
+    blue500: '#3B82F6',
     black: '#000000',
     white: '#ffffff',
     gray050: '#F9FAFB',
@@ -88,6 +94,9 @@ const theme = {
     font-size: 12px;
     line-height: 20px;
   `,
+  },
+  shadow: {
+    boxShadow: `box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);`,
   },
 };
 
