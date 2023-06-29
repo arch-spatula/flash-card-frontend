@@ -46,7 +46,11 @@ export function Button({
       color={color}
     >
       {href && (
-        <NewButtonLink to={href} {...(disabled && { tabIndex: -1 })}>
+        <NewButtonLink
+          to={href}
+          {...(disabled && { tabIndex: -1 })}
+          disabled={disabled}
+        >
           <TextWrapper
             isLoading={isLoading}
             hierarchy={hierarchy}
@@ -60,7 +64,7 @@ export function Button({
       {onClick && (
         <NewButtonButton
           onClick={onClick}
-          disabled={disabled}
+          disabled={disabled || isLoading}
           {...(disabled && { tabIndex: -1 })}
         >
           <TextWrapper
