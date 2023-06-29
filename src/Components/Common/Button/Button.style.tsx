@@ -128,12 +128,9 @@ export const NewButtonLink = styled(Link)<{ disabled: boolean }>`
 
 export const NewButtonButton = styled.button``;
 
-export const TextWrapper = styled.span<{
-  isLoading: boolean;
-  hierarchy: HierarchyType;
-  disabled: boolean;
-  color: ColorType;
-}>`
+type TextWrapperProps = Omit<NewButtonWrapperProps, 'width'>;
+
+export const TextWrapper = styled.span<TextWrapperProps>`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -149,87 +146,6 @@ export const TextWrapper = styled.span<{
     return props.theme.colors.green500;
   }};
   margin: 0 1rem;
-`;
-
-export const ButtonWrapper = styled.button<{
-  isLoading: boolean;
-  width?: number | 'grow';
-  hierarchy: HierarchyType;
-}>`
-  all: unset;
-  ${(props) => props.theme.fonts.body16Regular}
-  border-radius: 0.5rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  box-sizing: border-box;
-
-  border: none;
-  ${(props) => !props.disabled && 'cursor: pointer;'}
-
-  /* disabled 이면 gray가 되고 loading이면 green을 유지 */
-  background-color: ${(props) =>
-    props.disabled && !props.isLoading
-      ? props.theme.colors.gray400
-      : props.theme.colors.green500};
-  color: ${(props) => props.theme.colors.white};
-  height: 2.75rem;
-
-  width: ${(props) => {
-    // 숫자 입력시 숫자만큼 채우기
-    if (!props.width) return 'fit-content';
-    if (props.width !== 'grow') return (props.width / 16).toString() + 'rem';
-    return 'fit-content';
-  }};
-  ${(props) => props.width === 'grow' && 'flex: 1 1 0px;'}
-  min-width: 5.25rem;
-`;
-
-export const LinkWrapper = styled(Link)<{
-  width?: number | 'grow';
-  disabled?: boolean;
-  hierarchy: HierarchyType;
-}>`
-  all: unset;
-  ${(props) => props.theme.fonts.body16Regular}
-  border-radius: 0.5rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  box-sizing: border-box;
-
-  border: none;
-  ${(props) => !props.disabled && 'cursor: pointer;'}
-
-  /* disabled 이면 gray가 되고 loading이면 green을 유지 */
-  background-color: ${(props) => {
-    return props.theme.colors.green500;
-  }};
-  color: ${(props) => props.theme.colors.white};
-  height: 2.75rem;
-
-  width: ${(props) => {
-    // 숫자 입력시 숫자만큼 채우기
-    if (!props.width) return 'fit-content';
-    if (props.width !== 'grow') return (props.width / 16).toString() + 'rem';
-    return 'fit-content';
-  }};
-  ${(props) => props.width === 'grow' && 'flex: 1 1 0px;'}
-  min-width: 5.25rem;
-
-  /* 링크를 위한 스타일링 */
-  text-decoration: none;
-  color: ${(props) => props.theme.colors.white};
-`;
-
-export const VisibilityWrapper = styled.div<{ visible: boolean }>`
-  display: ${(props) => (props.visible ? 'flex' : 'none')};
-  align-items: center;
-  justify-content: center;
 `;
 
 export const LoaderWrapper = styled.div`
