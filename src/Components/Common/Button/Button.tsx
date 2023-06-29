@@ -1,7 +1,5 @@
 import theme from '@/styles/theme';
 import {
-  ButtonWrapper,
-  LinkWrapper,
   LoaderWrapper,
   NewButtonButton,
   NewButtonLink,
@@ -30,7 +28,7 @@ export function Button({
   disabled = false,
   color = 'green',
 }: ButtonProps) {
-  const haneleColor = (color: 'green' | 'red' | 'neutral') => {
+  const handleColor = (color: 'green' | 'red' | 'neutral') => {
     if (hierarchy === 'primary') {
       return theme.colors.white;
     } else {
@@ -78,7 +76,7 @@ export function Button({
       {isLoading && (
         <LoaderWrapper>
           <PulseLoader
-            color={haneleColor(color)}
+            color={handleColor(color)}
             loading
             margin={4}
             size={12}
