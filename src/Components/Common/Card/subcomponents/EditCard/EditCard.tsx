@@ -1,20 +1,46 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCardSide, useInput } from '../../../../../hooks';
 import { updateCardsAPI } from '../../../../../api/cardClient';
 import { Button, Input } from '../../..';
 import { CardEditContainer } from './EditCard.style';
 
-type EditCardProps = {
-  _id: string;
-  question: string;
-  answer: string;
-  stackCount: number;
-};
+type EditCardProps = Omit<Card, 'userId'>;
 
-export function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
+export function EditCard({
+  _id,
+  question,
+  answer,
+  stackCount,
+  submitDate,
+}: EditCardProps) {
   const { cardSide, togglePrev } = useCardSide();
 
-  const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
+  const queryClient = useQueryClient();
+  const { mutate: updateCard } = useMutation({
+    mutationFn: updateCardsAPI,
+    onMutate: async (cardItem) => {
+      await queryClient.cancelQueries({ queryKey: ['cards'] });
+
+      const previousCards: Card[] = queryClient.getQueryData(['cards']) ?? [];
+
+      queryClient.setQueryData<Card[]>(['cards'], (oldCards) => {
+        if (oldCards) {
+          return [...oldCards].map((card) =>
+            card._id === cardItem.id
+              ? { _id: cardItem.id, ...cardItem.card }
+              : card
+          );
+        } else return [];
+      });
+      return { previousCards };
+    },
+    onError: (_err, _cardItem, context) => {
+      if (context) queryClient.setQueryData(['cards'], context.previousCards);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['cards'] });
+    },
+  });
 
   const {
     inputVal: questionVal,
@@ -30,7 +56,6 @@ export function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
   const handleSave = () => {
     togglePrev();
     if (_id) {
-      const submitDate = new Date();
       updateCard({
         id: _id,
         card: {
