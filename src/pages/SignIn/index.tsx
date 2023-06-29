@@ -111,6 +111,99 @@ function SignIn() {
             회원가입
           </Button>
         </ButtonWrapper>
+        <h2>일반</h2>
+        {/* <NewButton
+          onClick={() => {
+            console.log('hello');
+          }}
+          width={'grow'}
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <NewButton
+          href={ROUTE_PATHS.SIGN_UP}
+          width={'grow'}
+          hierarchy="secondary"
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <NewButton
+          href={ROUTE_PATHS.SIGN_UP}
+          width={'grow'}
+          hierarchy="ghost"
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <h2>loading</h2>
+        <NewButton
+          href={ROUTE_PATHS.SIGN_UP}
+          isLoading
+          width={'grow'}
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <NewButton
+          href={ROUTE_PATHS.SIGN_UP}
+          width={'grow'}
+          hierarchy="secondary"
+          isLoading
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <NewButton
+          href={ROUTE_PATHS.SIGN_UP}
+          width={'grow'}
+          hierarchy="ghost"
+          isLoading
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <h2>disabled</h2>
+        <NewButton
+          onClick={() => {
+            console.log('hello');
+          }}
+          width={'grow'}
+          disabled
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <NewButton
+          href={ROUTE_PATHS.SIGN_UP}
+          width={'grow'}
+          hierarchy="secondary"
+          disabled
+          color="neutral"
+        >
+          hello
+        </NewButton>
+        <NewButton
+          onClick={() => console.log('???')}
+          // href="/card"
+          width={'grow'}
+          hierarchy="secondary"
+          disabled
+          color="neutral"
+        >
+          hello
+        </NewButton>
+
+        <NewButton
+          href={ROUTE_PATHS.SIGN_UP}
+          width={'grow'}
+          hierarchy="ghost"
+          disabled
+          color="neutral"
+        >
+          hello
+        </NewButton> */}
       </MainWrapper>
     </MainContainer>
   );
