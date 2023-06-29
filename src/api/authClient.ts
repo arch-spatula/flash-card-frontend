@@ -1,6 +1,6 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { authClient } from './AxiosClient';
-import { API_URLS } from '../constant/config';
+import { API_URLS, STORAGE_KEY } from '../constant/config';
 
 type UserInput = {
   email: string;
@@ -49,7 +49,7 @@ async function signUpAPI({
  */
 async function refreshAccessAPI() {
   try {
-    const sessionToken = sessionStorage.getItem('sessionToken');
+    const sessionToken = sessionStorage.getItem(STORAGE_KEY.SESSION_TOKEN);
     if (!sessionToken) throw Error('sessionToken');
 
     const {
@@ -63,12 +63,12 @@ async function refreshAccessAPI() {
       },
     });
 
-    localStorage.setItem('accessToken', `${access_token}`);
+    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, `${access_token}`);
 
     return access_token;
   } catch (error) {
-    localStorage.clear();
-    sessionStorage.clear();
+    localStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
+    sessionStorage.removeItem(STORAGE_KEY.SESSION_TOKEN);
     if (error instanceof AxiosError) {
       return error.response?.data;
     }

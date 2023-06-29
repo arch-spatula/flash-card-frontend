@@ -1,6 +1,6 @@
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
-import { API_URLS, BASE_URL } from '../constant/config';
+import { API_URLS, BASE_URL, STORAGE_KEY } from '../constant/config';
 import { refreshAccessAPI } from './authClient';
 
 const axiosClient: AxiosInstance = axios.create({
@@ -19,7 +19,7 @@ const authClient: AxiosInstance = axios.create({
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN);
 
     const configCopy = { ...config };
     if (token) configCopy.headers.Authorization = `Bearer ${token}`;
