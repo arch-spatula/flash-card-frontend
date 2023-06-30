@@ -24,13 +24,13 @@ export function EditCard({
       const previousCards: Card[] = queryClient.getQueryData(['cards']) ?? [];
 
       queryClient.setQueryData<Card[]>(['cards'], (oldCards) => {
-        if (oldCards) {
+        if (oldCards)
           return [...oldCards].map((card) =>
             card._id === cardItem.id
               ? { _id: cardItem.id, ...cardItem.card }
               : card
           );
-        } else return [];
+        else return [];
       });
       return { previousCards };
     },
