@@ -7,6 +7,6 @@ export const AddCardContainer = styled.form`
   height: 19.5rem;
   padding: 1.25rem;
   background-color: ${(props) => props.theme.colors.white};
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12);
+  ${(props) => props.theme.shadow.boxShadow}
   border-radius: 1rem;
 `;

@@ -21,7 +21,7 @@ function Cards() {
       {isLoading ? (
         <LoaderContainer>
           <PulseLoader
-            color={theme.colors.green}
+            color={theme.colors.green500}
             loading
             margin={4}
             size={20}
