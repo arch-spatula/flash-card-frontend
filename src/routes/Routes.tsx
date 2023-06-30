@@ -53,6 +53,10 @@ const routes = createBrowserRouter([
         element: <Setting />,
         loader: protectRoutes('signin'),
       },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
     ],
     errorElement: <ServerError />,
   },
