@@ -2,7 +2,7 @@ import { CardWrapper } from './Card.style';
 import { Provider } from 'jotai';
 import { CardBack, CardFront, EditCard } from './subcomponents';
 
-export function Card({ question, answer, _id, stackCount }: Card) {
+export function Card({ question, answer, _id, stackCount, submitDate }: Card) {
   return (
     <Provider>
       <CardWrapper>
@@ -14,7 +14,13 @@ export function Card({ question, answer, _id, stackCount }: Card) {
               answer={answer}
               stackCount={stackCount}
             />
-            <CardFront _id={_id} question={question} answer={answer} />
+            <CardFront
+              _id={_id}
+              question={question}
+              answer={answer}
+              submitDate={submitDate}
+              stackCount={stackCount}
+            />
             <CardBack
               _id={_id}
               answer={answer}
