@@ -1,50 +1,29 @@
-import { useState } from 'react';
-import { Button, Input } from '..';
-import { useInput } from '../../../hooks';
-import {
-  CardBackContainer,
-  CardFrontContainer,
-  CardWrapper,
-  Question,
-  SubmitForm,
-} from './Card.style';
+import { CardWrapper } from './Card.style';
+import { Provider } from 'jotai';
+import { CardBack, CardFront, EditCard } from './subcomponents';
 
-/**
- * @todo 카드 앞면과 뒷면 관심사 분리하기
- */
-
-export function Card({ question, answer }: Card) {
-  const { inputVal, changeInputVal } = useInput();
-  const [active, setActive] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setActive(true);
-  };
-
-  const handleConform = () => {
-    setActive(false);
-  };
-
+export function Card({ question, answer, _id, stackCount }: Card) {
   return (
-    <CardWrapper>
-      <CardFrontContainer active={active}>
-        <Question>{question}</Question>
-        <SubmitForm onSubmit={handleSubmit}>
-          <Input
-            value={inputVal}
-            onChange={changeInputVal}
-            hideHelper
-            width={180}
-          />
-          <Button disabled={!inputVal}>제출</Button>
-        </SubmitForm>
-      </CardFrontContainer>
-      <CardBackContainer active={active}>
-        <p>{answer}</p>
-        <p>{inputVal}</p>
-        <Button onClick={handleConform}>확인</Button>
-      </CardBackContainer>
-    </CardWrapper>
+    <Provider>
+      <CardWrapper>
+        {_id && (
+          <>
+            <EditCard
+              _id={_id}
+              question={question}
+              answer={answer}
+              stackCount={stackCount}
+            />
+            <CardFront _id={_id} question={question} answer={answer} />
+            <CardBack
+              _id={_id}
+              answer={answer}
+              question={question}
+              stackCount={stackCount}
+            />
+          </>
+        )}
+      </CardWrapper>
+    </Provider>
   );
 }

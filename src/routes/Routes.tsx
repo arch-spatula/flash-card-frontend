@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './GlobalLayout';
 import { ROUTE_PATHS } from '../constant/config';
 import { lazy } from 'react';
+import { protectRoutes } from '@/utils';
 
 const Landing = lazy(() => import('../pages/Landing'));
 const SignIn = lazy(() => import('../pages/SignIn'));
@@ -17,19 +18,41 @@ const ServerError = lazy(() => import('../pages/ServerError'));
  * @see https://github.com/WANTED-TEAM03/pre-onboarding-10th-1-3/blob/main/src/routes/Routes.tsx
  * @see https://github.com/wanted-frontedend-team5/pre-onboarding-10th-1-5/blob/main/src/router/Router.jsx
  */
-
 const routes = createBrowserRouter([
   {
     path: ROUTE_PATHS.WELCOME,
     element: <Layout />,
     children: [
-      { index: true, element: <Landing /> },
-      { path: ROUTE_PATHS.SIGN_IN, element: <SignIn /> },
-      { path: ROUTE_PATHS.SIGN_UP, element: <SignUp /> },
-      { path: ROUTE_PATHS.CARDS, element: <Cards /> },
-      { path: ROUTE_PATHS.DECK, element: <Deck /> },
-      { path: ROUTE_PATHS.SETTING, element: <Setting /> },
-      { path: '*', element: <NotFound /> },
+      {
+        index: true,
+        element: <Landing />,
+        loader: protectRoutes('cards'),
+      },
+      {
+        path: ROUTE_PATHS.SIGN_IN,
+        element: <SignIn />,
+        loader: protectRoutes('cards'),
+      },
+      {
+        path: ROUTE_PATHS.SIGN_UP,
+        element: <SignUp />,
+        loader: protectRoutes('cards'),
+      },
+      {
+        path: ROUTE_PATHS.CARDS,
+        element: <Cards />,
+        loader: protectRoutes('signin'),
+      },
+      {
+        path: ROUTE_PATHS.DECK,
+        element: <Deck />,
+        loader: protectRoutes('signin'),
+      },
+      {
+        path: ROUTE_PATHS.SETTING,
+        element: <Setting />,
+        loader: protectRoutes('signin'),
+      },
     ],
     errorElement: <ServerError />,
   },

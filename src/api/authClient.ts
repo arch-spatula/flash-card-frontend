@@ -1,6 +1,7 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { authClient } from './AxiosClient';
-import { API_URLS } from '../constant/config';
+import { API_URLS, ROUTE_PATHS, STORAGE_KEY } from '../constant/config';
+import { redirect } from 'react-router-dom';
 
 type UserInput = {
   email: string;
@@ -42,14 +43,10 @@ async function signUpAPI({
   }
 }
 
-/**
- * - access_token을 갱신하는 함수
- * - API 명세의 요구에 맞춰 authClient 중 유일하게 header를 활용하고 refresh token으로 설정
- * - Jotai Storage로 set하고 난 후에는 큰따옴표(`"`)로 감싸져있기 때문에 slice가 필요
- */
+/** - API 명세의 요구사항 때문에 authClient 중 유일하게 header를 활용해야 함 */
 async function refreshAccessAPI() {
   try {
-    const sessionToken = sessionStorage.getItem('sessionToken');
+    const sessionToken = sessionStorage.getItem(STORAGE_KEY.SESSION_TOKEN);
     if (!sessionToken) throw Error('sessionToken');
 
     const {
@@ -59,19 +56,17 @@ async function refreshAccessAPI() {
       access_token: string;
     }>(API_URLS.REFRESH, null, {
       headers: {
-        Authorization: `Bearer ${sessionToken.slice(
-          1,
-          sessionToken.length - 1
-        )}`,
+        Authorization: `Bearer ${sessionToken}`,
       },
     });
 
-    localStorage.setItem('accessToken', `"${access_token}"`);
+    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, `${access_token}`);
 
     return access_token;
   } catch (error) {
-    localStorage.clear();
-    sessionStorage.clear();
+    localStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
+    sessionStorage.removeItem(STORAGE_KEY.SESSION_TOKEN);
+    redirect(ROUTE_PATHS.SIGN_IN);
     if (error instanceof AxiosError) {
       return error.response?.data;
     }

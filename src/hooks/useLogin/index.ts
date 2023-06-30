@@ -1,29 +1,27 @@
-import { useAtom } from 'jotai';
-import { atomWithStorage, createJSONStorage } from 'jotai/utils';
+import { STORAGE_KEY } from '@/constant/config';
+import { checkLogin } from '@/utils';
+import { atom, useAtom } from 'jotai';
 import { useCallback } from 'react';
 
-const session = createJSONStorage(() => sessionStorage);
-const accessTokenAtom = atomWithStorage('accessToken', '');
-const sessionTokenAtom = atomWithStorage('sessionToken', '', session);
+const loginAtom = atom(checkLogin());
 
 export function useLogin() {
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom);
-  const [sessionToken, setSessionToken] = useAtom(sessionTokenAtom);
-
-  const isLoggedIn = Boolean(accessToken && sessionToken);
+  const [isLoggedIn, setIsLoggedIn] = useAtom(loginAtom);
 
   const setTokens = useCallback(
     (accessToken: string, sessionToken: string) => {
-      setAccessToken(accessToken);
-      setSessionToken(sessionToken);
+      localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, accessToken);
+      sessionStorage.setItem(STORAGE_KEY.SESSION_TOKEN, sessionToken);
+      setIsLoggedIn(checkLogin());
     },
-    [setAccessToken, setSessionToken]
+    [setIsLoggedIn]
   );
 
   const emptyTokens = useCallback(() => {
-    setAccessToken('');
-    setSessionToken('');
-  }, [setAccessToken, setSessionToken]);
+    localStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
+    sessionStorage.removeItem(STORAGE_KEY.SESSION_TOKEN);
+    setIsLoggedIn(checkLogin());
+  }, [setIsLoggedIn]);
 
   return {
     isLoggedIn,
