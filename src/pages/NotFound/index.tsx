@@ -7,10 +7,10 @@ import { ButtonWrapper, NotFoundContainer } from './NotFound.style';
 function NotFound() {
   const { isLoggedIn } = useLogin();
 
-  const route = useNavigate();
+  const navigate = useNavigate();
 
   const handle = () => {
-    route(-1);
+    navigate(-1);
   };
 
   return (
