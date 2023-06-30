@@ -55,7 +55,7 @@ function Deck() {
         <Input value={question} onChange={changeQuestion} placeholder="설정" />
         <h3>정답</h3>
         <Input value={answer} onChange={changeAnswer} placeholder="configure" />
-        <Button disabled={disabled}>카드 생성????????????????</Button>
+        <Button disabled={disabled}>카드 생성</Button>
       </AddCardContainer>
 
       <>

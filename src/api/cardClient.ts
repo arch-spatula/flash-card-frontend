@@ -24,7 +24,7 @@ async function createCardsAPI(card: Card) {
   }
 }
 
-async function updateCardsAPI(id: string, card: Card) {
+async function updateCardsAPI({ id, card }: { id: string; card: Card }) {
   try {
     const res = await axiosClient.patch(`${API_URLS.CARDS}/${id}`, card);
     return res;
@@ -37,7 +37,7 @@ async function updateCardsAPI(id: string, card: Card) {
 
 async function deleteCardsAPI(id: string) {
   try {
-    const res = await axiosClient.post(`${API_URLS.CARDS}/${id}`);
+    const res = await axiosClient.delete(`${API_URLS.CARDS}/${id}`);
     return res;
   } catch (error) {
     if (error instanceof AxiosError) {
