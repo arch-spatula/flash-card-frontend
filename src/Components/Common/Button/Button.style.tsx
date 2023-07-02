@@ -41,36 +41,36 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
     border-radius: 0.5rem;
 
     background-color: ${(props) => {
-      if (props.hierarchy === 'secondary') {
-        return props.theme.colors.white;
+      if (props.hierarchy !== 'primary') return props.theme.colors.white;
+
+      if (props.disabled && !props.isLoading) {
+        if (props.hierarchy === 'primary') return props.theme.colors.gray400;
+        else return props.theme.colors.white;
       }
 
-      if (props.hierarchy === 'ghost') {
-        return props.theme.colors.white;
-      }
+      const colorMap = {
+        green: props.theme.colors.green500,
+        red: props.theme.colors.red500,
+        neutral: props.theme.colors.gray700,
+      };
 
-      if (props.disabled && !props.isLoading && props.hierarchy === 'primary')
-        return props.theme.colors.gray400;
-
-      if (props.disabled && !props.isLoading && props.hierarchy !== 'primary')
-        return props.theme.colors.white;
-      if (props.color === 'green') return props.theme.colors.green500;
-      if (props.color === 'red') return props.theme.colors.red500;
-      if (props.color === 'neutral') return props.theme.colors.gray700; // 컬러 미정
+      return colorMap[props.color];
     }};
 
     box-shadow: 0 0 0 2px
       ${(props) => {
-        if (props.hierarchy === 'secondary') {
-          if (props.disabled) return props.theme.colors.gray400;
-          else {
-            if (props.color === 'green') return props.theme.colors.green500;
-            if (props.color === 'red') return props.theme.colors.red500;
-            if (props.color === 'neutral') return props.theme.colors.gray700; // 컬러 미정
-          }
-        } else {
-          return 'none';
-        }
+        if (props.disabled && props.hierarchy === 'secondary')
+          return props.theme.colors.gray400;
+
+        const colorMap = {
+          green: props.theme.colors.green500,
+          red: props.theme.colors.red500,
+          neutral: props.theme.colors.gray700,
+        };
+
+        if (props.hierarchy === 'secondary') return colorMap[props.color];
+
+        return 'none';
       }}
       inset;
 
@@ -83,9 +83,13 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
     :focus-visible {
       box-shadow: 0 0 0 0.25rem
         ${(props) => {
-          if (props.color === 'green') return props.theme.colors.green200;
-          if (props.color === 'red') return props.theme.colors.red200;
-          if (props.color === 'neutral') return props.theme.colors.gray400;
+          const colorMap = {
+            green: props.theme.colors.green200,
+            red: props.theme.colors.red200,
+            neutral: props.theme.colors.gray400,
+          } as const;
+
+          return colorMap[props.color];
         }}
         inset;
     }
@@ -93,30 +97,52 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
     :hover {
       background-color: ${(props) => {
         if (props.disabled) return props.theme.colors.gray400;
-        if (props.hierarchy === 'primary') {
-          if (props.color === 'green') return props.theme.colors.green400;
-          if (props.color === 'red') return props.theme.colors.red400;
-          if (props.color === 'neutral') return props.theme.colors.gray600;
-        } else {
-          if (props.color === 'green') return props.theme.colors.green050;
-          if (props.color === 'red') return props.theme.colors.red050;
-          if (props.color === 'neutral') return props.theme.colors.gray100;
-        }
+
+        const colorMap = {
+          primary: {
+            green: props.theme.colors.green400,
+            red: props.theme.colors.red400,
+            neutral: props.theme.colors.gray600,
+          },
+          secondary: {
+            green: props.theme.colors.green050,
+            red: props.theme.colors.red050,
+            neutral: props.theme.colors.gray100,
+          },
+          ghost: {
+            green: props.theme.colors.green050,
+            red: props.theme.colors.red050,
+            neutral: props.theme.colors.gray100,
+          },
+        } as const;
+
+        return colorMap[props.hierarchy][props.color];
       }};
     }
 
     :active {
       background-color: ${(props) => {
         if (props.disabled) return props.theme.colors.gray400;
-        if (props.hierarchy === 'primary') {
-          if (props.color === 'green') return props.theme.colors.green600;
-          if (props.color === 'red') return props.theme.colors.red600;
-          if (props.color === 'neutral') return props.theme.colors.gray800;
-        } else {
-          if (props.color === 'green') return props.theme.colors.green100;
-          if (props.color === 'red') return props.theme.colors.red100;
-          if (props.color === 'neutral') return props.theme.colors.gray200; // 컬러 미정
-        }
+
+        const colorMap = {
+          primary: {
+            green: props.theme.colors.green600,
+            red: props.theme.colors.red600,
+            neutral: props.theme.colors.gray800,
+          },
+          secondary: {
+            green: props.theme.colors.green100,
+            red: props.theme.colors.red100,
+            neutral: props.theme.colors.gray200,
+          },
+          ghost: {
+            green: props.theme.colors.green100,
+            red: props.theme.colors.red100,
+            neutral: props.theme.colors.gray200,
+          },
+        } as const;
+
+        return colorMap[props.hierarchy][props.color];
       }};
     }
   }
@@ -142,10 +168,14 @@ export const TextWrapper = styled.span<TextWrapperProps>`
     if (props.disabled && props.hierarchy !== 'primary')
       return props.theme.colors.gray400;
     if (props.hierarchy === 'primary') return props.theme.colors.white;
-    if (props.color === 'green') return props.theme.colors.green500;
-    if (props.color === 'red') return props.theme.colors.red500;
-    if (props.color === 'neutral') return props.theme.colors.gray700;
-    return props.theme.colors.green500;
+
+    const colorMap = {
+      green: props.theme.colors.green500,
+      red: props.theme.colors.red500,
+      neutral: props.theme.colors.gray700,
+    } as const;
+
+    return colorMap[props.color];
   }};
   margin: 0 1rem;
 `;
