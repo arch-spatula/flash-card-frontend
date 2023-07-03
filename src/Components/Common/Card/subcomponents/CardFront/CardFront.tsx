@@ -15,7 +15,7 @@ export function CardFront({ _id, question, answer }: CardFrontProps) {
 
   const { inputVal, changeInputVal } = useAtomInput();
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     toggleTo('back');
 
@@ -27,16 +27,14 @@ export function CardFront({ _id, question, answer }: CardFrontProps) {
     <CardFrontContainer active={cardSide === 'front'}>
       <CardSetting _id={_id} />
       <Question>{question}</Question>
-      <SubmitForm>
+      <SubmitForm onSubmit={handleSubmit}>
         <Input
           value={inputVal}
           onChange={changeInputVal}
           hideHelper
           width={180}
         />
-        <Button type="button" disabled={!inputVal} onClick={handleSubmit}>
-          제출
-        </Button>
+        <Button disabled={!inputVal}>제출</Button>
       </SubmitForm>
     </CardFrontContainer>
   );
