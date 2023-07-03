@@ -29,21 +29,11 @@ export function DropdownMenu({
   menuItem,
   direction = 'left',
 }: DropdownMenuProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const toggleClose = () => {
-    setIsOpen(false);
-  };
-
-  const { customRef } = useOutsideClick<HTMLDivElement>(toggleClose);
+  const { customRef, isOpen, handleRevers } = useOutsideClick<HTMLDivElement>();
 
   return (
     <DropdownMenuContainer ref={customRef}>
-      <DropdownOpen type="button" onClick={toggleMenu} isOpen={isOpen}>
+      <DropdownOpen type="button" onClick={handleRevers} isOpen={isOpen}>
         <Icon />
       </DropdownOpen>
       {isOpen && <Menu menuItem={menuItem} direction={direction} />}
