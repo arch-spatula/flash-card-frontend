@@ -27,6 +27,7 @@ export function Button({
   hierarchy = 'primary',
   disabled = false,
   color = 'green',
+  ...other
 }: ButtonProps) {
   const handleColor = (color: 'green' | 'red' | 'neutral') => {
     if (hierarchy === 'primary') return theme.colors.white;
@@ -68,6 +69,7 @@ export function Button({
           onClick={onClick}
           disabled={disabled || isLoading}
           {...(disabled && { tabIndex: -1 })}
+          {...other}
         >
           <TextWrapper
             isLoading={isLoading}
