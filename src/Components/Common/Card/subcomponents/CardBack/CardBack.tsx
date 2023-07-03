@@ -1,6 +1,9 @@
-import { useMutation } from '@tanstack/react-query';
-import { useAtomInput, useCardSide, useCorrect } from '../../../../../hooks';
-import { updateCardsAPI } from '../../../../../api/cardClient';
+import {
+  useAtomInput,
+  useCardMutation,
+  useCardSide,
+  useCorrect,
+} from '@/hooks';
 import {
   AnswerContainer,
   CardBackContainer,
@@ -17,8 +20,8 @@ type CardBackProps = {
 };
 
 export function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
-  const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
   const { cardSide, toggleTo } = useCardSide();
+  const { updateCard } = useCardMutation();
 
   const { isCorrect } = useCorrect();
   const { inputVal, resetInputVal } = useAtomInput();
