@@ -28,11 +28,11 @@ export function DropdownMenu({
   menuItem,
   direction = 'left',
 }: DropdownMenuProps) {
-  const { customRef, isOpen, handleRevers, OutSideProvider } =
+  const { outSideAreaRef, isOpen, handleRevers, OutSideProvider } =
     useOutsideClick<HTMLDivElement>();
 
   return (
-    <DropdownMenuContainer ref={customRef}>
+    <DropdownMenuContainer ref={outSideAreaRef}>
       <DropdownOpen type="button" onClick={handleRevers} isOpen={isOpen}>
         <Icon />
       </DropdownOpen>

@@ -5,13 +5,13 @@ type OutSideProviderProps = {
 };
 
 export function useOutsideClick<T extends HTMLElement>() {
-  const areaRef = useRef<T>(null);
+  const outSideAreaRef = useRef<T>(null);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handleClick = useCallback(
     (e: MouseEvent) => {
-      if (areaRef.current?.contains(e.target as Node) === false) {
+      if (outSideAreaRef.current?.contains(e.target as Node) === false) {
         setIsOpen(false);
       }
     },
@@ -40,7 +40,7 @@ export function useOutsideClick<T extends HTMLElement>() {
   };
 
   return {
-    customRef: areaRef,
+    outSideAreaRef: outSideAreaRef,
     isOpen,
     handleClose,
     handleOpen,
