@@ -1,22 +1,18 @@
-import { Button } from '../../Components';
-import { useLogin } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
-import { ROUTE_PATHS } from '../../constant/config';
+import { Button, PageHeading } from '../../Components';
+import { useFakeSignOut } from '../../hooks';
+import { SettingContainer, SettingWrapper } from './Setting.style';
 
 function Setting() {
-  const { emptyTokens } = useLogin();
-  const navigate = useNavigate();
-
-  const handelSignOut = () => {
-    emptyTokens();
-    navigate(ROUTE_PATHS.SIGN_IN);
-  };
-
+  const { isLoading, handelSignOut } = useFakeSignOut();
   return (
-    <div>
-      <h1>Setting</h1>
-      <Button onClick={handelSignOut}>Sign out</Button>
-    </div>
+    <SettingContainer>
+      <SettingWrapper>
+        <PageHeading>Setting</PageHeading>
+        <Button onClick={handelSignOut} isLoading={isLoading}>
+          Sign out
+        </Button>
+      </SettingWrapper>
+    </SettingContainer>
   );
 }
 

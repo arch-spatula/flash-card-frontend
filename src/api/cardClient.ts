@@ -11,6 +11,7 @@ async function getCardsAPI() {
       return error.message;
     }
   }
+  return [];
 }
 
 async function createCardsAPI(card: Card) {

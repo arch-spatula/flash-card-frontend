@@ -1,20 +1,19 @@
-import { useMutation } from '@tanstack/react-query';
-import { useCardSide, useInput } from '../../../../../hooks';
-import { updateCardsAPI } from '../../../../../api/cardClient';
+import { useCardMutation, useCardSide, useInput } from '@/hooks';
 import { Button, Input } from '../../..';
 import { CardEditContainer } from './EditCard.style';
 
-type EditCardProps = {
-  _id: string;
-  question: string;
-  answer: string;
-  stackCount: number;
-};
+type EditCardProps = Omit<Card, 'userId'>;
 
-export function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
+export function EditCard({
+  _id,
+  question,
+  answer,
+  stackCount,
+  submitDate,
+}: EditCardProps) {
   const { cardSide, togglePrev } = useCardSide();
 
-  const { mutate: updateCard } = useMutation({ mutationFn: updateCardsAPI });
+  const { updateCard } = useCardMutation();
 
   const {
     inputVal: questionVal,
@@ -30,7 +29,6 @@ export function EditCard({ _id, question, answer, stackCount }: EditCardProps) {
   const handleSave = () => {
     togglePrev();
     if (_id) {
-      const submitDate = new Date();
       updateCard({
         id: _id,
         card: {

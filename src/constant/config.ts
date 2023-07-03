@@ -15,3 +15,8 @@ export const ROUTE_PATHS = {
   DECK: '/deck',
   SETTING: '/setting',
 } as const;
+
+export const STORAGE_KEY = {
+  ACCESS_TOKEN: 'accessToken',
+  SESSION_TOKEN: 'sessionToken',
+} as const;
