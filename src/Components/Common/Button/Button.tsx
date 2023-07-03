@@ -29,13 +29,15 @@ export function Button({
   color = 'green',
 }: ButtonProps) {
   const handleColor = (color: 'green' | 'red' | 'neutral') => {
-    if (hierarchy === 'primary') {
-      return theme.colors.white;
-    } else {
-      if (color === 'green') return theme.colors.green500;
-      if (color === 'red') return theme.colors.red500;
-      if (color === 'neutral') return theme.colors.gray700;
-    }
+    if (hierarchy === 'primary') return theme.colors.white;
+
+    const colorMap = {
+      green: theme.colors.green500,
+      red: theme.colors.red500,
+      neutral: theme.colors.gray700,
+    };
+
+    return colorMap[color];
   };
   return (
     <ButtonWrapper
