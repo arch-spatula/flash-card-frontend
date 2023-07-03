@@ -48,7 +48,7 @@ export function Button({
       isLoading={isLoading}
       color={color}
     >
-      {href && (
+      {href ? (
         <CustomLink
           to={href}
           {...(disabled && { tabIndex: -1 })}
@@ -63,8 +63,7 @@ export function Button({
             {children}
           </TextWrapper>
         </CustomLink>
-      )}
-      {onClick && (
+      ) : (
         <CustomButton
           onClick={onClick}
           disabled={disabled || isLoading}
