@@ -5,7 +5,7 @@ import {
   CardPageContainer,
   LoaderContainer,
 } from './Cards.style';
-import { useCards } from '../../hooks';
+import { useCards } from '@/hooks';
 import theme from '../../styles/theme';
 
 function Cards() {
