@@ -14,7 +14,6 @@ function Cards() {
   if (typeof cards === 'string' || error) {
     return <div>{`${error}`}</div>;
   }
-
   return (
     <CardPageContainer>
       <PageHeading>Cards</PageHeading>

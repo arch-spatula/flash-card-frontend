@@ -6,12 +6,12 @@ export function useCards() {
   const loaderCards = useLoaderData() as Awaited<
     ReturnType<ReturnType<typeof cardLoader>>
   >;
-
+  const query = cardsQuery();
   const {
     data: cards,
     isLoading,
     error,
-  } = useQuery({ ...cardsQuery(), initialData: loaderCards });
+  } = useQuery({ ...query, initialData: loaderCards });
 
   return { cards, isLoading, error };
 }
