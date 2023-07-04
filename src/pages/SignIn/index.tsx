@@ -34,6 +34,7 @@ function SignIn() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const { setTokens } = useLogin();
 
   const { mutate, isLoading } = useMutation({
@@ -52,6 +53,7 @@ function SignIn() {
         onSuccess(data) {
           const { success } = data;
           if (success) {
+            setIsRedirecting(true);
             const { access_token, refresh_token } = data;
             setTokens(access_token, refresh_token);
             navigate(ROUTE_PATHS.CARDS);
@@ -101,7 +103,7 @@ function SignIn() {
         <ButtonWrapper>
           <Button
             onClick={signIn}
-            isLoading={isLoading}
+            isLoading={isLoading || isRedirecting}
             disabled={disabled}
             width={'grow'}
           >

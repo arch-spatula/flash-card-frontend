@@ -1,16 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
-import { getCardsAPI } from '../../api/cardClient';
+import { cardLoader, cardsQuery } from '@/utils';
+import { useLoaderData } from 'react-router-dom';
 
 export function useCards() {
+  const loaderCards = useLoaderData() as Awaited<
+    ReturnType<ReturnType<typeof cardLoader>>
+  >;
+
   const {
     data: cards,
     isLoading,
     error,
-  } = useQuery({
-    queryKey: ['cards'],
-    queryFn: getCardsAPI,
-    staleTime: 5000,
-  });
+  } = useQuery({ ...cardsQuery(), initialData: loaderCards });
 
   return { cards, isLoading, error };
 }
