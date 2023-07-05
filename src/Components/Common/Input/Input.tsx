@@ -1,3 +1,4 @@
+import { spaceToHyphen } from '@/utils';
 import {
   InputWrapper,
   HelperText,
@@ -27,18 +28,21 @@ export function Input({
   helperTextColor = 'normal',
   ...other
 }: InputProps) {
+  const id = spaceToHyphen(inputLabel);
   return (
     <InputContainer
       hideHelper={hideHelper}
       width={width}
       inputLabel={inputLabel}
     >
-      {inputLabel && <InputLabel htmlFor={inputLabel}>{inputLabel}</InputLabel>}
+      {inputLabel && (
+        <InputLabel {...(id && { htmlFor: id })}>{inputLabel}</InputLabel>
+      )}
       <InputWrapper
         onChange={onChange}
         value={value}
         ref={customRef}
-        id={inputLabel}
+        {...(id && { id })}
         {...other}
       />
       {!hideHelper && (
