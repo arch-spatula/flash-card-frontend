@@ -15,7 +15,13 @@ export function Card({ question, answer, _id, stackCount, submitDate }: Card) {
               stackCount={stackCount}
               submitDate={submitDate}
             />
-            <CardFront _id={_id} question={question} answer={answer} />
+            <CardFront
+              _id={_id}
+              question={question}
+              answer={answer}
+              submitDate={submitDate}
+              stackCount={stackCount}
+            />
             <CardBack
               _id={_id}
               answer={answer}

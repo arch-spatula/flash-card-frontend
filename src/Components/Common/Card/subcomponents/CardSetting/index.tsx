@@ -3,14 +3,18 @@ import { Dialog, DropdownMenu } from '../../..';
 import { MenuWrapper } from './CardSetting.style';
 import { useCardMutation, useCardSide, useOutsideClick } from '@/hooks';
 
-export function CardSetting({ _id }: { _id: string }) {
+type CardSettingProps = {
+  _id: NonNullable<Card['_id']>;
+};
+
+export function CardSetting({ _id }: CardSettingProps) {
   const { toggleTo } = useCardSide();
   const { deleteCard } = useCardMutation();
 
   const { OutSideProvider, handleOpen, handleClose } = useOutsideClick();
 
   const handleDelete = useCallback(() => {
-    if (_id) {
+    {
       deleteCard(_id);
       handleClose();
     }
