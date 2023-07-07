@@ -16,6 +16,11 @@ export const ROUTE_PATHS = {
   SETTING: '/setting',
 } as const;
 
+export const STORAGE_KEY = {
+  ACCESS_TOKEN: 'accessToken',
+  SESSION_TOKEN: 'sessionToken',
+} as const;
+
 /**
  * @todo 유저의 복습 간겨을 설정하게 되면 이동하기 바람
  * - 유저가 복습 간격을 설정으로 쓰기가 가능해질 경우 더이상 상수로 취급하지 않음

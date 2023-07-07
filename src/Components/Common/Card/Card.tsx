@@ -13,6 +13,7 @@ export function Card({ question, answer, _id, stackCount, submitDate }: Card) {
               question={question}
               answer={answer}
               stackCount={stackCount}
+              submitDate={submitDate}
             />
             <CardFront
               _id={_id}

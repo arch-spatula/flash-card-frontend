@@ -1,9 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
-import { useCardSide } from '../../../../../hooks';
 import { useCallback } from 'react';
 import { DropdownMenu } from '../../..';
 import { MenuWrapper } from './CardSetting.style';
-import { deleteCardsAPI } from '../../../../../api/cardClient';
+import { useCardMutation, useCardSide } from '@/hooks';
 
 type CardSettingProps = {
   _id: NonNullable<Card['_id']>;
@@ -11,7 +9,7 @@ type CardSettingProps = {
 
 export function CardSetting({ _id }: CardSettingProps) {
   const { toggleTo } = useCardSide();
-  const { mutate: deleteCard } = useMutation({ mutationFn: deleteCardsAPI });
+  const { deleteCard } = useCardMutation();
 
   const handleDelete = useCallback(() => {
     deleteCard(_id);

@@ -3,12 +3,18 @@ import styled from '@emotion/styled';
 export const InputContainer = styled.div<{
   hideHelper: boolean;
   width?: number;
+  inputLabel?: string;
 }>`
   display: flex;
   flex-direction: column;
   justify-content: left;
   gap: 0.5rem;
-  height: ${(props) => (props.hideHelper ? '2.75rem' : '4.75rem')};
+  height: ${(props) => {
+    let inputHeight = 44;
+    if (!props.hideHelper) inputHeight += 32;
+    if (props.inputLabel) inputHeight += 28;
+    return `${inputHeight / 16}rem`;
+  }};
   ${(props) => (props.width === 0 ? 'flex-grow: 1' : `width: ${props.width}px`)}
 `;
 
@@ -26,7 +32,23 @@ export const InputWrapper = styled.input`
   }
 `;
 
-export const HelperText = styled.p`
+export const HelperText = styled.p<{
+  helperTextColor: 'warning' | 'success' | 'information' | 'normal';
+}>`
   ${(props) => props.theme.fonts.body14Regular}
+  color: ${(props) => {
+    const colorMap = {
+      normal: props.theme.colors.black,
+      success: props.theme.colors.green500,
+      warning: props.theme.colors.red500,
+      information: props.theme.colors.blue500,
+    } as const;
+
+    return colorMap[props.helperTextColor];
+  }};
   min-height: 1.5rem;
+`;
+
+export const InputLabel = styled.label`
+  ${(props) => props.theme.fonts.caption12Regular}
 `;

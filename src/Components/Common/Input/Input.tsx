@@ -1,32 +1,53 @@
-import { InputWrapper, HelperText, InputContainer } from './Input.style';
+import { spaceToHyphen } from '@/utils';
+import {
+  InputWrapper,
+  HelperText,
+  InputContainer,
+  InputLabel,
+} from './Input.style';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   helperText?: string;
   hideHelper?: boolean;
+  helperTextColor?: 'warning' | 'success' | 'information' | 'normal';
   customRef?: React.RefObject<HTMLInputElement>;
   width?: number;
+  inputLabel?: string;
 };
 
 export function Input({
   onChange,
   value,
-  helperText,
-  hideHelper = false,
   customRef,
   width = 0,
+  inputLabel,
+  helperText,
+  hideHelper = false,
+  helperTextColor = 'normal',
   ...other
 }: InputProps) {
+  const id = spaceToHyphen(inputLabel);
   return (
-    <InputContainer hideHelper={hideHelper} width={width}>
+    <InputContainer
+      hideHelper={hideHelper}
+      width={width}
+      inputLabel={inputLabel}
+    >
+      {inputLabel && (
+        <InputLabel {...(id && { htmlFor: id })}>{inputLabel}</InputLabel>
+      )}
       <InputWrapper
         onChange={onChange}
         value={value}
         ref={customRef}
+        {...(id && { id })}
         {...other}
       />
-      {!hideHelper && <HelperText>{helperText}</HelperText>}
+      {!hideHelper && (
+        <HelperText helperTextColor={helperTextColor}>{helperText}</HelperText>
+      )}
     </InputContainer>
   );
 }
