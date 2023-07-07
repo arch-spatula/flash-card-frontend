@@ -1,4 +1,4 @@
-import { Card } from '@/Components';
+import { Card, EmptyCards } from '@/Components';
 import { calDiffBetweenNowFromNextInterval } from '@/utils';
 import { intervalMap } from '@/constant/config';
 import { useMemo } from 'react';
@@ -7,8 +7,6 @@ import {
   CardContainer,
   DeckItemContainer,
   DeckListContainer,
-  NoCardContainer,
-  NoCardMessage,
 } from './DeckList.style';
 
 export function DeckList({ cards }: { cards: Card[] }) {
@@ -131,9 +129,7 @@ function DeckItem({ title, cards }: DeckItemProps) {
             ))}
           </CardContainer>
         ) : (
-          <NoCardContainer>
-            <NoCardMessage>카드가 없습니다.</NoCardMessage>
-          </NoCardContainer>
+          <EmptyCards />
         )}
       </>
     </DeckItemContainer>

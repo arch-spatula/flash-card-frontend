@@ -1,4 +1,4 @@
-import { Card, PageHeading } from '../../Components';
+import { Card, EmptyCards, PageHeading } from '../../Components';
 import { PulseLoader } from 'react-spinners';
 import {
   CardContainer,
@@ -7,6 +7,7 @@ import {
 } from './Cards.style';
 import { useCards } from '../../hooks';
 import theme from '../../styles/theme';
+import { calDiffBetweenNowFromNextInterval } from '@/utils';
 
 function Cards() {
   const { cards, isLoading, error } = useCards();
@@ -14,6 +15,13 @@ function Cards() {
   if (typeof cards === 'string' || error) {
     return <div>{`${error}`}</div>;
   }
+
+  const currentCards =
+    cards?.filter(
+      (card) =>
+        calDiffBetweenNowFromNextInterval(card.submitDate, card.stackCount) ===
+        0
+    ) ?? [];
 
   return (
     <CardPageContainer>
@@ -32,9 +40,11 @@ function Cards() {
         <>
           {cards ? (
             <CardContainer>
-              {cards.map((card) => (
-                <Card {...card} key={card._id} />
-              ))}
+              {currentCards.length === 0 ? (
+                <EmptyCards />
+              ) : (
+                currentCards.map((card) => <Card {...card} key={card._id} />)
+              )}
             </CardContainer>
           ) : (
             <div>
