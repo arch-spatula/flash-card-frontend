@@ -2,7 +2,7 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 
 const center = css`
-  position: absolute;
+  position: fixed;
   left: 0;
   right: 0;
   top: 0;
@@ -10,10 +10,7 @@ const center = css`
   margin: auto;
 `;
 
-export const WindowContainer = styled.div`
-  width: 100vw;
-  height: 100vh;
-`;
+export const WindowContainer = styled.div``;
 
 export const DialogContainer = styled.div`
   z-index: 5;

@@ -11,6 +11,7 @@ import {
 } from './Dialog.style';
 import { Button } from '..';
 import theme from '@/styles/theme';
+import { useStopScroll } from '@/hooks';
 
 const modalRoot = document.querySelector('#modal-root');
 
@@ -31,6 +32,7 @@ export function Dialog({
   primaryLabel = '실행',
   secondaryLabel = '취소',
 }: DialogProps) {
+  useStopScroll();
   if (modalRoot)
     return createPortal(
       <WindowContainer>
@@ -66,11 +68,11 @@ function DialogHeader({ title, closeCB }: DialogHeaderProps) {
           width="24"
           height="24"
           viewBox="0 0 24 24"
-          stroke-width="2"
+          strokeWidth="2"
           stroke={theme.colors.gray700}
           fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
           <path d="M18 6l-12 12"></path>
