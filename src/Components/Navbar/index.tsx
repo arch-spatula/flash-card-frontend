@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
 import { Nav, Container, List, ListItem } from './Navbar.style';
-import { useLogin } from '@/hooks';
+import { useIsRedirectToCards, useLogin } from '@/hooks';
 import { ROUTE_PATHS } from '@/constant/config';
 
 export function Navbar() {
   const { isLoggedIn } = useLogin();
-  return <Nav>{isLoggedIn ? <LoggedInNav /> : <LoggedOutNav />}</Nav>;
+  const { isRedirecting } = useIsRedirectToCards();
+  return (
+    <Nav>
+      {isLoggedIn && !isRedirecting ? <LoggedInNav /> : <LoggedOutNav />}
+    </Nav>
+  );
 }
 
 function LoggedInNav() {
