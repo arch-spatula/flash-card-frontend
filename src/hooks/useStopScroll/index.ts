@@ -14,7 +14,6 @@ export const useStopScroll = () => {
       overflow-y: scroll;
       width: 100%;
     `;
-    console.log(window.scrollY);
     return () => {
       const scrollY = document.body.style.top;
       document.body.style.cssText = '';
