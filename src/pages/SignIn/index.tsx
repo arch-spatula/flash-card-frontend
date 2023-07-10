@@ -1,8 +1,8 @@
 import { Button, Checkbox, Input } from '../../Components';
 import { signInAPI } from '../../api/authClient';
-import { useInput, useLogin } from '../../hooks';
+import { useEmail, useInput, useLogin } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE_PATHS, STORAGE_KEY } from '../../constant/config';
+import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
 import {
   ButtonWrapper,
@@ -22,15 +22,14 @@ import { checkEmail } from '../../utils';
 
 function SignIn() {
   const {
-    inputVal: emailValue,
-    changeInputVal: changeEmail,
-    inputRef: emailRef,
-    focusInput: focusEmail,
-  } = useInput(localStorage.getItem(STORAGE_KEY.EMAIL) ?? '');
-
-  const [isChecked, setIsChecked] = useState<boolean>(
-    !!localStorage.getItem(STORAGE_KEY.EMAIL)
-  );
+    emailValue,
+    emailRef,
+    storeEmail,
+    focusEmail,
+    changeEmail,
+    handleSaveEmail,
+    isChecked,
+  } = useEmail();
 
   const {
     inputVal: passwordValue,
@@ -62,7 +61,7 @@ function SignIn() {
             const { access_token, refresh_token } = data;
             setTokens(access_token, refresh_token);
             navigate(ROUTE_PATHS.CARDS);
-            if (isChecked) localStorage.setItem(STORAGE_KEY.EMAIL, emailValue);
+            storeEmail();
           } else {
             const { msg } = data;
             if (msg === 'Error: 비밀번호가 일치하지 않습니다.') {
@@ -85,16 +84,6 @@ function SignIn() {
   const disabled = [checkEmail(emailValue), passwordValue].some(
     (elem) => !elem
   );
-
-  const handleSaveEmail = () => {
-    if (isChecked) {
-      localStorage.removeItem(STORAGE_KEY.EMAIL);
-      setIsChecked(false);
-    } else {
-      localStorage.setItem(STORAGE_KEY.EMAIL, emailValue);
-      setIsChecked(true);
-    }
-  };
 
   return (
     <MainContainer>
