@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   Anchor,
   DropdownMenuContainer,
@@ -8,6 +7,7 @@ import {
   MenuList,
 } from './DropdownMenu.style';
 import { Icon } from './Icon';
+import { useOutsideClick } from '@/hooks';
 
 type LinkItem = {
   label: string;
@@ -28,18 +28,17 @@ export function DropdownMenu({
   menuItem,
   direction = 'left',
 }: DropdownMenuProps) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleOpenMenu = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const { nonTargetAreaRef, isOpen, handleRevers, OutSideProvider } =
+    useOutsideClick<HTMLDivElement>();
 
   return (
-    <DropdownMenuContainer>
-      <DropdownOpen type="button" onClick={handleOpenMenu} isOpen={isOpen}>
+    <DropdownMenuContainer ref={nonTargetAreaRef}>
+      <DropdownOpen type="button" onClick={handleRevers} isOpen={isOpen}>
         <Icon />
       </DropdownOpen>
-      {isOpen && <Menu menuItem={menuItem} direction={direction} />}
+      <OutSideProvider
+        component={<Menu menuItem={menuItem} direction={direction} />}
+      />
     </DropdownMenuContainer>
   );
 }

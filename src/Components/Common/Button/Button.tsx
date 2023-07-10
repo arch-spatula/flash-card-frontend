@@ -1,7 +1,9 @@
+import theme from '@/styles/theme';
 import {
-  ButtonWrapper,
-  LinkWrapper,
   LoaderWrapper,
+  CustomButton,
+  CustomLink,
+  ButtonWrapper,
   TextWrapper,
 } from './Button.style';
 import { PulseLoader } from 'react-spinners';
@@ -12,12 +14,10 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   href?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   isLoading?: boolean;
-  hierarchy?: 'primary' | 'secondary';
+  hierarchy?: 'primary' | 'secondary' | 'ghost';
+  color?: 'green' | 'red' | 'neutral';
 };
 
-/**
- * @todo hierarchy "ghost" 추가하기
- */
 export function Button({
   children,
   onClick,
@@ -25,35 +25,65 @@ export function Button({
   href,
   width,
   hierarchy = 'primary',
+  disabled = false,
+  color = 'green',
   ...other
 }: ButtonProps) {
-  if (href) {
-    return (
-      <LinkWrapper
-        to={href}
-        disabled={isLoading}
-        // isLoading={isLoading}
-        width={width}
-        hierarchy={hierarchy}
-      >
-        <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
-      </LinkWrapper>
-    );
-  }
+  const handleColor = (color: 'green' | 'red' | 'neutral') => {
+    if (hierarchy === 'primary') return theme.colors.white;
+
+    const colorMap = {
+      green: theme.colors.green500,
+      red: theme.colors.red500,
+      neutral: theme.colors.gray700,
+    };
+
+    return colorMap[color];
+  };
   return (
     <ButtonWrapper
-      onClick={onClick}
-      disabled={isLoading}
-      isLoading={isLoading}
       width={width}
+      disabled={disabled}
       hierarchy={hierarchy}
-      {...other}
+      isLoading={isLoading}
+      color={color}
     >
-      <TextWrapper isLoading={isLoading}>{children}</TextWrapper>
+      {href ? (
+        <CustomLink
+          to={href}
+          {...(disabled && { tabIndex: -1 })}
+          disabled={disabled}
+        >
+          <TextWrapper
+            isLoading={isLoading}
+            hierarchy={hierarchy}
+            disabled={disabled}
+            color={color}
+          >
+            {children}
+          </TextWrapper>
+        </CustomLink>
+      ) : (
+        <CustomButton
+          onClick={onClick}
+          disabled={disabled || isLoading}
+          {...(disabled && { tabIndex: -1 })}
+          {...other}
+        >
+          <TextWrapper
+            isLoading={isLoading}
+            hierarchy={hierarchy}
+            disabled={disabled}
+            color={color}
+          >
+            {children}
+          </TextWrapper>
+        </CustomButton>
+      )}
       {isLoading && (
         <LoaderWrapper>
           <PulseLoader
-            color="#ffffff"
+            color={handleColor(color)}
             loading
             margin={4}
             size={12}
