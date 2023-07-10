@@ -39,7 +39,9 @@ qwer1234
 
 ### 트러블 슈팅
 
-1. [request waterfall 방지](#request-waterfall-방지)
+1. [request waterfall 숨기기](#request-waterfall-숨기기)
+2. [card side](#card-side)
+3. [부가적인 문제해결](#부가적인-문제해결)
 
 #### request waterfall 숨기기
 
@@ -244,6 +246,15 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 ![card-flip](https://user-images.githubusercontent.com/84452145/248541998-c6a9c7d9-2c34-4089-8f2a-878c4f020942.gif)
 
 문제에서 편집을 접근하고 돌아갈 수 있고 또 정답에서도 편집으로 돌아갈 수 있습니다.
+
+#### 부가적인 문제해결
+
+- React Portal
+- Axios Refresh
+- Optimistic Update
+- Vite Code Splitting
+- Button Spinier
+- Save Email
 
 ## Screen Shot
 
