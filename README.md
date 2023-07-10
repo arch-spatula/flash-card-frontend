@@ -273,14 +273,15 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 1. [Vite React](#vite-react)
 2. [Axios](#axios)
-3. [React-Query](#react-query)
-4. [Jotai](#jotai)
-5. [Emotion](#emotion)
-6. [React-Spinner](#react-spinner)
+3. [React-Router-DOM](#react-router-dom)
+4. [React-Query](#react-query)
+5. [Jotai](#jotai)
+6. [Emotion](#emotion)
+7. [React-Spinner](#react-spinner)
 
 ### Vite React
 
-- Vite으로 code splitting이 아주 간편합니다.
+- Vite으로 code splitting이 아주 간편하게 처리할 수 있습니다.
 - 성능문제가 없는 Vitest를 1.1.0에 테스트러너로 활용할 수 있습니다.
 
 ### Axios
@@ -288,11 +289,17 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 - 통신과 관련된 기본적인 추상화 혜택을 받고자 활용합니다.
 - interceptor로 인증과 갱신처리 합니다.
 
+### React Router DOM
+
+- loader를 통해 route protect을 적용할 수 있습니다.
+- loader에서 prefetch를 사용하고 request-waterfall로 보이는 로딩 스피너를 숨길 수 있습니다.
+
 ### React-Query
 
 - 통신 상태를 활용할 수 있습니다.
 - 통신 결과를 캐싱할 수 있습니다.
 - 통신은 비동기고 화면은 동기적으로 동작시킬 수 있습니다.
+- 캐시 키를 통해 전역으로 상태를 공유할 수 있습니다.
 
 ### Jotai
 
