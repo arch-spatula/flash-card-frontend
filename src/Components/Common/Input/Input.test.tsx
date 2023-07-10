@@ -1,6 +1,6 @@
 import { Input } from '.';
 import { render, screen } from '../../../libs/test-utils';
-import { describe, it } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
 describe('Input', () => {
   it('should render helper text', () => {
@@ -29,5 +29,15 @@ describe('Input', () => {
     const helperTextElement = screen.queryByText(helperText);
 
     expect(helperTextElement).not.toBeInTheDocument();
+  });
+
+  it('should render label by text', () => {
+    const label = 'label text';
+
+    render(<Input value={'foo'} onChange={() => 0} inputLabel={label} />);
+
+    const labelText = screen.getByLabelText(label);
+
+    expect(labelText).toBeInTheDocument();
   });
 });

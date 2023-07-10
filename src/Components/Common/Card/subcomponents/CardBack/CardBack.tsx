@@ -12,11 +12,8 @@ import {
 import { CardSetting } from '../CardSetting';
 import { Button } from '../../..';
 
-type CardBackProps = {
-  _id: string;
-  answer: string;
-  question: string;
-  stackCount: number;
+type CardBackProps = Omit<Card, 'userId' | 'submitDate'> & {
+  _id: Exclude<Card['_id'], undefined>;
 };
 
 export function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
@@ -30,19 +27,22 @@ export function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
     resetInputVal();
     toggleTo('front');
 
-    if (_id) {
-      const submitDate = new Date();
-      if (isCorrect) {
-        updateCard({
-          id: _id,
-          card: { question, answer, submitDate, stackCount: stackCount + 1 },
-        });
-      } else {
-        updateCard({
-          id: _id,
-          card: { question, answer, submitDate, stackCount: 0 },
-        });
-      }
+    const newSubmitDate = new Date();
+    if (isCorrect) {
+      updateCard({
+        id: _id,
+        card: {
+          question,
+          answer,
+          submitDate: newSubmitDate,
+          stackCount: stackCount + 1,
+        },
+      });
+    } else {
+      updateCard({
+        id: _id,
+        card: { question, answer, submitDate: newSubmitDate, stackCount: 0 },
+      });
     }
   };
 
