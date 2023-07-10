@@ -1,4 +1,8 @@
-import { deleteCardsAPI, updateCardsAPI } from '@/api/cardClient';
+import {
+  createCardsAPI,
+  deleteCardsAPI,
+  updateCardsAPI,
+} from '@/api/cardClient';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useCardMutation() {
@@ -52,5 +56,21 @@ export function useCardMutation() {
     },
   });
 
-  return { deleteCard, updateCard };
+  const { mutate: createCard, isLoading: isCreateCardLoading } = useMutation({
+    mutationFn: createCardsAPI,
+
+    onSuccess: (newCardId, newCard) => {
+      queryClient.setQueryData<Card[]>(['cards'], (oldCards) => {
+        if (oldCards && typeof newCardId === 'string')
+          return [...oldCards, { ...newCard, _id: newCardId }];
+        else return [];
+      });
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ['cards'] });
+    },
+  });
+
+  return { deleteCard, updateCard, createCard, isCreateCardLoading };
 }

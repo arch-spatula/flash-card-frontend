@@ -1,8 +1,6 @@
-import { useMutation } from '@tanstack/react-query';
 import { Button, Input, PageHeading } from '../../Components';
-import { useCards, useInput } from '../../hooks';
+import { useCardMutation, useCards, useInput } from '@/hooks';
 import { AddCardContainer, DeckPageContainer } from './Deck.style';
-import { createCardsAPI } from '../../api/cardClient';
 import { DeckList, SectionTitle } from './subcomponents';
 
 function Deck() {
@@ -18,7 +16,7 @@ function Deck() {
     resetInputVal: resetAnswer,
   } = useInput();
 
-  const { mutate } = useMutation({ mutationFn: createCardsAPI });
+  const { createCard, isCreateCardLoading } = useCardMutation();
 
   const disabled = [question, answer].some((elem) => !elem);
 
@@ -28,7 +26,7 @@ function Deck() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate(
+    createCard(
       {
         question,
         answer,
@@ -36,8 +34,7 @@ function Deck() {
         stackCount: 0,
       },
       {
-        onSuccess: (data) => {
-          console.log(data);
+        onSuccess: () => {
           resetQuestion();
           resetAnswer();
         },
@@ -57,7 +54,9 @@ function Deck() {
         <Input value={question} onChange={changeQuestion} placeholder="설정" />
         <h3>정답</h3>
         <Input value={answer} onChange={changeAnswer} placeholder="configure" />
-        <Button disabled={disabled}>카드 생성</Button>
+        <Button disabled={disabled} isLoading={isCreateCardLoading}>
+          카드 생성
+        </Button>
       </AddCardContainer>
 
       {cards && <DeckList cards={cards} />}
