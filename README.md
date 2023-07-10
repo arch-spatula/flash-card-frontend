@@ -39,18 +39,216 @@ qwer1234
 
 ### 트러블 슈팅
 
-<!-- @todo: request waterfal 방지 -->
+1. [request waterfall 방지](#request-waterfall-방지)
+
+#### request waterfall 숨기기
+
+##### 문제: request waterfall은 동문서답
+
+기다림 끝에 또 유저에게 기다림을 요구하는 것은 관공서로 충분합니다.
+
+유저가 A를 요청하면 처리 후 A를 줘야 합니다. 하지만 request waterfall 현상은 유저가 A를 달라고 하면 처리하고 B를 잠시 두고 있다가 A를 주는 것과 같습니다. 굳이 2번 기다리게 하지말고 1번만 기다리게 해도 됩니다. 유저는 로그인을 위한 요청처리 이후 다시 본인 리소스에 대한 요청인 2번의 request-response 라이프 사이클을 알 필요 없습니다.
+
+![request waterfall - 1](https://user-images.githubusercontent.com/84452145/252219174-765f2a02-48cf-41d3-9dd5-cdc6181f4ab7.gif)
+
+##### 조치: loader에서 리소스를 요청하기
+
+tkdodo의 [React Query meets React Router](https://tkdodo.eu/blog/react-query-meets-react-router)를 그대로 적용했습니다.
+
+React-Router-DOM에서 loader는 Page 접근 전에 실행하는 함수입니다. 실행하고 싶은 로직을 콜백함수로 대입하고 콜백함수의 반환값도 `useLoaderData`로 접근할 수 있습니다.
+
+```tsx
+function Cards() {
+  const { cards, isLoading, error } = useCards();
+
+  return <>{/* ... 생략 */}</>;
+}
+```
+
+로직이 중복해서 useCard custom hook으로 담습니다.
+
+```tsx
+import { useQuery } from '@tanstack/react-query';
+import { cardLoader, cardsQuery } from '@/utils';
+import { useLoaderData } from 'react-router-dom';
+
+export function useCards() {
+  const loaderCards = useLoaderData() as Awaited<
+    ReturnType<ReturnType<typeof cardLoader>>
+  >;
+
+  const query = cardsQuery();
+  const {
+    data: cards,
+    isLoading,
+    error,
+  } = useQuery({ ...query, initialData: loaderCards });
+
+  return { cards, isLoading, error };
+}
+```
+
+useCards 내부에서는 useLoaderData의 결과 값을 react-query에 캐싱합니다.
+
+```tsx
+import { cardsQuery } from '@/utils';
+import queryClient from '@/libs/queryClient';
+
+export const cardLoader = () => async () => {
+  const query = () => ({
+    queryKey: ['cards'],
+    queryFn: getCardsAPI,
+    staleTime: 5000,
+  });
+
+  return (
+    queryClient.getQueryData<Card[]>(query.queryKey) ??
+    (await queryClient.fetchQuery(query))
+  );
+};
+```
+
+mount 하기 전에 query-cache는 캐싱하면 Page 컴포넌트 Mount에 요청을 해결할 수 있습니다.
+
+##### 결과: 기다림은 1번
+
+![request waterfall - 2](https://user-images.githubusercontent.com/84452145/252223625-04292074-2754-46c6-9ec3-6038689a7c1b.gif)
+
+- 로그인 시점에 1번만 기다리고 페이지를 방문할 수 있게 됩니다.
+- 다른 페이지를 접근해도 불필요한 로딩 스피너가 보이지 않습니다.
 
 <!-- @todo: axios refresh -->
+<!--
+#### refresh token
+
+refresh token 로직은 순수하게 프론트엔드만 해결하는 문제는 아닙니다. 백엔드도 문제가 있고 이를 해결해야 합니다. 백엔드의 경우 배포환경 서버의 재가동 문제와 refresh 응답입니다.
+
+##### 문제:
+
+token의 만료시간은 1시간이고 유저의 체류시간은 충분히 1시간을 초과할 수 있습니다.
+
+##### 조치:
+
+401 응답에 대해서 token을 자동 갱신하고 동일한 요청을 갱신한 token으로 재요청했습니다.
+
+```ts
+axiosClient.interceptors.response.use(
+  (res) => res,
+  async (err) => {
+    const {
+      config,
+      response: { status },
+    } = err;
+
+    if (config.url === API_URLS.REFRESH || status !== 401 || config.sent) {
+      return Promise.reject(err);
+    }
+
+    config.sent = true;
+    const accessToken = await refreshAccessAPI();
+
+    if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+
+    return axiosClient(config);
+  }
+);
+```
+
+```ts
+import { AxiosError, AxiosResponse } from 'axios';
+import { authClient } from './AxiosClient';
+import { API_URLS, ROUTE_PATHS, STORAGE_KEY } from '../constant/config';
+import { redirect } from 'react-router-dom';
+
+async function refreshAccessAPI() {
+  try {
+    const sessionToken = sessionStorage.getItem(STORAGE_KEY.SESSION_TOKEN);
+    if (!sessionToken) throw Error('sessionToken');
+
+    const {
+      data: { access_token },
+    } = await authClient.post<{
+      success: boolean;
+      access_token: string;
+    }>(API_URLS.REFRESH, null, {
+      headers: {
+        Authorization: `Bearer ${sessionToken}`,
+      },
+    });
+
+    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, `${access_token}`);
+
+    return access_token;
+  } catch (error) {
+    localStorage.removeItem(STORAGE_KEY.ACCESS_TOKEN);
+    sessionStorage.removeItem(STORAGE_KEY.SESSION_TOKEN);
+    redirect(ROUTE_PATHS.SIGN_IN);
+    if (error instanceof AxiosError) {
+      return error.response?.data;
+    }
+  }
+}
+```
+
+##### 결과:
+
+유저는 1시간보다 더 오랫동안 자동 인증이 됩니다. -->
 
 <!-- @todo: card side -->
+
+#### card side
+
+#### 문제: 카드는 3가지 면을 가져야 합니다.
+
+문제, 정답, 편집 3가지 상태를 가져야 합니다. 그리고 문제, 정답 어느 맥락에서 편집을 접근했는지 기억해야 합니다.
+
+#### 조치:
+
+카드의 면접을 기록하고 돌아가기를 하면 기록인 캐시를 접근하는 방식을 고안했습니다.
+
+```ts
+import { atom, useAtom } from 'jotai';
+import { useCallback } from 'react';
+
+type CardSide = 'front' | 'back' | 'edit';
+
+const cardSideAtom = atom<CardSide>('front');
+
+const prevCache = new Map<'cache', CardSide>([['cache', 'front']]);
+
+export function useCardSide() {
+  const [cardSide, setCardSide] = useAtom(cardSideAtom);
+
+  const toggleTo = useCallback(
+    (side: CardSide) => {
+      if (cardSide !== side) {
+        prevCache.set('cache', cardSide);
+        setCardSide(side);
+      }
+    },
+    [setCardSide, cardSide]
+  );
+
+  const togglePrev = useCallback(() => {
+    setCardSide(prevCache.get('cache') ?? 'front');
+  }, [setCardSide]);
+
+  return { togglePrev, cardSide, toggleTo };
+}
+```
+
+prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 상태 변경을 합니다.
+
+#### 결과:
+
+![card-flip](https://user-images.githubusercontent.com/84452145/248541998-c6a9c7d9-2c34-4089-8f2a-878c4f020942.gif)
+
+문제에서 편집을 접근하고 돌아갈 수 있고 또 정답에서도 편집으로 돌아갈 수 있습니다.
 
 ## Screen Shot
 
 <!-- @todo: 랜딩, Card, Deck, 로그인, 회원가입, 로그아웃 -->
 <!-- @todo: 배포 후 수정하기 -->
-
-![card-flip](https://user-images.githubusercontent.com/84452145/248541998-c6a9c7d9-2c34-4089-8f2a-878c4f020942.gif)
 
 ### 버튼
 
