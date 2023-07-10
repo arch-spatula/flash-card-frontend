@@ -34,8 +34,7 @@ function SignIn() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const { isRedirecting, startRedirecting, endRedirecting } =
-    useIsRedirectToCards();
+  const { isRedirecting, startRedirecting } = useIsRedirectToCards();
   const { setTokens } = useLogin();
 
   const { mutate, isLoading } = useMutation({
@@ -58,7 +57,6 @@ function SignIn() {
             const { access_token, refresh_token } = data;
             setTokens(access_token, refresh_token);
             navigate(ROUTE_PATHS.CARDS);
-            endRedirecting();
           } else {
             const { msg } = data;
             if (msg === 'Error: 비밀번호가 일치하지 않습니다.') {
