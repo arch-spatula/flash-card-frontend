@@ -269,13 +269,43 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 ![red-btn](https://user-images.githubusercontent.com/84452145/251381622-505987e2-eb03-4513-acaf-bafd4429ebd8.gif)
 
-## tech Stack
+## Tech Stack
 
-1. Vite React
-2. React-Query
-3. Jotai
-4. Emotion
-5. React-Spinner
+1. [Vite React](#vite-react)
+2. [Axios](#axios)
+3. [React-Query](#react-query)
+4. [Jotai](#jotai)
+5. [Emotion](#emotion)
+6. [React-Spinner](#react-spinner)
+
+### Vite React
+
+- Vite으로 code splitting이 아주 간편합니다.
+- 성능문제가 없는 Vitest를 1.1.0에 테스트러너로 활용할 수 있습니다.
+
+### Axios
+
+- 통신과 관련된 기본적인 추상화 혜택을 받고자 활용합니다.
+- interceptor로 인증과 갱신처리 합니다.
+
+### React-Query
+
+- 통신 상태를 활용할 수 있습니다.
+- 통신 결과를 캐싱할 수 있습니다.
+- 통신은 비동기고 화면은 동기적으로 동작시킬 수 있습니다.
+
+### Jotai
+
+- 서버 통신과 무관한 상태관리를 아주 간단하게 할 수 있습니다.
+
+### Emotion
+
+- 스타일링 자원을 간단하게 공유할 수 있습니다.
+- 스타일링을 보수하기 수월합니다.
+
+### React-Spinner
+
+- Spinner를 다루기 상당히 간단합니다. storybook 문서를 보고 원하는대로 만들고 붙이면 됩니다.
 
 <!-- @todo: 서비스 아키텍쳐 -->
 
