@@ -9,8 +9,8 @@ import {
   CopyWrapper,
   ButtonWrapper,
 } from './Landing.style';
-import flashCardJPG from '/pexels-pixabay-268351_1920.jpg';
-import flashCardWEBP from '/pexels-pixabay-268351_1920.webp';
+import flashCardJPG from '/pexels-pixabay-268351_1280.jpg';
+import flashCardWEBP from '/pexels-pixabay-268351_1280.webp';
 import { Button, PageHeading } from '../../Components';
 
 function Landing() {

@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './GlobalLayout';
 import { ROUTE_PATHS } from '../constant/config';
 import { lazy } from 'react';
-import { protectRoutes } from '@/utils';
+import { cardLoader, protectRoutes } from '@/utils';
 
 const Landing = lazy(() => import('../pages/Landing'));
 const SignIn = lazy(() => import('../pages/SignIn'));
@@ -11,6 +11,7 @@ const Cards = lazy(() => import('../pages/Cards'));
 const Deck = lazy(() => import('../pages/Deck'));
 const Setting = lazy(() => import('../pages/Setting'));
 const NotFound = lazy(() => import('../pages/NotFound'));
+const ServerError = lazy(() => import('../pages/ServerError'));
 
 /**
  * 참고 자료
@@ -40,20 +41,24 @@ const routes = createBrowserRouter([
       {
         path: ROUTE_PATHS.CARDS,
         element: <Cards />,
-        loader: protectRoutes('signin'),
+        loader: cardLoader(),
       },
       {
         path: ROUTE_PATHS.DECK,
         element: <Deck />,
-        loader: protectRoutes('signin'),
+        loader: cardLoader(),
       },
       {
         path: ROUTE_PATHS.SETTING,
         element: <Setting />,
         loader: protectRoutes('signin'),
       },
+      {
+        path: '*',
+        element: <NotFound />,
+      },
     ],
-    errorElement: <NotFound />,
+    errorElement: <ServerError />,
   },
 ]);
 

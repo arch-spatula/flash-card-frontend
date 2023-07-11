@@ -5,16 +5,21 @@ import {
   CardPageContainer,
   LoaderContainer,
 } from './Cards.style';
-import { useCards } from '../../hooks';
+import { useCards, useIsRedirectToCards } from '@/hooks';
 import theme from '../../styles/theme';
+import { useEffect } from 'react';
 
 function Cards() {
   const { cards, isLoading, error } = useCards();
 
+  const { endRedirecting } = useIsRedirectToCards();
+  useEffect(() => {
+    endRedirecting();
+  }, [endRedirecting]);
+
   if (typeof cards === 'string' || error) {
     return <div>{`${error}`}</div>;
   }
-
   return (
     <CardPageContainer>
       <PageHeading>Cards</PageHeading>
