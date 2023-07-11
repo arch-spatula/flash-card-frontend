@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './GlobalLayout';
 import { ROUTE_PATHS } from '../constant/config';
 import { lazy } from 'react';
-import { protectRoutes } from '@/utils';
+import { cardLoader, protectRoutes } from '@/utils';
 
 const Landing = lazy(() => import('../pages/Landing'));
 const SignIn = lazy(() => import('../pages/SignIn'));
@@ -41,12 +41,12 @@ const routes = createBrowserRouter([
       {
         path: ROUTE_PATHS.CARDS,
         element: <Cards />,
-        loader: protectRoutes('signin'),
+        loader: cardLoader(),
       },
       {
         path: ROUTE_PATHS.DECK,
         element: <Deck />,
-        loader: protectRoutes('signin'),
+        loader: cardLoader(),
       },
       {
         path: ROUTE_PATHS.SETTING,
