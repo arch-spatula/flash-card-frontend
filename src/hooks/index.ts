@@ -8,4 +8,4 @@ export * from './useCorrect';
 export * from './useCardMutation';
 export * from './useOutsideClick';
 export * from './useIsRedirectToCards';
-export * from './useEmail';
+export * from './useEmailSave';

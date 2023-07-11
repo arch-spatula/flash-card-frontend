@@ -1,11 +1,11 @@
 import { Button, Checkbox, Input } from '../../Components';
 import { signInAPI } from '../../api/authClient';
 import {
-  useEmail,
+  useEmailSave,
   useInput,
   useIsRedirectToCards,
   useLogin,
-} from '../../hooks';
+} from '@/hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
@@ -34,7 +34,7 @@ function SignIn() {
     changeEmail,
     handleSaveEmail,
     isChecked,
-  } = useEmail();
+  } = useEmailSave();
 
   const {
     inputVal: passwordValue,

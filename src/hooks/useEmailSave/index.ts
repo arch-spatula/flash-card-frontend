@@ -2,7 +2,7 @@ import { STORAGE_KEY } from '@/constant/config';
 import { useInput } from '..';
 import { useState } from 'react';
 
-export function useEmail() {
+export function useEmailSave() {
   const {
     inputVal: emailValue,
     changeInputVal: changeEmail,
