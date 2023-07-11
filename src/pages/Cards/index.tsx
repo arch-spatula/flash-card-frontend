@@ -5,22 +5,18 @@ import {
   CardPageContainer,
   LoaderContainer,
 } from './Cards.style';
-import { useCards, useIsRedirectToCards } from '@/hooks';
+import { useCards, useEndRedirectToCards } from '@/hooks';
 import theme from '../../styles/theme';
-import { useEffect } from 'react';
 import { calDiffBetweenNowFromNextInterval } from '@/utils';
 
 function Cards() {
   const { cards, isLoading, error } = useCards();
-
-  const { endRedirecting } = useIsRedirectToCards();
-  useEffect(() => {
-    endRedirecting();
-  }, [endRedirecting]);
+  useEndRedirectToCards();
 
   if (typeof cards === 'string' || error) {
     return <div>{`${error}`}</div>;
   }
+
   const currentCards =
     cards?.filter(
       (card) =>
