@@ -67,7 +67,7 @@ describe('formatDate', () => {
 
 describe('intervalDate', () => {
   const baseDate = new Date('2023-06-01T00:00:00');
-  const intervalMap = [
+  const intervalMap = new Int32Array([
     10, // 0 틀림 10분
     60, // 1번 맞춤 1시간
     60 * 24, // 2번 맞춤 내일
@@ -80,7 +80,7 @@ describe('intervalDate', () => {
     60 * 24 * 30.4375 * 2, // 9번 다다음달
     60 * 24 * 91.3125, // 10번 맞춤 다음분기
     60 * 24 * 182.625, // 11번 맞춤 다음반기
-  ];
+  ]);
 
   it('should return the same date when count is negative', () => {
     const result = getNextIntervalDate(baseDate, -1, intervalMap);

@@ -1,6 +1,7 @@
-import { Button, Card, Input, PageHeading } from '../../Components';
+import { Button, Input, PageHeading } from '../../Components';
 import { useCardMutation, useCards, useInput } from '@/hooks';
-import { AddCardContainer } from './Deck.style';
+import { AddCardContainer, DeckPageContainer } from './Deck.style';
+import { DeckList, SectionTitle } from './subcomponents';
 
 function Deck() {
   const { cards, error } = useCards();
@@ -45,8 +46,9 @@ function Deck() {
   };
 
   return (
-    <div>
+    <DeckPageContainer>
       <PageHeading>Deck</PageHeading>
+      <SectionTitle>카드 생성</SectionTitle>
       <AddCardContainer onSubmit={handleSubmit}>
         <h3>문제</h3>
         <Input value={question} onChange={changeQuestion} placeholder="설정" />
@@ -57,20 +59,8 @@ function Deck() {
         </Button>
       </AddCardContainer>
 
-      <>
-        {cards ? (
-          <>
-            {cards.map((card) => (
-              <Card {...card} key={card._id} />
-            ))}
-          </>
-        ) : (
-          <div>
-            <p>카드가 없습니다.</p>
-          </div>
-        )}
-      </>
-    </div>
+      {cards && <DeckList cards={cards} />}
+    </DeckPageContainer>
   );
 }
 
