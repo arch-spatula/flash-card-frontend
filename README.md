@@ -21,8 +21,8 @@ qwer1234
 1. [프로젝트 소개](#프로젝트-소개)
 2. [Screen Shot](#screen-shot)
 3. [Tech Stack](#tech-stack)
-4. [ERD](#entity-relationship-diagram)
-5. [Directory](#directory)
+   <!-- 4. [ERD](#entity-relationship-diagram) -->
+   <!-- 5. [Directory](#directory) -->
 
 ## 프로젝트 소개
 
@@ -249,12 +249,12 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 #### 부가적인 문제해결
 
-- React Portal
-- Axios Refresh
-- Optimistic Update
-- Vite Code Splitting
-- Button Spinier
-- Save Email
+- [React Portal](https://arch-spatula.github.io/blog/2023/07/03/request-waterfal)
+- [Axios Refresh](https://arch-spatula.github.io/2023/06/19/refresh-interceptor)
+- [Save Email](https://arch-spatula.github.io/blog/2023/07/06/save-email)
+  <!-- - Optimistic Update -->
+  <!-- - Vite Code Splitting -->
+  <!-- - Button Spinier -->
 
 ## Screen Shot
 
