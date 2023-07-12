@@ -30,7 +30,11 @@ function Landing() {
             <Button type="button" href={ROUTE_PATHS.SIGN_IN} width={160}>
               로그인
             </Button>
-            <Button href={ROUTE_PATHS.SIGN_UP} width={160}>
+            <Button
+              href={ROUTE_PATHS.SIGN_UP}
+              width={160}
+              hierarchy="secondary"
+            >
               회원가입
             </Button>
           </ButtonWrapper>

@@ -118,6 +118,8 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
 
         return colorMap[props.hierarchy][props.color];
       }};
+
+      cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
     }
 
     :active {
