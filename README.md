@@ -261,13 +261,19 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 <!-- @todo: 랜딩, Card, Deck, 로그인, 회원가입, 로그아웃 -->
 <!-- @todo: 배포 후 수정하기 -->
 
-### 버튼
+### Component
+
+#### Button
 
 ![green-btn](https://user-images.githubusercontent.com/84452145/251381619-6c2570a5-952f-4aab-9c0d-6a0d07a5d9ee.gif)
 
 ![gray-btn](https://user-images.githubusercontent.com/84452145/251381609-2d9dd8c6-bca2-45ac-a71a-4faa01ee269e.gif)
 
 ![red-btn](https://user-images.githubusercontent.com/84452145/251381622-505987e2-eb03-4513-acaf-bafd4429ebd8.gif)
+
+#### Dialog Modal
+
+![Dialog Modal](https://user-images.githubusercontent.com/84452145/252849431-5806ccc8-804a-4565-911d-b0ab31513498.gif)
 
 ## Tech Stack
 
