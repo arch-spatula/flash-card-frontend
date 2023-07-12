@@ -11,12 +11,14 @@ export const PictureContainer = styled.picture`
 `;
 
 export const LandingPageContainer = styled.div`
-  padding: 3.5rem 0 6rem;
+  min-height: 100vh;
+  padding: 3.5rem 0;
+  margin: 0 0 7.5rem;
 `;
 
 export const ImageWrapper = styled.div`
   width: inherit;
-  height: 55rem;
+  aspect-ratio: 16/9;
   position: relative;
 `;
 

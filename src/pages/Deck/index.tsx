@@ -1,8 +1,7 @@
-import { useMutation } from '@tanstack/react-query';
-import { Button, Card, Input, PageHeading } from '../../Components';
-import { useCards, useInput } from '../../hooks';
-import { AddCardContainer } from './Deck.style';
-import { createCardsAPI } from '../../api/cardClient';
+import { Button, Input, PageHeading } from '../../Components';
+import { useCardMutation, useCards, useInput } from '@/hooks';
+import { AddCardContainer, DeckPageContainer } from './Deck.style';
+import { DeckList, SectionTitle } from './subcomponents';
 
 function Deck() {
   const { cards, error } = useCards();
@@ -17,7 +16,7 @@ function Deck() {
     resetInputVal: resetAnswer,
   } = useInput();
 
-  const { mutate } = useMutation({ mutationFn: createCardsAPI });
+  const { createCard, isCreateCardLoading } = useCardMutation();
 
   const disabled = [question, answer].some((elem) => !elem);
 
@@ -27,7 +26,7 @@ function Deck() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    mutate(
+    createCard(
       {
         question,
         answer,
@@ -35,8 +34,7 @@ function Deck() {
         stackCount: 0,
       },
       {
-        onSuccess: (data) => {
-          console.log(data);
+        onSuccess: () => {
           resetQuestion();
           resetAnswer();
         },
@@ -48,30 +46,21 @@ function Deck() {
   };
 
   return (
-    <div>
+    <DeckPageContainer>
       <PageHeading>Deck</PageHeading>
+      <SectionTitle>카드 생성</SectionTitle>
       <AddCardContainer onSubmit={handleSubmit}>
         <h3>문제</h3>
         <Input value={question} onChange={changeQuestion} placeholder="설정" />
         <h3>정답</h3>
         <Input value={answer} onChange={changeAnswer} placeholder="configure" />
-        <Button disabled={disabled}>카드 생성</Button>
+        <Button disabled={disabled} isLoading={isCreateCardLoading}>
+          카드 생성
+        </Button>
       </AddCardContainer>
 
-      <>
-        {cards ? (
-          <>
-            {cards.map((card) => (
-              <Card {...card} key={card._id} />
-            ))}
-          </>
-        ) : (
-          <div>
-            <p>카드가 없습니다.</p>
-          </div>
-        )}
-      </>
-    </div>
+      {cards && <DeckList cards={cards} />}
+    </DeckPageContainer>
   );
 }
 

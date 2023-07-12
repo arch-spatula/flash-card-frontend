@@ -16,8 +16,11 @@ async function getCardsAPI() {
 
 async function createCardsAPI(card: Card) {
   try {
-    const res = await axiosClient.post(API_URLS.CARDS, card);
-    return res;
+    const res = await axiosClient.post<{ insertedId: string }>(
+      API_URLS.CARDS,
+      card
+    );
+    return res.data.insertedId;
   } catch (error) {
     if (error instanceof AxiosError) {
       return error;

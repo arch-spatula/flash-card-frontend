@@ -1,6 +1,6 @@
 import { Button, Input } from '../../Components';
 import { signInAPI } from '../../api/authClient';
-import { useInput, useLogin } from '../../hooks';
+import { useInput, useIsRedirectToCards, useLogin } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
@@ -34,6 +34,7 @@ function SignIn() {
   const navigate = useNavigate();
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const { isRedirecting, startRedirecting } = useIsRedirectToCards();
   const { setTokens } = useLogin();
 
   const { mutate, isLoading } = useMutation({
@@ -52,6 +53,7 @@ function SignIn() {
         onSuccess(data) {
           const { success } = data;
           if (success) {
+            startRedirecting();
             const { access_token, refresh_token } = data;
             setTokens(access_token, refresh_token);
             navigate(ROUTE_PATHS.CARDS);
@@ -101,7 +103,7 @@ function SignIn() {
         <ButtonWrapper>
           <Button
             onClick={signIn}
-            isLoading={isLoading}
+            isLoading={isLoading || isRedirecting}
             disabled={disabled}
             width={'grow'}
           >

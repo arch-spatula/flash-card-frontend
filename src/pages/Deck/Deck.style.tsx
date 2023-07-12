@@ -10,3 +10,7 @@ export const AddCardContainer = styled.form`
   ${(props) => props.theme.shadow.boxShadow}
   border-radius: 1rem;
 `;
+
+export const DeckPageContainer = styled.div`
+  padding: 3rem 0 9rem;
+`;

@@ -1,5 +1,5 @@
 import { redirect } from 'react-router-dom';
-import { checkLogin } from '..';
+import { checkLogin } from '../../auth';
 import { ROUTE_PATHS } from '@/constant/config';
 
 type Direction = 'signin' | 'cards';
