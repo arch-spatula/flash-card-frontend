@@ -119,7 +119,16 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
         return colorMap[props.hierarchy][props.color];
       }};
 
-      cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+      cursor: ${(props) => !props.disabled && 'pointer'};
+      ${(props) =>
+        props.disabled &&
+        `
+        -ms-user-select: none;
+        -moz-user-select: -moz-none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+      `}
     }
 
     :active {
