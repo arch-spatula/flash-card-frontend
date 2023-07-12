@@ -1,21 +1,4 @@
-/**
- * @todo 유저의 복습 기간을 설정하게 되면 이동하기 바람
- * 가독성을 위해 계산 과정을 보여줌
- */
-const intervalMap = [
-  10, // 0 틀림 10분
-  60, // 1번 맞춤 1시간
-  60 * 24, // 2번 맞춤 내일
-  60 * 24 * 2,
-  60 * 24 * 3,
-  60 * 24 * 4,
-  60 * 24 * 7, // 6번 맞춤 다음주
-  60 * 24 * 14, // 7번 맞춤 다다음주
-  60 * 24 * 30.4375, // 8번 맞춤 다음달
-  60 * 24 * 30.4375 * 2, // 9번 다다음달
-  60 * 24 * 91.3125, // 10번 맞춤 다음분기
-  60 * 24 * 182.625, // 11번 맞춤 다음반기
-];
+import { intervalMap } from '@/constant/config';
 
 /**
  * - 읽기 전용 배열
@@ -27,13 +10,13 @@ const diffInUnits: {
 }[] = [
   { unit: 'second', value: 1 },
   { unit: 'minute', value: 60 },
-  { unit: 'hour', value: 60 * 60 },
-  { unit: 'day', value: 60 * 60 * 24 },
-  { unit: 'week', value: 60 * 60 * 24 * 7 },
-  { unit: 'month', value: 60 * 60 * 24 * 30.4375 }, // 평균 월 수 (365.25 / 12)
-  { unit: 'quarter', value: 60 * 60 * 24 * 91.3125 }, // 평균 분기 수 (365.25 / 4)
-  { unit: 'quarter', value: 60 * 60 * 24 * 182.625 }, // 평균 반년 수 (365.25 / 2)
-  { unit: 'year', value: 60 * 60 * 24 * 365.25 },
+  { unit: 'hour', value: 3600 }, // 60 * 60
+  { unit: 'day', value: 86400 }, // 60 * 60 * 24
+  { unit: 'week', value: 604800 }, // 60 * 60 * 24 * 7
+  { unit: 'month', value: 2629800 }, // 60 * 60 * 24 * 30.4375 -> 평균 월 수 (365.25 / 12)
+  { unit: 'quarter', value: 7889400 }, // 60 * 60 * 24 * 91.3125 -> 평균 분기 수 (365.25 / 4)
+  { unit: 'quarter', value: 15778800 }, // 60 * 60 * 24 * 182.625 -> 평균 반년 수 (365.25 / 2)
+  { unit: 'year', value: 31557600 }, // 60 * 60 * 24 * 365.25
 ];
 Object.freeze(diffInUnits);
 
@@ -43,10 +26,7 @@ export function formatDate(
   stackCount: number,
   now = new Date()
 ) {
-  const diff = Math.max(
-    +getNextIntervalDate(new Date(submitDate), stackCount, intervalMap) - +now,
-    0
-  );
+  const diff = calDiffBetweenNowFromNextInterval(submitDate, stackCount, now);
 
   if (diff === 0) return '지금';
 
@@ -71,11 +51,23 @@ export function formatDate(
   }
 }
 
-/** 제출일과 맞은 횟수를 기준으로 다음 풀이까지 남은 시간을 구함 */
+/** 현재와 다음에 풀어야 하는 시점까지 차이를 구함 */
+export function calDiffBetweenNowFromNextInterval(
+  submitDate: Date | string | number,
+  stackCount: number,
+  now = new Date()
+) {
+  return Math.max(
+    +getNextIntervalDate(new Date(submitDate), stackCount, intervalMap) - +now,
+    0
+  );
+}
+
+/** 제출일과 맞은 횟수를 기준으로 다음에 풀어야 할 시간과 날짜를 구함 */
 export function getNextIntervalDate(
   date: Date,
   count: number,
-  intervalMap: number[]
+  intervalMap: Int32Array
 ) {
   const newDate = new Date(date);
 
