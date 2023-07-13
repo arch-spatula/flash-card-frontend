@@ -274,6 +274,14 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 ### Component
 
+#### Card
+
+![card front](https://user-images.githubusercontent.com/84452145/253193627-65034e36-2e0a-4a10-8e30-ae63bde2d3b0.png)
+
+![card back](https://user-images.githubusercontent.com/84452145/253194058-e518f146-6740-4078-9f71-9ac568bc61ee.png)
+
+![card edit](https://user-images.githubusercontent.com/84452145/253193493-834500e9-cb00-44e0-9bdc-e859b04e6be2.png)
+
 #### Button
 
 ![green-btn](https://user-images.githubusercontent.com/84452145/251381619-6c2570a5-952f-4aab-9c0d-6a0d07a5d9ee.gif)
@@ -282,9 +290,15 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 ![red-btn](https://user-images.githubusercontent.com/84452145/251381622-505987e2-eb03-4513-acaf-bafd4429ebd8.gif)
 
+![interaction-btn](https://user-images.githubusercontent.com/84452145/253195508-af96b317-fbf9-412a-a229-6ff17d79e70e.gif)
+
 #### Dialog Modal
 
 ![Dialog Modal](https://user-images.githubusercontent.com/84452145/252849431-5806ccc8-804a-4565-911d-b0ab31513498.gif)
+
+#### drop down
+
+![card](https://user-images.githubusercontent.com/84452145/253193398-524a61eb-2e44-4f49-8f8f-60a0a424ad2e.png)
 
 ## Tech Stack
 
