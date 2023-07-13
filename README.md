@@ -258,8 +258,19 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 ## Screen Shot
 
-<!-- @todo: 랜딩, Card, Deck, 로그인, 회원가입, 로그아웃 -->
-<!-- @todo: 배포 후 수정하기 -->
+### page
+
+![landing page screen shot](https://user-images.githubusercontent.com/84452145/253107058-801ebee0-fa03-4a43-bc14-3fbef833d0b5.png)
+
+![sign up page screen shot](https://user-images.githubusercontent.com/84452145/253107136-05d5fbd4-f26d-4f0f-8817-91ba2243e122.png)
+
+![sign in page screen shot](https://user-images.githubusercontent.com/84452145/253107244-5df27011-5f39-44fb-a331-0bbb85400b40.png)
+
+![cards page screen shot](https://user-images.githubusercontent.com/84452145/253146527-b64eba7d-feae-4b53-a74d-deee6cff0d70.png)
+
+![deck page screen shot](https://user-images.githubusercontent.com/84452145/253146579-16e37e0f-efe2-4b48-9989-d9ad08875039.png)
+
+![setting page screen shot](https://user-images.githubusercontent.com/84452145/253146615-bd313e70-ed3b-4c7c-a494-c2e08ae80056.png)
 
 ### Component
 
