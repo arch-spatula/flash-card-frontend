@@ -8,7 +8,7 @@ export function Icon() {
       height="24"
       viewBox="0 0 24 24"
       strokeWidth="2"
-      stroke={theme.colors.gray700}
+      stroke={theme.colors.gray400}
       fill="none"
       strokeLinecap="round"
       strokeLinejoin="round"

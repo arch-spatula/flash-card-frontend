@@ -87,7 +87,12 @@ function SignUp() {
           <Button disabled={disabled} isLoading={isLoading} width={'grow'}>
             회원가입
           </Button>
-          <Button type="button" href={ROUTE_PATHS.SIGN_IN} width={'grow'}>
+          <Button
+            type="button"
+            href={ROUTE_PATHS.SIGN_IN}
+            width={'grow'}
+            hierarchy="secondary"
+          >
             로그인
           </Button>
         </ButtonWrapper>

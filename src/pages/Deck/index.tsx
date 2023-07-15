@@ -50,11 +50,23 @@ function Deck() {
       <PageHeading>Deck</PageHeading>
       <SectionTitle>카드 생성</SectionTitle>
       <AddCardContainer onSubmit={handleSubmit}>
-        <h3>문제</h3>
-        <Input value={question} onChange={changeQuestion} placeholder="설정" />
-        <h3>정답</h3>
-        <Input value={answer} onChange={changeAnswer} placeholder="configure" />
-        <Button disabled={disabled} isLoading={isCreateCardLoading}>
+        <Input
+          value={question}
+          onChange={changeQuestion}
+          placeholder="설정"
+          inputLabel="문제"
+        />
+        <Input
+          value={answer}
+          onChange={changeAnswer}
+          placeholder="configure"
+          inputLabel="정답"
+        />
+        <Button
+          disabled={disabled}
+          isLoading={isCreateCardLoading}
+          width={'grow'}
+        >
           카드 생성
         </Button>
       </AddCardContainer>

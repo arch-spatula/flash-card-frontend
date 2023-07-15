@@ -50,5 +50,5 @@ export const HelperText = styled.p<{
 `;
 
 export const InputLabel = styled.label`
-  ${(props) => props.theme.fonts.caption12Regular}
+  ${(props) => props.theme.fonts.body16Regular}
 `;

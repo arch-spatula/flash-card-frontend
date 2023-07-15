@@ -9,5 +9,6 @@ export * from './useCardMutation';
 export * from './useOutsideClick';
 export * from './useIsRedirectToCards';
 export * from './useEndRedirectToCards';
+export * from './useEmailSave';
 export * from './useStopScroll';
 export * from './useEmailSave';
