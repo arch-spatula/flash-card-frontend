@@ -23,3 +23,15 @@ export const ButtonWrapper = styled.div`
   display: flex;
   gap: 0.5rem;
 `;
+
+export const EmailCheckBox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+`;
+
+export const CheckBoxCaption = styled.p`
+  ${(props) => props.theme.fonts.body14Regular}
+  color: ${(props) => props.theme.colors.gray600};
+`;

@@ -19,6 +19,7 @@ export const ROUTE_PATHS = {
 export const STORAGE_KEY = {
   ACCESS_TOKEN: 'accessToken',
   SESSION_TOKEN: 'sessionToken',
+  EMAIL: 'email',
 } as const;
 
 /**

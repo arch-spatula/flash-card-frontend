@@ -5,3 +5,4 @@ export * from './Card';
 export * from './DropdownMenu';
 export * from './EmptyCards';
 export * from './Dialog';
+export * from './Checkbox';

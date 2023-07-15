@@ -1,11 +1,18 @@
-import { Button, Input } from '../../Components';
+import { Button, Checkbox, Input } from '../../Components';
 import { signInAPI } from '../../api/authClient';
-import { useInput, useIsRedirectToCards, useLogin } from '../../hooks';
+import {
+  useEmailSave,
+  useInput,
+  useIsRedirectToCards,
+  useLogin,
+} from '@/hooks';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '../../constant/config';
 import { useState } from 'react';
 import {
   ButtonWrapper,
+  CheckBoxCaption,
+  EmailCheckBox,
   MainContainer,
   MainWrapper,
   Title,
@@ -20,11 +27,15 @@ import { checkEmail } from '../../utils';
 
 function SignIn() {
   const {
-    inputVal: emailValue,
-    changeInputVal: changeEmail,
-    inputRef: emailRef,
-    focusInput: focusEmail,
-  } = useInput();
+    emailValue,
+    emailRef,
+    storeEmail,
+    focusEmail,
+    changeEmail,
+    handleSaveEmail,
+    isChecked,
+  } = useEmailSave();
+
   const {
     inputVal: passwordValue,
     changeInputVal: changePassword,
@@ -57,6 +68,7 @@ function SignIn() {
             const { access_token, refresh_token } = data;
             setTokens(access_token, refresh_token);
             navigate(ROUTE_PATHS.CARDS);
+            storeEmail();
           } else {
             const { msg } = data;
             if (msg === 'Error: 비밀번호가 일치하지 않습니다.') {
@@ -92,6 +104,13 @@ function SignIn() {
           customRef={emailRef}
           placeholder="user@email.com"
         />
+        <EmailCheckBox>
+          <Checkbox
+            check={!isChecked ? 'checked' : 'unchecked'}
+            onClick={handleSaveEmail}
+          />
+          <CheckBoxCaption>이메일 저장</CheckBoxCaption>
+        </EmailCheckBox>
         <Input
           type="password"
           onChange={changePassword}

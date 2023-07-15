@@ -10,3 +10,4 @@ export * from './useOutsideClick';
 export * from './useIsRedirectToCards';
 export * from './useEndRedirectToCards';
 export * from './useStopScroll';
+export * from './useEmailSave';
