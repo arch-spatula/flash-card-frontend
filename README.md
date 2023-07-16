@@ -250,7 +250,7 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 #### 부가적인 문제해결
 
 - [React Portal](https://arch-spatula.github.io/blog/2023/07/03/request-waterfal)
-- [Axios Refresh](https://arch-spatula.github.io/2023/06/19/refresh-interceptor)
+- [Axios Refresh](https://arch-spatula.github.io/blog/2023/06/19/refresh-interceptor)
 - [Save Email](https://arch-spatula.github.io/blog/2023/07/06/save-email)
   <!-- - Optimistic Update -->
   <!-- - Vite Code Splitting -->
