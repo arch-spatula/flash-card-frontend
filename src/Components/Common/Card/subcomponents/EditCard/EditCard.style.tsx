@@ -6,3 +6,8 @@ export const CardEditContainer = styled(CardContainer)`
     return props.active ? rotateInverse : rotate;
   }};
 `;
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;

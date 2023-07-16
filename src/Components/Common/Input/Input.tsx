@@ -1,10 +1,10 @@
-import { spaceToHyphen } from '@/utils';
 import {
   InputWrapper,
   HelperText,
   InputContainer,
   InputLabel,
 } from './Input.style';
+import { useId } from 'react';
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   value: string;
@@ -28,7 +28,7 @@ export function Input({
   helperTextColor = 'normal',
   ...other
 }: InputProps) {
-  const id = spaceToHyphen(inputLabel);
+  const id = useId();
   return (
     <InputContainer
       hideHelper={hideHelper}

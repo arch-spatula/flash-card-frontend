@@ -1,6 +1,6 @@
 import { useCardMutation, useCardSide, useInput } from '@/hooks';
 import { Button, Input } from '../../..';
-import { CardEditContainer } from './EditCard.style';
+import { ButtonWrapper, CardEditContainer } from './EditCard.style';
 
 type EditCardProps = Omit<Card, 'userId'>;
 
@@ -51,24 +51,28 @@ export function EditCard({
 
   return (
     <CardEditContainer active={cardSide === 'edit'}>
-      <h3>문제</h3>
       <Input
         value={questionVal}
         onChange={changeQuestion}
         placeholder={question}
         hideHelper
+        inputLabel="문제"
       />
-      <h3>정답</h3>
       <Input
         value={answerVal}
         onChange={changeAnswer}
         placeholder={answer}
         hideHelper
+        inputLabel="정답"
       />
-      <Button disabled={disabled} onClick={handleSave}>
-        저장
-      </Button>
-      <Button onClick={handleCancel}>취소</Button>
+      <ButtonWrapper>
+        <Button disabled={disabled} onClick={handleSave} width={'grow'}>
+          저장
+        </Button>
+        <Button onClick={handleCancel} hierarchy="secondary" width={'grow'}>
+          취소
+        </Button>
+      </ButtonWrapper>
     </CardEditContainer>
   );
 }
