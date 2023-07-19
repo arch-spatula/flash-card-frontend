@@ -45,7 +45,7 @@ qwer1234
 
 #### request waterfall 숨기기
 
-래퍼런스: [React Query meets React Router - tkdodo](https://tkdodo.eu/blog/react-query-meets-react-router)
+레퍼런스: [React Query meets React Router - tkdodo](https://tkdodo.eu/blog/react-query-meets-react-router)
 
 ##### 문제: request waterfall은 동문서답
 
@@ -352,9 +352,146 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 - Spinner를 다루기 상당히 간단합니다. storybook 문서를 보고 원하는대로 만들고 붙이면 됩니다.
 
-<!-- @todo: 서비스 아키텍쳐 -->
+<!-- @todo: ## 서비스 아키텍쳐 -->
 
-<!-- @todo ## ERD -->
+<!-- @todo: ## ERD -->
+
+## 코딩 컨벤션
+
+### top level, return 아래 helper 함수는 function 키워드
+
+- 코드를 읽을 때 제일 중요한 함수를 최상단에 위치시킵니다.
+- function 키워드는 호이스팅(hoisting)의 장점을 활용합니다.
+
+```tsx
+const SubComponent = () => {
+  return <div>Not Important</div>;
+};
+
+const Component = () => {
+  return <SubComponent />;
+};
+```
+
+중요한 것을 미괄식으로 표현합니다.
+
+```tsx
+function Component() {
+  return <SubComponent />;
+}
+
+function SubComponent() {
+  return <div>Not Important</div>;
+}
+```
+
+호이스팅이 중요한 것을 두괄식으로 표현할 수 있게 해줍니다.
+
+### callback, 이벤트 handler 함수는 화살표함수
+
+```tsx
+function Component(init = '') {
+  const changeInputVal = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputVal(e.target.value);
+    },
+    []
+  );
+
+  const resetInputVal = () => {
+    setInputVal(init);
+  };
+
+  return { inputVal, changeInputVal, resetInputVal, focusInput, inputRef };
+}
+```
+
+### hook과 handler 영역 구분하기
+
+관심사에 맞지 않은 hook과 handler가 섞이고 결합되는 방지하기 위해 영역을 구분합니다.
+
+```tsx
+function Component() {
+  const handleSomething = () => {};
+
+  return { handleSomething };
+}
+```
+
+hook과 handler가 섞여 있습니다. 나중에 다양한 hook과 handler들이 추가되면 관심사에 맞는 코드를 구분하기 어려워집니다. 또 추출도 어려워집니다.
+
+```tsx
+function Component() {
+  // hook 영역 시작 -------------------------------------------------------------
+  const [inputVal, setInputVal] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // hook 영역 종료 & handler 영역 시작 -------------------------------------------
+  const changeInputVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+  };
+
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
+  // handler 영역 종료 & JSX 영역 시작 --------------------------------------------
+  return <input value={inputVal} onChange={changeInputVal} ref={inputRef} />;
+  // JSX 영역 종료 = ------------------------------------------------------------
+}
+```
+
+JSX에 주입하고 이벤트를 처리할 함수와 hook이라는 관심사를 분리합니다.
+
+### useEffect는 custom hook에서 사용
+
+라이프 사이클이외 관심사에 맞지 않은 handler 함수를 주입할지도 모릅니다.
+
+```tsx
+function Component() {
+  const { handleBar } = useFoo('');
+  const { handleQux } = useBaz('');
+
+  useEffect(() => {
+    handleBar();
+    handleQux();
+  }, []);
+
+  return <NotImportant />;
+}
+```
+
+라이프사이클에 각각 다른 관심사가 하나로 결합되었습니다. 하나의 handler는 update에 구독해야 하고 다른 함수는 mount시점만 필요하면 분리가 필요합니다.
+
+```tsx
+function Component() {
+  useCorge('');
+  useGrault('');
+
+  return <NotImportant />;
+}
+
+function useCorge() {
+  const { handleBar } = useFoo('');
+
+  useEffect(() => {
+    handleBar();
+  }, []);
+
+  return {};
+}
+
+function useGrault() {
+  const { handleQux, graply } = useBaz('');
+
+  useEffect(() => {
+    handleQux();
+  }, [graply]);
+  return {};
+}
+```
+
+useEffect 사용한다점 자체로 하위 계층구조로 간주합니다. 서로 구독해야 하는 라이프사이클을 독립적으로 구분합니다.
 
 ## 실행 명령
 
