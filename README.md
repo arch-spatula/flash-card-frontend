@@ -390,19 +390,16 @@ function SubComponent() {
 ### callback, 이벤트 handler 함수는 화살표함수
 
 ```tsx
-function Component(init = '') {
-  const changeInputVal = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputVal(e.target.value);
-    },
-    []
-  );
+function useSomething() {
+  const doSomething = useCallback(() => {
+    // do something
+  }, []);
 
-  const resetInputVal = () => {
-    setInputVal(init);
+  const handleSomething = () => {
+    // do something else
   };
 
-  return { inputVal, changeInputVal, resetInputVal, focusInput, inputRef };
+  return { somethingValue, handleSomething };
 }
 ```
 
@@ -412,13 +409,21 @@ function Component(init = '') {
 
 ```tsx
 function Component() {
-  const handleSomething = () => {};
+  const [inputVal, setInputVal] = useState('');
+  const changeInputVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+  };
 
-  return { handleSomething };
+  const inputRef = useRef<HTMLInputElement>(null);
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
+  return <input value={inputVal} onChange={changeInputVal} ref={inputRef} />;
 }
 ```
 
-hook과 handler가 섞여 있습니다. 나중에 다양한 hook과 handler들이 추가되면 관심사에 맞는 코드를 구분하기 어려워집니다. 또 추출도 어려워집니다.
+hook과 handler가 섞여 있습니다. 지금은 직관적이지만 나중에 `useEffect`, 조건문, hook에 handler 대입하는 것처럼 로직이 추가되고 섞이면 관심사에 맞는 코드를 구분하기 어려워질 수 있습니다.
 
 ```tsx
 function Component() {
@@ -461,12 +466,12 @@ function Component() {
 }
 ```
 
-라이프사이클에 각각 다른 관심사가 하나로 결합되었습니다. 하나의 handler는 update에 구독해야 하고 다른 함수는 mount시점만 필요하면 분리가 필요합니다.
+라이프사이클에 각각 다른 관심사가 하나로 결합되었습니다. 하나의 함수는 update에 구독해야 하고 다른 함수는 mount시점만 필요하면 분리가 필요합니다.
 
 ```tsx
 function Component() {
-  useCorge('');
-  useGrault('');
+  useCorge();
+  useGrault();
 
   return <NotImportant />;
 }
