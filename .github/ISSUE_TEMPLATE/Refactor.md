@@ -6,7 +6,7 @@ labels: Refactor
 assignees: arch-spatula
 ---
 
-# 리팩토링 주제
+## 리팩토링 주제
 
 - (리팩토링할 모듈 목록)
 

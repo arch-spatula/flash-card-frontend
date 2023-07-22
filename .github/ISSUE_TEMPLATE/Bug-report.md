@@ -6,7 +6,7 @@ labels: bug
 assignees: arch-spatula
 ---
 
-# 버그 이름
+## 버그 이름
 
 (버그 이미지 or 영상)
 

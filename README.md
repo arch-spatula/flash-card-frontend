@@ -40,10 +40,12 @@ qwer1234
 ### 트러블 슈팅
 
 1. [request waterfall 숨기기](#request-waterfall-숨기기)
-2. [card side](#card-side)
-3. [부가적인 문제해결](#부가적인-문제해결)
+<!-- 2. [card side](#card-side) -->
+2. [부가적인 문제해결](#부가적인-문제해결)
 
 #### request waterfall 숨기기
+
+레퍼런스: [React Query meets React Router - tkdodo](https://tkdodo.eu/blog/react-query-meets-react-router)
 
 ##### 문제: request waterfall은 동문서답
 
@@ -54,8 +56,6 @@ qwer1234
 ![request waterfall - 1](https://user-images.githubusercontent.com/84452145/252219174-765f2a02-48cf-41d3-9dd5-cdc6181f4ab7.gif)
 
 ##### 조치: loader에서 리소스를 요청하기
-
-tkdodo의 [React Query meets React Router](https://tkdodo.eu/blog/react-query-meets-react-router)를 그대로 적용했습니다.
 
 React-Router-DOM에서 loader는 Page 접근 전에 실행하는 함수입니다. 실행하고 싶은 로직을 콜백함수로 대입하고 콜백함수의 반환값도 `useLoaderData`로 접근할 수 있습니다.
 
@@ -121,17 +121,21 @@ mount 하기 전에 query-cache는 캐싱하면 Page 컴포넌트 Mount에 요�
 
 <!-- @todo: axios refresh -->
 <!--
-#### refresh token
+#### axios token refresh and retry
 
-refresh token 로직은 순수하게 프론트엔드만 해결하는 문제는 아닙니다. 백엔드도 문제가 있고 이를 해결해야 합니다. 백엔드의 경우 배포환경 서버의 재가동 문제와 refresh 응답입니다.
+- best practice의 참고입니다. 현재의 구현은 best practice가 전혀 아닙니다. Request Forgery에 여전히 취약합니다.
+- refresh token 로직은 순수하게 프론트엔드만 해결하는 문제는 아닙니다. 백엔드도 문제가 있고 이를 해결해야 합니다. 백엔드의 경우 배포환경 서버의 재가동 문제와 refresh 응답입니다.
+- 저의 블로그 [토큰 갱신 처리하기](https://arch-spatula.github.io/blog/2023/06/19/refresh-interceptor)에서 더 자세히 다릅니다.
+- 레퍼런스: [axios interceptors와 refresh token을 활용한 jwt 토큰 관리 - HyunGyu-Kim](https://gusrb3164.github.io/web/2022/08/07/refresh-with-axios-for-client/)
 
 ##### 문제:
 
-token의 만료시간은 1시간이고 유저의 체류시간은 충분히 1시간을 초과할 수 있습니다.
+- token의 만료시간은 1시간이고 유저의 체류시간은 충분히 1시간을 초과할 수 있습니다.
+- 로그아웃처리는 사용자 경험이 너무 나쁩니다.
 
 ##### 조치:
 
-401 응답에 대해서 token을 자동 갱신하고 동일한 요청을 갱신한 token으로 재요청했습니다.
+- 401 응답에 대해서 token을 자동 갱신하고 동일한 요청을 갱신한 token으로 재요청했습니다.
 
 ```ts
 axiosClient.interceptors.response.use(
@@ -155,6 +159,9 @@ axiosClient.interceptors.response.use(
   }
 );
 ```
+
+- axiosClient의 token 만료 응답을 감청합니다. 만료를 포착하면 갱신하고 동일한 요청을 다시 시도합니다.
+- 갱신 실패, 재요청 실패, 만료 이외 요청 실패의 경우 해당 영역에서 처리하도록 `Promise.reject(err)`를 반환합니다.
 
 ```ts
 import { AxiosError, AxiosResponse } from 'axios';
@@ -192,13 +199,13 @@ async function refreshAccessAPI() {
 }
 ```
 
+- refresh 만료전이면 access token을 갱신합니다. 만약에 만료 혹은 통신 중 다른 에러가 발생하면 로그아웃 처리합니다.
+
 ##### 결과:
 
-유저는 1시간보다 더 오랫동안 자동 인증이 됩니다. -->
+- 유저는 1시간보다 더 오랫동안 자동 인증이 됩니다. -->
 
-<!-- @todo: card side -->
-
-#### card side
+<!-- #### card side
 
 #### 문제: 카드는 3가지 면을 가져야 합니다.
 
@@ -206,7 +213,7 @@ async function refreshAccessAPI() {
 
 #### 조치:
 
-카드의 면접을 기록하고 돌아가기를 하면 기록인 캐시를 접근하는 방식을 고안했습니다.
+카드의 면을 기록하고 돌아가기를 하면 기록인 캐시를 접근하는 방식을 고안했습니다.
 
 ```ts
 import { atom, useAtom } from 'jotai';
@@ -245,11 +252,11 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 ![card-flip](https://user-images.githubusercontent.com/84452145/248541998-c6a9c7d9-2c34-4089-8f2a-878c4f020942.gif)
 
-문제에서 편집을 접근하고 돌아갈 수 있고 또 정답에서도 편집으로 돌아갈 수 있습니다.
+문제에서 편집을 접근하고 돌아갈 수 있고 또 정답에서도 편집으로 돌아갈 수 있습니다. -->
 
 #### 부가적인 문제해결
 
-- [React Portal](https://arch-spatula.github.io/blog/2023/07/03/request-waterfal)
+- [React Portal](https://arch-spatula.github.io/blog/2023/07/06/react-portal)
 - [Axios Refresh](https://arch-spatula.github.io/blog/2023/06/19/refresh-interceptor)
 - [Save Email](https://arch-spatula.github.io/blog/2023/07/06/save-email)
   <!-- - Optimistic Update -->
@@ -318,7 +325,7 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 ### Axios
 
 - 통신과 관련된 기본적인 추상화 혜택을 받고자 활용합니다.
-- interceptor로 인증과 갱신처리 합니다.
+- interceptor로 인가과 갱신처리 합니다.
 
 ### React Router DOM
 
@@ -345,9 +352,151 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 - Spinner를 다루기 상당히 간단합니다. storybook 문서를 보고 원하는대로 만들고 붙이면 됩니다.
 
-<!-- @todo: 서비스 아키텍쳐 -->
+<!-- @todo: ## 서비스 아키텍쳐 -->
 
-<!-- @todo ## ERD -->
+<!-- @todo: ## ERD -->
+
+## 코딩 컨벤션
+
+### top level, return 아래 helper 함수는 function 키워드
+
+- 코드를 읽을 때 제일 중요한 함수를 최상단에 위치시킵니다.
+- function 키워드는 호이스팅(hoisting)의 장점을 활용합니다.
+
+```tsx
+const SubComponent = () => {
+  return <div>Not Important</div>;
+};
+
+const Component = () => {
+  return <SubComponent />;
+};
+```
+
+중요한 것을 미괄식으로 표현합니다.
+
+```tsx
+function Component() {
+  return <SubComponent />;
+}
+
+function SubComponent() {
+  return <div>Not Important</div>;
+}
+```
+
+호이스팅이 중요한 것을 두괄식으로 표현할 수 있게 해줍니다.
+
+### callback, 이벤트 handler 함수는 화살표함수
+
+```tsx
+function useSomething() {
+  const doSomething = useCallback(() => {
+    // do something
+  }, []);
+
+  const handleSomething = () => {
+    // do something else
+  };
+
+  return { somethingValue, handleSomething };
+}
+```
+
+### hook과 handler 영역 구분하기
+
+관심사에 맞지 않은 hook과 handler가 섞이고 결합되는 방지하기 위해 영역을 구분합니다.
+
+```tsx
+function Component() {
+  const [inputVal, setInputVal] = useState('');
+  const changeInputVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+  };
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
+  return <input value={inputVal} onChange={changeInputVal} ref={inputRef} />;
+}
+```
+
+hook과 handler가 섞여 있습니다. 지금은 직관적이지만 나중에 `useEffect`, 조건문, hook에 handler 대입하는 것처럼 로직이 추가되고 섞이면 관심사에 맞는 코드를 구분하기 어려워질 수 있습니다.
+
+```tsx
+function Component() {
+  // hook 영역 시작 -------------------------------------------------------------
+  const [inputVal, setInputVal] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // hook 영역 종료 & handler 영역 시작 -------------------------------------------
+  const changeInputVal = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputVal(e.target.value);
+  };
+
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
+  // handler 영역 종료 & JSX 영역 시작 --------------------------------------------
+  return <input value={inputVal} onChange={changeInputVal} ref={inputRef} />;
+  // JSX 영역 종료 = ------------------------------------------------------------
+}
+```
+
+JSX에 주입하고 이벤트를 처리할 함수와 hook이라는 관심사를 분리합니다.
+
+### useEffect는 custom hook에서 사용
+
+라이프 사이클이외 관심사에 맞지 않은 handler 함수를 주입할지도 모릅니다.
+
+```tsx
+function Component() {
+  const { handleBar } = useFoo('');
+  const { handleQux } = useBaz('');
+
+  useEffect(() => {
+    handleBar();
+    handleQux();
+  }, []);
+
+  return <NotImportant />;
+}
+```
+
+라이프사이클에 각각 다른 관심사가 하나로 결합되었습니다. 하나의 함수는 update에 구독해야 하고 다른 함수는 mount시점만 필요하면 분리가 필요합니다.
+
+```tsx
+function Component() {
+  useCorge();
+  useGrault();
+
+  return <NotImportant />;
+}
+
+function useCorge() {
+  const { handleBar } = useFoo('');
+
+  useEffect(() => {
+    handleBar();
+  }, []);
+
+  return {};
+}
+
+function useGrault() {
+  const { handleQux, graply } = useBaz('');
+
+  useEffect(() => {
+    handleQux();
+  }, [graply]);
+  return {};
+}
+```
+
+useEffect 사용한다점 자체로 하위 계층구조로 간주합니다. 서로 구독해야 하는 라이프사이클을 독립적으로 구분합니다.
 
 ## 실행 명령
 
