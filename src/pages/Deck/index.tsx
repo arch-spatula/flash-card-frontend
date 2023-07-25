@@ -1,10 +1,9 @@
-import { Button, Input, PageHeading } from '../../Components';
-import { useCardMutation, useCards, useInput } from '@/hooks';
+import { Button, ErrorBoundary, Input, PageHeading } from '../../Components';
+import { useCardMutation, useInput } from '@/hooks';
 import { AddCardContainer, DeckPageContainer } from './Deck.style';
 import { DeckList, SectionTitle } from './subcomponents';
 
 function Deck() {
-  const { cards, error } = useCards();
   const {
     inputVal: question,
     changeInputVal: changeQuestion,
@@ -19,10 +18,6 @@ function Deck() {
   const { createCard, isCreateCardLoading } = useCardMutation();
 
   const disabled = [question, answer].some((elem) => !elem);
-
-  if (typeof cards === 'string' || error) {
-    return <div>{`${error}`}</div>;
-  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -70,8 +65,9 @@ function Deck() {
           카드 생성
         </Button>
       </AddCardContainer>
-
-      {cards && <DeckList cards={cards} />}
+      <ErrorBoundary fallback={<h2>something went wrong???</h2>}>
+        <DeckList />
+      </ErrorBoundary>
     </DeckPageContainer>
   );
 }

@@ -1,8 +1,9 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Layout from './GlobalLayout';
 import { ROUTE_PATHS } from '../constant/config';
-import { lazy } from 'react';
+import React, { lazy } from 'react';
 import { cardLoader, protectRoutes } from '@/utils';
+import { ErrorBoundary } from '@/Components';
 
 const Landing = lazy(() => import('../pages/Landing'));
 const SignIn = lazy(() => import('../pages/SignIn'));
@@ -12,6 +13,10 @@ const Deck = lazy(() => import('../pages/Deck'));
 const Setting = lazy(() => import('../pages/Setting'));
 const NotFound = lazy(() => import('../pages/NotFound'));
 const ServerError = lazy(() => import('../pages/ServerError'));
+
+{
+  /* <ErrorBoundary ></ErrorBoundary> */
+}
 
 /**
  * 참고 자료

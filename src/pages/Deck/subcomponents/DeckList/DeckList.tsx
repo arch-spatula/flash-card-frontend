@@ -8,8 +8,11 @@ import {
   DeckItemContainer,
   DeckListContainer,
 } from './DeckList.style';
+import { useCards } from '@/hooks';
 
-export function DeckList({ cards }: { cards: Card[] }) {
+export function DeckList() {
+  const { cards } = useCards();
+
   const IntervalArray: { title: string; deck: Card[] }[] = useMemo(() => {
     const arr: { title: string; deck: Card[] }[] = [
       {
@@ -70,37 +73,38 @@ export function DeckList({ cards }: { cards: Card[] }) {
       },
     ];
 
-    for (let j = 0; j < cards.length; j++) {
-      const card = cards[j];
-      const diff = calDiffBetweenNowFromNextInterval(
-        card.submitDate,
-        card.stackCount
-      );
+    if (cards) {
+      for (let j = 0; j < cards.length; j++) {
+        const card = cards[j];
+        const diff = calDiffBetweenNowFromNextInterval(
+          card.submitDate,
+          card.stackCount
+        );
 
-      if (diff === 0) {
-        arr[0].deck.push(card);
-        continue;
-      }
-
-      if (0 < diff && diff <= intervalMap[0] * 60 * 1000) {
-        arr[1].deck.push(card);
-        continue;
-      }
-
-      let find = false;
-      for (let i = 0; i < intervalMap.length; i++) {
-        if (
-          intervalMap[i] * 60 * 1000 < diff &&
-          diff <= intervalMap[i + 1] * 60 * 1000
-        ) {
-          arr[i + 2].deck.push(card);
-          find = true;
-          break;
+        if (diff === 0) {
+          arr[0].deck.push(card);
+          continue;
         }
-      }
-      if (find) continue;
 
-      if (intervalMap[11] * 60 * 1000 < diff) arr[13].deck.push(card);
+        if (0 < diff && diff <= intervalMap[0] * 60 * 1000) {
+          arr[1].deck.push(card);
+          continue;
+        }
+
+        let find = false;
+        for (let i = 0; i < intervalMap.length; i++) {
+          if (
+            intervalMap[i] * 60 * 1000 < diff &&
+            diff <= intervalMap[i + 1] * 60 * 1000
+          ) {
+            arr[i + 2].deck.push(card);
+            find = true;
+            break;
+          }
+        }
+        if (find) continue;
+        if (intervalMap[11] * 60 * 1000 < diff) arr[13].deck.push(card);
+      }
     }
 
     return arr;

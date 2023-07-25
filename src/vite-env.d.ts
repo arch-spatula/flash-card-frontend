@@ -8,3 +8,5 @@ declare type Card = {
   stackCount: number;
   submitDate: Date;
 };
+
+declare type ErrorResponse = { success: boolean; msg: string };
