@@ -17,7 +17,7 @@ type CardBackProps = Omit<Card, 'userId' | 'submitDate'> & {
 };
 
 export function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
-  const { cardSide, toggleTo } = useCardSide();
+  const { cardSide, dispatch } = useCardSide();
   const { updateCard } = useCardMutation();
 
   const { isCorrect } = useCorrect();
@@ -25,7 +25,7 @@ export function CardBack({ _id, answer, question, stackCount }: CardBackProps) {
 
   const handleConform = () => {
     resetInputVal();
-    toggleTo('front');
+    dispatch('front');
 
     const newSubmitDate = new Date();
     if (isCorrect) {

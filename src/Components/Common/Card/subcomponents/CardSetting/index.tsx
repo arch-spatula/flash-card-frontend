@@ -8,7 +8,7 @@ type CardSettingProps = {
 };
 
 export function CardSetting({ _id }: CardSettingProps) {
-  const { toggleTo } = useCardSide();
+  const { dispatch } = useCardSide();
   const { deleteCard } = useCardMutation();
 
   const { OutSideProvider, handleOpen, handleClose } = useOutsideClick();
@@ -21,8 +21,8 @@ export function CardSetting({ _id }: CardSettingProps) {
   }, [deleteCard, _id, handleClose]);
 
   const handleEdit = useCallback(() => {
-    toggleTo('edit');
-  }, [toggleTo]);
+    dispatch('edit');
+  }, [dispatch]);
 
   return (
     <MenuWrapper>
