@@ -20,10 +20,11 @@ function NotFound() {
         <Button
           href={isLoggedIn ? ROUTE_PATHS.CARDS : ROUTE_PATHS.SIGN_IN}
           width={160}
+          hierarchy="primary"
         >
           홈으로 이동
         </Button>
-        <Button onClick={handle} width={160}>
+        <Button onClick={handle} width={160} hierarchy="secondary">
           뒤로가기 이동
         </Button>
       </ButtonWrapper>
