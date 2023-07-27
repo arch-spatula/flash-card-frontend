@@ -1,7 +1,8 @@
-import { Button, ErrorBoundary, Input, PageHeading } from '../../Components';
 import { useCardMutation, useInput } from '@/hooks';
 import { AddCardContainer, DeckPageContainer } from './Deck.style';
 import { DeckList, SectionTitle } from './subcomponents';
+import { ErrorBoundary } from 'react-error-boundary';
+import { Button, EmptyCards, Input, PageHeading } from '@/Components';
 
 function Deck() {
   const {
@@ -65,7 +66,14 @@ function Deck() {
           카드 생성
         </Button>
       </AddCardContainer>
-      <ErrorBoundary fallback={<h2>something went wrong???</h2>}>
+      <ErrorBoundary
+        FallbackComponent={({ error }) => (
+          <>
+            <SectionTitle>Oops! something went wrong 🤯</SectionTitle>
+            <EmptyCards error={error} />
+          </>
+        )}
+      >
         <DeckList />
       </ErrorBoundary>
     </DeckPageContainer>

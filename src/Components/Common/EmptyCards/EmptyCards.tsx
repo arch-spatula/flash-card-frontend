@@ -1,9 +1,13 @@
 import { NoCardContainer, NoCardMessage } from './EmptyCards.style';
 
-export function EmptyCards() {
+type EmptyCardsProps = {
+  error?: ErrorResponse;
+};
+
+export function EmptyCards({ error }: EmptyCardsProps) {
   return (
     <NoCardContainer>
-      <NoCardMessage>카드가 없습니다.</NoCardMessage>
+      <NoCardMessage>{error ? error.msg : '카드가 없습니다.'}</NoCardMessage>
     </NoCardContainer>
   );
 }
