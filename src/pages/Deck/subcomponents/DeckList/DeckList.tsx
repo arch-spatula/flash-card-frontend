@@ -1,17 +1,12 @@
-import { Card, EmptyCards } from '@/Components';
 import { calDiffBetweenNowFromNextInterval } from '@/utils';
 import { intervalMap } from '@/constant/config';
 import { useMemo } from 'react';
 import { SectionTitle } from '..';
-import {
-  CardContainer,
-  DeckItemContainer,
-  DeckListContainer,
-  NoCardContainer,
-} from './DeckList.style';
+import { DeckListContainer, NoCardContainer } from './DeckList.style';
 import { useCards } from '@/hooks';
 import { PulseLoader } from 'react-spinners';
 import theme from '@/styles/theme';
+import { DeckItem } from './DeckItem';
 
 export function DeckList() {
   const { cards, isLoading } = useCards();
@@ -135,26 +130,5 @@ export function DeckList() {
         <DeckItem title={deckItem.title} cards={deckItem.deck} key={idx} />
       ))}
     </DeckListContainer>
-  );
-}
-
-type DeckItemProps = { title: string; cards: Card[] };
-
-function DeckItem({ title, cards }: DeckItemProps) {
-  return (
-    <DeckItemContainer>
-      <SectionTitle>{title}</SectionTitle>
-      <>
-        {cards.length !== 0 ? (
-          <CardContainer>
-            {cards.map((card) => (
-              <Card {...card} key={card._id} />
-            ))}
-          </CardContainer>
-        ) : (
-          <EmptyCards />
-        )}
-      </>
-    </DeckItemContainer>
   );
 }
