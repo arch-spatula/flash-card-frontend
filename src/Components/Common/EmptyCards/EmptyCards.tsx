@@ -1,13 +1,26 @@
-import { NoCardContainer, NoCardMessage } from './EmptyCards.style';
+import { Button } from '..';
+import {
+  ErrorCardMessage,
+  NoCardContainer,
+  NoCardMessage,
+} from './EmptyCards.style';
 
 type EmptyCardsProps = {
   error?: ErrorResponse;
+  resetErrorBoundary?: (...args: any[]) => void;
 };
 
-export function EmptyCards({ error }: EmptyCardsProps) {
+export function EmptyCards({ error, resetErrorBoundary }: EmptyCardsProps) {
   return (
     <NoCardContainer>
-      <NoCardMessage>{error ? error.msg : '카드가 없습니다.'}</NoCardMessage>
+      {error ? (
+        <ErrorCardMessage>
+          <NoCardMessage>{error.msg}</NoCardMessage>
+          <Button onClick={resetErrorBoundary}>retry</Button>
+        </ErrorCardMessage>
+      ) : (
+        <NoCardMessage>카드가 없습니다.</NoCardMessage>
+      )}
     </NoCardContainer>
   );
 }

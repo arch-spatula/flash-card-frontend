@@ -7,11 +7,14 @@ import {
   CardContainer,
   DeckItemContainer,
   DeckListContainer,
+  NoCardContainer,
 } from './DeckList.style';
 import { useCards } from '@/hooks';
+import { PulseLoader } from 'react-spinners';
+import theme from '@/styles/theme';
 
 export function DeckList() {
-  const { cards } = useCards();
+  const { cards, isLoading } = useCards();
 
   const IntervalArray: { title: string; deck: Card[] }[] = useMemo(() => {
     const arr: { title: string; deck: Card[] }[] = [
@@ -109,6 +112,22 @@ export function DeckList() {
 
     return arr;
   }, [cards]);
+
+  if (isLoading)
+    return (
+      <>
+        <SectionTitle>Oops! something went wrong 🤯</SectionTitle>
+        <NoCardContainer>
+          <PulseLoader
+            color={theme.colors.green500}
+            loading
+            margin={4}
+            size={20}
+            speedMultiplier={0.5}
+          />
+        </NoCardContainer>
+      </>
+    );
 
   return (
     <DeckListContainer>

@@ -1,19 +1,13 @@
 import { useCards, useEndRedirectToCards } from '@/hooks';
 import { calDiffBetweenNowFromNextInterval } from '@/utils';
-import { CardContainer, LoaderContainer } from '../../Cards.style';
 import { PulseLoader } from 'react-spinners';
 import theme from '@/styles/theme';
 import { Card, EmptyCards } from '@/Components';
+import { CardContainer, NoCardContainer } from './NowDeck.style';
 
 export function NowDeck() {
   const res = useCards();
-  console.log('useCards', res.cards, res.isLoading, res.error);
   useEndRedirectToCards();
-
-  if (res.error instanceof Error) {
-    console.log('error', res.cards, res.isLoading, res.error);
-    return <div>{`${res.error}`}</div>;
-  }
 
   const currentCards =
     res.cards?.filter(
@@ -25,7 +19,7 @@ export function NowDeck() {
   return (
     <>
       {res.isLoading ? (
-        <LoaderContainer>
+        <NoCardContainer>
           <PulseLoader
             color={theme.colors.green500}
             loading
@@ -33,7 +27,7 @@ export function NowDeck() {
             size={20}
             speedMultiplier={0.5}
           />
-        </LoaderContainer>
+        </NoCardContainer>
       ) : (
         <>
           {res.cards ? (

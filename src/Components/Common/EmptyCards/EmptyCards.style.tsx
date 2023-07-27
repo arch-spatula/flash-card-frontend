@@ -20,3 +20,10 @@ export const NoCardMessage = styled.p`
   -webkit-user-select: none;
   user-select: none;
 `;
+
+export const ErrorCardMessage = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+`;
