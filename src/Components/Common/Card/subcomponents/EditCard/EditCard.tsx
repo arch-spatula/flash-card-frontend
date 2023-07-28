@@ -11,7 +11,7 @@ export function EditCard({
   stackCount,
   submitDate,
 }: EditCardProps) {
-  const { cardSide, togglePrev } = useCardSide();
+  const { cardSide, dispatch } = useCardSide();
 
   const { updateCard } = useCardMutation();
 
@@ -27,7 +27,7 @@ export function EditCard({
   } = useInput(answer);
 
   const handleSave = () => {
-    togglePrev();
+    dispatch('prev');
     if (_id) {
       updateCard({
         id: _id,
@@ -42,7 +42,7 @@ export function EditCard({
   };
 
   const handleCancel = () => {
-    togglePrev();
+    dispatch('prev');
     resetAnswer();
     resetQuestion();
   };
