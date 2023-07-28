@@ -4,38 +4,33 @@ import { Card, EmptyCards, Spinner } from '@/Components';
 import { CardContainer, NoCardContainer } from './NowDeck.style';
 
 export function NowDeck() {
-  const res = useCards();
   useEndRedirectToCards();
+  const { cards, isLoading } = useCards();
 
   const currentCards =
-    res.cards?.filter(
+    cards?.filter(
       (card) =>
         calDiffBetweenNowFromNextInterval(card.submitDate, card.stackCount) ===
         0
     ) ?? [];
 
+  if (isLoading)
+    return (
+      <NoCardContainer>
+        <Spinner />
+      </NoCardContainer>
+    );
+
   return (
     <>
-      {res.isLoading ? (
-        <NoCardContainer>
-          <Spinner />
-        </NoCardContainer>
-      ) : (
-        <>
-          {res.cards ? (
-            <CardContainer>
-              {currentCards.length === 0 ? (
-                <EmptyCards />
-              ) : (
-                currentCards.map((card) => <Card {...card} key={card._id} />)
-              )}
-            </CardContainer>
+      {cards && (
+        <CardContainer>
+          {currentCards.length === 0 ? (
+            <EmptyCards />
           ) : (
-            <div>
-              <p>카드가 없습니다.</p>
-            </div>
+            currentCards.map((card) => <Card {...card} key={card._id} />)
           )}
-        </>
+        </CardContainer>
       )}
     </>
   );

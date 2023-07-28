@@ -1,5 +1,4 @@
-// export const BASE_URL = 'https://flash-card-backend.deno.dev/api';
-export const BASE_URL = 'http://localhost:8000/api';
+export const BASE_URL = 'https://flash-card-backend.deno.dev/api';
 
 export const API_URLS = {
   CARDS: '/card',
