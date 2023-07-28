@@ -7,7 +7,7 @@ import {
 
 type EmptyCardsProps = {
   error?: ErrorResponse;
-  resetErrorBoundary?: (...args: any[]) => void;
+  resetErrorBoundary?: resetErrorBoundary;
 };
 
 export function EmptyCards({ error, resetErrorBoundary }: EmptyCardsProps) {

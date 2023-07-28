@@ -1,7 +1,12 @@
 import { DeckPageContainer } from './Deck.style';
-import { CreateCard, DeckList, SectionTitle } from './subcomponents';
+import {
+  CreateCard,
+  DeckList,
+  ErrorDeckItem,
+  SectionTitle,
+} from './subcomponents';
 import { ErrorBoundary } from 'react-error-boundary';
-import { EmptyCards, PageHeading } from '@/Components';
+import { PageHeading } from '@/Components';
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 function Deck() {
@@ -11,15 +16,7 @@ function Deck() {
       <PageHeading>Deck</PageHeading>
       <SectionTitle>카드 생성</SectionTitle>
       <CreateCard />
-      <ErrorBoundary
-        onReset={reset}
-        fallbackRender={({ error, resetErrorBoundary }) => (
-          <>
-            <SectionTitle>Oops! something went wrong 🤯</SectionTitle>
-            <EmptyCards error={error} resetErrorBoundary={resetErrorBoundary} />
-          </>
-        )}
-      >
+      <ErrorBoundary onReset={reset} fallbackRender={ErrorDeckItem}>
         <DeckList />
       </ErrorBoundary>
     </DeckPageContainer>

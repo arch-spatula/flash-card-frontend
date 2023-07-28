@@ -10,3 +10,5 @@ declare type Card = {
 };
 
 declare type ErrorResponse = { success: boolean; msg: string };
+
+declare type resetErrorBoundary = (...args: any[]) => void;
