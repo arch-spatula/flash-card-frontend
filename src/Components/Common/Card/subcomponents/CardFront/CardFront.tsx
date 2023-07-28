@@ -1,6 +1,6 @@
 import { formatDate } from '@/utils';
 import { Button, Input } from '../../..';
-import { useAtomInput, useCardSide, useCorrect } from '../../../../../hooks';
+import { useAtomInput, useCardSide, useCorrect } from '@/hooks';
 import { CardSetting } from '../CardSetting';
 import {
   CardFrontContainer,
@@ -22,14 +22,13 @@ export function CardFront({
   submitDate,
   stackCount,
 }: CardFrontProps) {
-  const { cardSide, toggleTo } = useCardSide();
+  const { cardSide, dispatch } = useCardSide();
   const { setIsCorrect } = useCorrect();
-
   const { inputVal, changeInputVal } = useAtomInput();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toggleTo('back');
+    dispatch('back');
 
     const regex = new RegExp(answer, 'i');
     setIsCorrect(() => regex.test(inputVal));
