@@ -1,8 +1,6 @@
 import { useCards, useEndRedirectToCards } from '@/hooks';
 import { calDiffBetweenNowFromNextInterval } from '@/utils';
-import { PulseLoader } from 'react-spinners';
-import theme from '@/styles/theme';
-import { Card, EmptyCards } from '@/Components';
+import { Card, EmptyCards, Spinner } from '@/Components';
 import { CardContainer, NoCardContainer } from './NowDeck.style';
 
 export function NowDeck() {
@@ -20,13 +18,7 @@ export function NowDeck() {
     <>
       {res.isLoading ? (
         <NoCardContainer>
-          <PulseLoader
-            color={theme.colors.green500}
-            loading
-            margin={4}
-            size={20}
-            speedMultiplier={0.5}
-          />
+          <Spinner />
         </NoCardContainer>
       ) : (
         <>

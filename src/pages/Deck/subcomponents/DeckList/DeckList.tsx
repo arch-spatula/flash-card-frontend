@@ -4,9 +4,8 @@ import { useMemo } from 'react';
 import { SectionTitle } from '..';
 import { DeckListContainer, NoCardContainer } from './DeckList.style';
 import { useCards } from '@/hooks';
-import { PulseLoader } from 'react-spinners';
-import theme from '@/styles/theme';
 import { DeckItem } from './DeckItem';
+import { Spinner } from '@/Components';
 
 export function DeckList() {
   const { cards, isLoading } = useCards();
@@ -113,13 +112,7 @@ export function DeckList() {
       <>
         <SectionTitle>Oops! something went wrong 🤯</SectionTitle>
         <NoCardContainer>
-          <PulseLoader
-            color={theme.colors.green500}
-            loading
-            margin={4}
-            size={20}
-            speedMultiplier={0.5}
-          />
+          <Spinner />
         </NoCardContainer>
       </>
     );
