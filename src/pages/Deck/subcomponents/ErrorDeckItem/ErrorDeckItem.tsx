@@ -1,4 +1,4 @@
-import { EmptyCards } from '@/Components';
+import { ErrorCards } from '@/Components';
 import { SectionTitle } from '..';
 
 type ErrorDeckItemProps = {
@@ -13,7 +13,7 @@ export function ErrorDeckItem({
   return (
     <>
       <SectionTitle>Oops! something went wrong 🤯</SectionTitle>
-      <EmptyCards error={error} resetErrorBoundary={resetErrorBoundary} />
+      <ErrorCards error={error} resetErrorBoundary={resetErrorBoundary} />
     </>
   );
 }

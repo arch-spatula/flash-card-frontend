@@ -1,26 +1,9 @@
-import { Button } from '..';
-import {
-  ErrorCardMessage,
-  NoCardContainer,
-  NoCardMessage,
-} from './EmptyCards.style';
+import { CardContainer, DisabledText } from '..';
 
-type EmptyCardsProps = {
-  error?: ErrorResponse;
-  resetErrorBoundary?: resetErrorBoundary;
-};
-
-export function EmptyCards({ error, resetErrorBoundary }: EmptyCardsProps) {
+export function EmptyCards() {
   return (
-    <NoCardContainer>
-      {error ? (
-        <ErrorCardMessage>
-          <NoCardMessage>{error.msg}</NoCardMessage>
-          <Button onClick={resetErrorBoundary}>retry</Button>
-        </ErrorCardMessage>
-      ) : (
-        <NoCardMessage>카드가 없습니다.</NoCardMessage>
-      )}
-    </NoCardContainer>
+    <CardContainer>
+      <DisabledText>카드가 없습니다.</DisabledText>
+    </CardContainer>
   );
 }

@@ -1,4 +1,4 @@
-import { EmptyCards, PageHeading } from '@/Components';
+import { ErrorCards, PageHeading } from '@/Components';
 import { ErrorBoundary } from 'react-error-boundary';
 import { CardPageContainer } from './Cards.style';
 import { NowDeck } from './subcomponents';
@@ -12,12 +12,7 @@ function Cards() {
   return (
     <CardPageContainer>
       <PageHeading>Cards</PageHeading>
-      <ErrorBoundary
-        onReset={reset}
-        fallbackRender={({ resetErrorBoundary, error }) => (
-          <EmptyCards error={error} resetErrorBoundary={resetErrorBoundary} />
-        )}
-      >
+      <ErrorBoundary onReset={reset} fallbackRender={ErrorCards}>
         <NowDeck />
       </ErrorBoundary>
     </CardPageContainer>
