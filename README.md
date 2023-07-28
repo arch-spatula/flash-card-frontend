@@ -356,9 +356,11 @@ prevCache에 가장 최근에 접근한 카드면을 먼저 기록하고 다음 
 
 <!-- @todo: ## ERD -->
 
-## 코딩 컨벤션
+## convention
 
-### top level, return 아래 helper 함수는 function 키워드
+### Code convention
+
+#### top level, return 아래 helper 함수는 function 키워드
 
 - 코드를 읽을 때 제일 중요한 함수를 최상단에 위치시킵니다.
 - function 키워드는 호이스팅(hoisting)의 장점을 활용합니다.
@@ -387,7 +389,7 @@ function SubComponent() {
 
 호이스팅이 중요한 것을 두괄식으로 표현할 수 있게 해줍니다.
 
-### callback, 이벤트 handler 함수는 화살표함수
+#### callback, 이벤트 handler 함수는 화살표함수
 
 ```tsx
 function useSomething() {
@@ -403,7 +405,7 @@ function useSomething() {
 }
 ```
 
-### hook과 handler 영역 구분하기
+#### hook과 handler 영역 구분하기
 
 관심사에 맞지 않은 hook과 handler가 섞이고 결합되는 방지하기 위해 영역을 구분합니다.
 
@@ -448,7 +450,7 @@ function Component() {
 
 JSX에 주입하고 이벤트를 처리할 함수와 hook이라는 관심사를 분리합니다.
 
-### useEffect는 custom hook에서 사용
+#### useEffect는 custom hook에서 사용
 
 라이프 사이클이외 관심사에 맞지 않은 handler 함수를 주입할지도 모릅니다.
 
@@ -497,6 +499,18 @@ function useGrault() {
 ```
 
 useEffect 사용한다점 자체로 하위 계층구조로 간주합니다. 서로 구독해야 하는 라이프사이클을 독립적으로 구분합니다.
+
+### Pull Request Convention
+
+- 당일 올린 PR은 당일 Merge하지 않습니다.
+- 1.1.0부터는 Merge 수량에 제한은 없습니다.
+  - 1.0.0까지는 하루 1개로 제한했었습니다.
+- PR에 대한 리뷰는 다음날 진행합니다.
+  - 다음날 확인하면 코드를 읽을 때 환기된 상태로 PR을 검토할 수 있습니다.
+- PR 리뷰에 대해서 대응여부는 재량이지만 응답은 필수입니다.
+- PR 템플릿을 준수합니다.
+  - PR을 올릴 때는 최대한 이미 혹은 영상을 활용하도록 합니다.
+  - 해결하는 비즈니스 문제 혹은 엔지니어링 문제도 자세히 기술하도록 합니다.
 
 ## 실행 명령
 
