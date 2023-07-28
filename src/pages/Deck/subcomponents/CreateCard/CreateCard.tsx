@@ -1,5 +1,4 @@
 import { useCardMutation, useInput } from '@/hooks';
-import { SectionTitle } from '..';
 import { Button, Input } from '@/Components';
 import { AddCardContainer } from './CreateCard.style';
 
@@ -41,7 +40,6 @@ export function CreateCard() {
   };
   return (
     <>
-      <SectionTitle>카드 생성</SectionTitle>
       <AddCardContainer onSubmit={handleSubmit}>
         <Input
           value={question}

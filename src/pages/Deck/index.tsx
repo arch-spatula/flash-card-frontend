@@ -9,6 +9,7 @@ function Deck() {
   return (
     <DeckPageContainer>
       <PageHeading>Deck</PageHeading>
+      <SectionTitle>카드 생성</SectionTitle>
       <CreateCard />
       <ErrorBoundary
         onReset={reset}
