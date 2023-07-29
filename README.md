@@ -16,6 +16,13 @@ adminname@email.com
 qwer1234
 ```
 
+## 관련 레포
+
+[flash card 백엔드 레포](https://github.com/arch-spatula/flash-card-backend)
+
+- Nest.js로 porting전까지 활용할 백엔드 레포입니다.
+- Deno deploy 무료 플랜을 활용하고 있습니다.
+
 ## 목차
 
 1. [프로젝트 소개](#프로젝트-소개)
@@ -29,8 +36,6 @@ qwer1234
 [저의 영단어 암기를 위해 만든 프로젝트입니다.](https://en.wikipedia.org/wiki/Eating_your_own_dog_food)
 
 이 프로젝트는 폴리레포 프로젝트이고 fullstack 프로젝트입니다. MVP를 빠르게 만들고 유지보수하며 확장하기 위한 프로젝트입니다.
-
-[flash card 백엔드 레포](https://github.com/arch-spatula/flash-card-backend)
 
 ### 핵심 기능
 
