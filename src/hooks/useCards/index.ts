@@ -11,7 +11,11 @@ export function useCards() {
     data: cards,
     isLoading,
     error,
-  } = useQuery({ ...query, initialData: loaderCards });
+  } = useQuery<Card[], ErrorResponse>({
+    ...query,
+    initialData: loaderCards,
+    useErrorBoundary: true,
+  });
 
   return { cards, isLoading, error };
 }

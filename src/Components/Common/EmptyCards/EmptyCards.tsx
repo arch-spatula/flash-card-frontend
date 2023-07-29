@@ -1,9 +1,9 @@
-import { NoCardContainer, NoCardMessage } from './EmptyCards.style';
+import { CardContainer, DisabledText } from '..';
 
 export function EmptyCards() {
   return (
-    <NoCardContainer>
-      <NoCardMessage>카드가 없습니다.</NoCardMessage>
-    </NoCardContainer>
+    <CardContainer>
+      <DisabledText>카드가 없습니다.</DisabledText>
+    </CardContainer>
   );
 }

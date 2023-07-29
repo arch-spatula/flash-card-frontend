@@ -1,15 +1,15 @@
-import { Card, EmptyCards } from '@/Components';
 import { calDiffBetweenNowFromNextInterval } from '@/utils';
 import { intervalMap } from '@/constant/config';
 import { useMemo } from 'react';
 import { SectionTitle } from '..';
-import {
-  CardContainer,
-  DeckItemContainer,
-  DeckListContainer,
-} from './DeckList.style';
+import { DeckListContainer, NoCardContainer } from './DeckList.style';
+import { useCards } from '@/hooks';
+import { DeckItem } from './DeckItem';
+import { Spinner } from '@/Components';
 
-export function DeckList({ cards }: { cards: Card[] }) {
+export function DeckList() {
+  const { cards, isLoading } = useCards();
+
   const IntervalArray: { title: string; deck: Card[] }[] = useMemo(() => {
     const arr: { title: string; deck: Card[] }[] = [
       {
@@ -70,41 +70,52 @@ export function DeckList({ cards }: { cards: Card[] }) {
       },
     ];
 
-    for (let j = 0; j < cards.length; j++) {
-      const card = cards[j];
-      const diff = calDiffBetweenNowFromNextInterval(
-        card.submitDate,
-        card.stackCount
-      );
+    if (cards) {
+      for (let j = 0; j < cards.length; j++) {
+        const card = cards[j];
+        const diff = calDiffBetweenNowFromNextInterval(
+          card.submitDate,
+          card.stackCount
+        );
 
-      if (diff === 0) {
-        arr[0].deck.push(card);
-        continue;
-      }
-
-      if (0 < diff && diff <= intervalMap[0] * 60 * 1000) {
-        arr[1].deck.push(card);
-        continue;
-      }
-
-      let find = false;
-      for (let i = 0; i < intervalMap.length; i++) {
-        if (
-          intervalMap[i] * 60 * 1000 < diff &&
-          diff <= intervalMap[i + 1] * 60 * 1000
-        ) {
-          arr[i + 2].deck.push(card);
-          find = true;
-          break;
+        if (diff === 0) {
+          arr[0].deck.push(card);
+          continue;
         }
-      }
-      if (find) continue;
 
-      if (intervalMap[11] * 60 * 1000 < diff) arr[13].deck.push(card);
+        if (0 < diff && diff <= intervalMap[0] * 60 * 1000) {
+          arr[1].deck.push(card);
+          continue;
+        }
+
+        let find = false;
+        for (let i = 0; i < intervalMap.length; i++) {
+          if (
+            intervalMap[i] * 60 * 1000 < diff &&
+            diff <= intervalMap[i + 1] * 60 * 1000
+          ) {
+            arr[i + 2].deck.push(card);
+            find = true;
+            break;
+          }
+        }
+        if (find) continue;
+        if (intervalMap[11] * 60 * 1000 < diff) arr[13].deck.push(card);
+      }
     }
 
     return arr;
   }, [cards]);
+
+  if (isLoading)
+    return (
+      <>
+        <SectionTitle>Oops! something went wrong 🤯</SectionTitle>
+        <NoCardContainer>
+          <Spinner />
+        </NoCardContainer>
+      </>
+    );
 
   return (
     <DeckListContainer>
@@ -112,26 +123,5 @@ export function DeckList({ cards }: { cards: Card[] }) {
         <DeckItem title={deckItem.title} cards={deckItem.deck} key={idx} />
       ))}
     </DeckListContainer>
-  );
-}
-
-type DeckItemProps = { title: string; cards: Card[] };
-
-function DeckItem({ title, cards }: DeckItemProps) {
-  return (
-    <DeckItemContainer>
-      <SectionTitle>{title}</SectionTitle>
-      <>
-        {cards.length !== 0 ? (
-          <CardContainer>
-            {cards.map((card) => (
-              <Card {...card} key={card._id} />
-            ))}
-          </CardContainer>
-        ) : (
-          <EmptyCards />
-        )}
-      </>
-    </DeckItemContainer>
   );
 }

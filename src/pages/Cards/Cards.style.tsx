@@ -7,13 +7,6 @@ export const CardPageContainer = styled.div`
   padding: 3rem 0;
 `;
 
-export const CardContainer = styled.div`
-  display: flex;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  flex-grow: 1;
-`;
-
 export const LoaderContainer = styled.div`
   display: flex;
   align-items: center;

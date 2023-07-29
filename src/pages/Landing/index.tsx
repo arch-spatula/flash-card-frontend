@@ -1,7 +1,4 @@
-import { useNavigate } from 'react-router-dom';
-import { useLogin } from '../../hooks';
 import { ROUTE_PATHS } from '../../constant/config';
-import { useEffect } from 'react';
 import {
   ImageWrapper,
   LandingPageContainer,
@@ -14,13 +11,6 @@ import flashCardWEBP from '/pexels-pixabay-268351_1280.webp';
 import { Button, PageHeading } from '../../Components';
 
 function Landing() {
-  const { isLoggedIn } = useLogin();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isLoggedIn) navigate(ROUTE_PATHS.CARDS);
-  }, [isLoggedIn, navigate]);
-
   return (
     <LandingPageContainer>
       <ImageWrapper>

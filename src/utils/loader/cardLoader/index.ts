@@ -7,9 +7,13 @@ export const cardLoader = () => async () => {
   protect();
 
   const query = cardsQuery();
-
-  return (
-    queryClient.getQueryData<Card[]>(query.queryKey) ??
-    (await queryClient.fetchQuery(query))
-  );
+  try {
+    return (
+      queryClient.getQueryData<Card[]>(query.queryKey) ??
+      (await queryClient.fetchQuery(query))
+    );
+  } catch (error) {
+    queryClient.invalidateQueries({ queryKey: ['cards'] });
+    return [];
+  }
 };

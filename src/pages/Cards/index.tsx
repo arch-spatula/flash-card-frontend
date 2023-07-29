@@ -1,59 +1,20 @@
-import { Card, EmptyCards, PageHeading } from '../../Components';
-import { PulseLoader } from 'react-spinners';
-import {
-  CardContainer,
-  CardPageContainer,
-  LoaderContainer,
-} from './Cards.style';
-import { useCards, useEndRedirectToCards } from '@/hooks';
-import theme from '../../styles/theme';
-import { calDiffBetweenNowFromNextInterval } from '@/utils';
+import { ErrorCards, PageHeading } from '@/Components';
+import { ErrorBoundary } from 'react-error-boundary';
+import { CardPageContainer } from './Cards.style';
+import { NowDeck } from './subcomponents';
+import { useEndRedirectToCards } from '@/hooks';
+import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 
 function Cards() {
-  const { cards, isLoading, error } = useCards();
   useEndRedirectToCards();
-
-  if (typeof cards === 'string' || error) {
-    return <div>{`${error}`}</div>;
-  }
-
-  const currentCards =
-    cards?.filter(
-      (card) =>
-        calDiffBetweenNowFromNextInterval(card.submitDate, card.stackCount) ===
-        0
-    ) ?? [];
+  const { reset } = useQueryErrorResetBoundary();
 
   return (
     <CardPageContainer>
       <PageHeading>Cards</PageHeading>
-      {isLoading ? (
-        <LoaderContainer>
-          <PulseLoader
-            color={theme.colors.green500}
-            loading
-            margin={4}
-            size={20}
-            speedMultiplier={0.5}
-          />
-        </LoaderContainer>
-      ) : (
-        <>
-          {cards ? (
-            <CardContainer>
-              {currentCards.length === 0 ? (
-                <EmptyCards />
-              ) : (
-                currentCards.map((card) => <Card {...card} key={card._id} />)
-              )}
-            </CardContainer>
-          ) : (
-            <div>
-              <p>카드가 없습니다.</p>
-            </div>
-          )}
-        </>
-      )}
+      <ErrorBoundary onReset={reset} fallbackRender={ErrorCards}>
+        <NowDeck />
+      </ErrorBoundary>
     </CardPageContainer>
   );
 }
