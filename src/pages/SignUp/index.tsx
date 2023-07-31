@@ -41,14 +41,16 @@ function SignUp() {
     mutate(
       { email, password },
       {
-        onSuccess: (data) => {
-          if (data.status === 201) {
-            navigate(ROUTE_PATHS.SIGN_IN);
-          } else {
-            const { msg } = data as { success: boolean; msg: string };
-            if (msg.startsWith('Error: 이미 가입한 아이디입니다.')) {
-              focusEmail();
-              setEmailHelper('이미 가입한 Email입니다.');
+        onSuccess: (res) => {
+          if (res) {
+            if (res.status === 201) {
+              navigate(ROUTE_PATHS.SIGN_IN);
+            } else {
+              const { msg } = res?.data as { success: boolean; msg: string };
+              if (msg.startsWith('Error: 이미 가입한 아이디입니다.')) {
+                focusEmail();
+                setEmailHelper('이미 가입한 Email입니다.');
+              }
             }
           }
         },
