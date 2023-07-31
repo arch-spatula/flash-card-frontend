@@ -1,7 +1,7 @@
 import { AxiosError, AxiosResponse } from 'axios';
-import { authClient } from './AxiosClient';
-import { API_URLS, ROUTE_PATHS, STORAGE_KEY } from '../constant/config';
 import { redirect } from 'react-router-dom';
+import { authClient } from '../AxiosClient';
+import { API_URLS, ROUTE_PATHS, STORAGE_KEY } from '@/constant/config';
 
 type UserInput = {
   email: string;

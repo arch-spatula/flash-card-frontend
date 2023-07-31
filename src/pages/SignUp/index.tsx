@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
-import { Button, Input, PageHeading } from '../../Components';
-import { useInput } from '../../hooks';
-import { checkEmail, checkPassword } from '../../utils';
+import { Button, Input, PageHeading } from '@/Components';
+import { useInput } from '@/hooks';
+import { checkEmail, checkPassword } from '@/utils';
 import { ButtonWrapper, MainContainer, MainWrapper } from './SignUp.style';
-import { signUpAPI } from '../../api/authClient';
+import { signUpAPI } from '@/api';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE_PATHS } from '../../constant/config';
+import { ROUTE_PATHS } from '@/constant/config';
 import { useState } from 'react';
 
 function SignUp() {

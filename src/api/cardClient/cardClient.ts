@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
-import { API_URLS } from '../constant/config';
-import { axiosClient } from './AxiosClient';
+import { axiosClient } from '../AxiosClient';
+import { API_URLS } from '@/constant/config';
 
 async function getCardsAPI() {
   try {

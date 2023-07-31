@@ -1,8 +1,4 @@
-import {
-  createCardsAPI,
-  deleteCardsAPI,
-  updateCardsAPI,
-} from '@/api/cardClient';
+import { createCardsAPI, deleteCardsAPI, updateCardsAPI } from '@/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export function useCardMutation() {
