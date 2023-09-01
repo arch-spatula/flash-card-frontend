@@ -12,7 +12,7 @@ const cards = {
       userId: '1234asdf',
     },
     {
-      _id: '1234asdf',
+      _id: '1234qwer',
       question: '블로그를 더 간지나게 만드는 방법',
       answer: 'github pages로 DIY로 만든다.',
       submitDate: 'Wed May 17 2023 21:11:26 GMT+0900 (한국 표준시)',
@@ -34,7 +34,7 @@ export const createCard = rest.post(
 );
 
 export const updateCard = rest.patch(
-  BASE_URL + API_URLS.CARDS,
+  BASE_URL + API_URLS.CARDS + '/:id',
   (_, res, ctx) => {
     return res(
       ctx.status(200),
@@ -47,7 +47,7 @@ export const updateCard = rest.patch(
 );
 
 export const deleteCard = rest.delete(
-  BASE_URL + API_URLS.CARDS,
+  BASE_URL + API_URLS.CARDS + '/:id',
   (_, res, ctx) => {
     return res(ctx.status(204), ctx.json(null));
   }
