@@ -54,6 +54,16 @@ export const signUp = rest.post<{ email: string; password: string }>(
   }
 );
 
-export const signIn = rest.post(BASE_URL + API_URLS.SIGN_IN, (_, res, ctx) => {
-  return res(ctx.status(201), ctx.json({ email: 'username@user.com' }));
-});
+export const signIn = rest.post(
+  BASE_URL + API_URLS.SIGN_IN,
+  async (_, res, ctx) => {
+    return res(
+      ctx.status(201),
+      ctx.json({
+        success: true,
+        access_token: 'asdf1234',
+        refresh_token: 'qwer6789',
+      })
+    );
+  }
+);

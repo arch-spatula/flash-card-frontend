@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { signUpAPI } from '.';
+import { signInAPI, signUpAPI } from '.';
 
 describe('authClient - signup', () => {
   it('should fail because of overlapping email', async () => {
@@ -22,5 +22,20 @@ describe('authClient - signup', () => {
     });
 
     expect(res?.status).toBe(201);
+  });
+});
+
+describe('sign in', () => {
+  it('should be able to sign in and return tokens', async () => {
+    const res = await signInAPI({
+      email: 'username@email.com',
+      password: '12345678',
+    });
+
+    expect(res).toEqual({
+      success: true,
+      access_token: 'asdf1234',
+      refresh_token: 'qwer6789',
+    });
   });
 });
