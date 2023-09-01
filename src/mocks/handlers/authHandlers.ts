@@ -67,3 +67,16 @@ export const signIn = rest.post(
     );
   }
 );
+
+export const refresh = rest.post(
+  BASE_URL + API_URLS.REFRESH,
+  async (_, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        success: true,
+        access_token: 'zxcv9876',
+      })
+    );
+  }
+);

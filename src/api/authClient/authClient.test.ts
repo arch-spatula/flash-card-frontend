@@ -1,5 +1,6 @@
-import { describe, expect, it } from 'vitest';
-import { signInAPI, signUpAPI } from '.';
+import { afterAll, describe, expect, it } from 'vitest';
+import { refreshAccessAPI, signInAPI, signUpAPI } from '.';
+import { STORAGE_KEY } from '@/constant/config';
 
 describe('authClient - signup', () => {
   it('should fail because of overlapping email', async () => {
@@ -37,5 +38,31 @@ describe('sign in', () => {
       access_token: 'asdf1234',
       refresh_token: 'qwer6789',
     });
+  });
+});
+
+describe('refresh access', () => {
+  afterAll(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+  });
+
+  it('should refresh access token', async () => {
+    sessionStorage.setItem(STORAGE_KEY.SESSION_TOKEN, 'token');
+
+    const res = await refreshAccessAPI();
+
+    expect(res).toBe('zxcv9876');
+    expect(localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN)).toBe('zxcv9876');
+  });
+
+  it('should empty storages by token keys when there is no session token', async () => {
+    sessionStorage.clear();
+    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, 'token');
+
+    await refreshAccessAPI();
+
+    expect(localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN)).toBe(null);
+    expect(sessionStorage.getItem(STORAGE_KEY.SESSION_TOKEN)).toBe(null);
   });
 });
