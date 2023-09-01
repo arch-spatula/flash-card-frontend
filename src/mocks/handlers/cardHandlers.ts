@@ -1,5 +1,5 @@
 import { rest } from 'msw';
-import { API_URLS, BASE_URL } from '../../constant/config';
+import { API_URLS, BASE_URL, STORAGE_KEY } from '../../constant/config';
 
 const cards = {
   documents: [
@@ -23,6 +23,8 @@ const cards = {
 };
 
 export const getCards = rest.get(BASE_URL + API_URLS.CARDS, (_, res, ctx) => {
+  const accessToken = localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN);
+  if (accessToken === 'expired') return res(ctx.status(401));
   return res(ctx.status(200), ctx.json(cards));
 });
 
