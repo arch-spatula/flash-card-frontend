@@ -2,7 +2,12 @@ import { useMutation } from '@tanstack/react-query';
 import { Button, Input, PageHeading } from '@/Components';
 import { useInput } from '@/hooks';
 import { checkEmail, checkPassword } from '@/utils';
-import { ButtonWrapper, MainContainer, MainWrapper } from './SignUp.style';
+import {
+  ButtonWrapper,
+  EmailCheckWrapper,
+  MainContainer,
+  MainWrapper,
+} from './SignUp.style';
 import { signUpAPI } from '@/api';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '@/constant/config';
@@ -61,18 +66,31 @@ function SignUp() {
     );
   };
 
+  const handleCheckEmail = () => {
+    console.log(email);
+  };
+
   return (
     <MainContainer>
       <MainWrapper onSubmit={handleSignUp}>
         <PageHeading>Sign Up</PageHeading>
-        <Input
-          value={email}
-          onChange={changeEmail}
-          type="email"
-          placeholder="user@email.com"
-          customRef={emailRef}
-          helperText={emailHelper}
-        />
+        <EmailCheckWrapper>
+          <Input
+            value={email}
+            onChange={changeEmail}
+            type="email"
+            placeholder="user@email.com"
+            customRef={emailRef}
+            helperText={emailHelper}
+          />
+          <Button
+            type="button"
+            onClick={handleCheckEmail}
+            disabled={!checkEmail(email)}
+          >
+            중복 확인
+          </Button>
+        </EmailCheckWrapper>
         <Input
           value={password}
           onChange={changePassword}

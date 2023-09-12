@@ -13,13 +13,13 @@ import queryClient from './libs/queryClient.ts';
  * @see https://stackoverflow.com/questions/68024935/msw-logging-warnings-for-unhandled-supertest-requests
  * import는 비동기 함수이기 때문 async await와 즉시 실행함수가 필요함
  */
-(async function () {
-  if (process.env.NODE_ENV === 'development') {
-    // tree shaking을 위해 await import 활용
-    const { worker } = await import('./mocks/worker.ts');
-    worker.start({ onUnhandledRequest: 'bypass' });
-  }
-})();
+// (async function () {
+//   if (process.env.NODE_ENV === 'development') {
+//     // tree shaking을 위해 await import 활용
+//     const { worker } = await import('./mocks/worker.ts');
+//     worker.start({ onUnhandledRequest: 'bypass' });
+//   }
+// })();
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
