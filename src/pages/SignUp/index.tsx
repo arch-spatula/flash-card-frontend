@@ -34,6 +34,7 @@ function SignUp() {
   const [emailHelper, setEmailHelper] = useState<
     '' | '이미 가입한 Email입니다.' | '사용할 수 있는 Email입니다.'
   >('');
+  const [conformedEmail, setConformedEmail] = useState('');
 
   const disabled = [
     checkEmail(email),
@@ -41,6 +42,7 @@ function SignUp() {
     checkPassword(password),
     conformPassword,
     password === conformPassword,
+    conformedEmail === email,
   ].some((elem) => !elem);
 
   const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -74,6 +76,7 @@ function SignUp() {
     mutateCheckEmail(email, {
       onSuccess: () => {
         setEmailHelper('사용할 수 있는 Email입니다.');
+        setConformedEmail(email);
       },
       onError: () => {
         focusEmail();
