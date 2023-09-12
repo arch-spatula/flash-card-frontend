@@ -35,6 +35,15 @@ async function signUpAPI({ email, password }: UserInput) {
   }
 }
 
+async function checkEmailAPI(email: string) {
+  try {
+    const res = authClient.post<null>(API_URLS.CHECK_EMAIL, { email });
+    return res;
+  } catch (error) {
+    if (axios.isAxiosError<ErrorResponse>(error)) throw error.response;
+  }
+}
+
 /** - API 명세의 요구사항 때문에 authClient 중 유일하게 header를 활용해야 함 */
 async function refreshAccessAPI() {
   try {
@@ -65,4 +74,4 @@ async function refreshAccessAPI() {
   }
 }
 
-export { signInAPI, signUpAPI, refreshAccessAPI };
+export { signInAPI, signUpAPI, refreshAccessAPI, checkEmailAPI };

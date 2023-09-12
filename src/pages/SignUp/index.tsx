@@ -8,7 +8,7 @@ import {
   MainContainer,
   MainWrapper,
 } from './SignUp.style';
-import { signUpAPI } from '@/api';
+import { checkEmailAPI, signUpAPI } from '@/api';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '@/constant/config';
 import { useState } from 'react';
@@ -67,7 +67,15 @@ function SignUp() {
   };
 
   const handleCheckEmail = () => {
-    console.log(email);
+    checkEmailAPI(email)
+      .then((res) => {
+        console.log('res', res);
+        return res;
+      })
+      .catch((err) => {
+        console.log('err', err);
+        return err;
+      });
   };
 
   return (
