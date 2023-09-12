@@ -1,15 +1,15 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createCardsAPI, deleteCardsAPI, getCardsAPI, updateCardsAPI } from '.';
-import { STORAGE_KEY } from '@/constant/config';
 import { cards } from '@/mocks/fixture';
+import { emptyStorage, grantAccess } from '@/utils';
 
 describe('cardClient - signup', () => {
   beforeAll(() => {
-    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, 'token');
+    grantAccess();
   });
 
   afterAll(() => {
-    localStorage.clear();
+    emptyStorage();
   });
 
   it('should get cards', async () => {

@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, it } from 'vitest';
 import { refreshAccessAPI, signInAPI, signUpAPI } from '.';
 import { STORAGE_KEY } from '@/constant/config';
-import { emptyStorage } from '@/utils';
+import { emptyStorage, grantAccess } from '@/utils';
 
 describe('authClient - signup', () => {
   it('should fail because of overlapping email', async () => {
@@ -64,7 +64,7 @@ describe('refresh access', () => {
   });
 
   it('should refresh access token', async () => {
-    sessionStorage.setItem(STORAGE_KEY.SESSION_TOKEN, 'token');
+    grantAccess();
 
     const res = await refreshAccessAPI();
 
@@ -74,7 +74,7 @@ describe('refresh access', () => {
 
   it('should empty storages by token keys when there is no session token', async () => {
     sessionStorage.clear();
-    localStorage.setItem(STORAGE_KEY.ACCESS_TOKEN, 'token');
+    grantAccess();
 
     await refreshAccessAPI();
 
