@@ -1,23 +1,6 @@
 import { rest } from 'msw';
 import { API_URLS, BASE_URL } from '@/constant/config';
-
-type User = {
-  _id: string;
-  email: string;
-  passwordHash: string;
-  passwordSalt: string;
-};
-
-const users: { documents: User[] } = {
-  documents: [
-    {
-      _id: '1234asdf',
-      email: 'username@email.com',
-      passwordHash: '12345678',
-      passwordSalt: '12345678',
-    },
-  ],
-};
+import { users } from '../fixture';
 
 export const signUp = rest.post<{ email: string; password: string }>(
   BASE_URL + API_URLS.SIGN_UP,

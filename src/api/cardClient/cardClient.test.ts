@@ -1,6 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createCardsAPI, deleteCardsAPI, getCardsAPI, updateCardsAPI } from '.';
 import { STORAGE_KEY } from '@/constant/config';
+import { cards } from '@/mocks/fixture';
 
 describe('cardClient - signup', () => {
   beforeAll(() => {
@@ -14,24 +15,7 @@ describe('cardClient - signup', () => {
   it('should get cards', async () => {
     const res = await getCardsAPI();
 
-    expect(res).toEqual([
-      {
-        _id: '1234asdf',
-        question: '도큐사우르스 짱짱맨',
-        answer: '킹정',
-        submitDate: 'Wed May 17 2023 21:11:26 GMT+0900 (한국 표준시)',
-        stackCount: '0',
-        userId: '1234asdf',
-      },
-      {
-        _id: '1234qwer',
-        question: '블로그를 더 간지나게 만드는 방법',
-        answer: 'github pages로 DIY로 만든다.',
-        submitDate: 'Wed May 17 2023 21:11:26 GMT+0900 (한국 표준시)',
-        stackCount: '0',
-        userId: '1234asdf',
-      },
-    ]);
+    expect(res).toEqual(cards);
   });
 
   it('should create a card', async () => {
