@@ -20,20 +20,24 @@ function SignUp() {
     inputRef: emailRef,
     focusInput: focusEmail,
   } = useInput();
+
   const { inputVal: password, changeInputVal: changePassword } = useInput();
   const { inputVal: conformPassword, changeInputVal: changeConformPassword } =
     useInput();
 
   const { mutate, isLoading } = useMutation({ mutationFn: signUpAPI });
+  const { mutate: mutateCheckEmail, isLoading: isLoadingCheckEmail } =
+    useMutation({ mutationFn: checkEmailAPI });
 
   const navigate = useNavigate();
 
   const [emailHelper, setEmailHelper] = useState<
-    '' | '이미 가입한 Email입니다.'
+    '' | '이미 가입한 Email입니다.' | '사용할 수 있는 Email입니다.'
   >('');
 
   const disabled = [
     checkEmail(email),
+    emailHelper === '사용할 수 있는 Email입니다.',
     checkPassword(password),
     conformPassword,
     password === conformPassword,
@@ -67,15 +71,15 @@ function SignUp() {
   };
 
   const handleCheckEmail = () => {
-    checkEmailAPI(email)
-      .then((res) => {
-        console.log('res', res);
-        return res;
-      })
-      .catch((err) => {
-        console.log('err', err);
-        return err;
-      });
+    mutateCheckEmail(email, {
+      onSuccess: () => {
+        setEmailHelper('사용할 수 있는 Email입니다.');
+      },
+      onError: () => {
+        focusEmail();
+        setEmailHelper('이미 가입한 Email입니다.');
+      },
+    });
   };
 
   return (
@@ -95,6 +99,7 @@ function SignUp() {
             type="button"
             onClick={handleCheckEmail}
             disabled={!checkEmail(email)}
+            isLoading={isLoadingCheckEmail}
           >
             중복 확인
           </Button>
