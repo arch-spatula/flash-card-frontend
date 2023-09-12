@@ -37,7 +37,8 @@ async function signUpAPI({ email, password }: UserInput) {
 
 async function checkEmailAPI(email: string) {
   try {
-    const res = authClient.post<null>(API_URLS.CHECK_EMAIL, { email });
+    const res = await authClient.post<null>(API_URLS.CHECK_EMAIL, { email });
+    // console.log(res.data);
     return res;
   } catch (error) {
     if (axios.isAxiosError<ErrorResponse>(error)) throw error.response;

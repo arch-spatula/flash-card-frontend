@@ -101,3 +101,23 @@ export const refresh = rest.post(
     }
   }
 );
+
+export const checkEmail = rest.post(
+  BASE_URL + API_URLS.CHECK_EMAIL,
+  async (req, res, ctx) => {
+    const { email } = await req.json<{
+      email: string;
+    }>();
+
+    const [user] = users.documents.filter((user) => user.email === email);
+    if (user === undefined) return res(ctx.status(204), ctx.json(null));
+    else
+      return res(
+        ctx.status(409),
+        ctx.json({
+          success: false,
+          msg: 'Error: email Conflict',
+        })
+      );
+  }
+);
