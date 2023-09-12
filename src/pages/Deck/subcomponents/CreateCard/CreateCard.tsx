@@ -39,28 +39,26 @@ export function CreateCard() {
     );
   };
   return (
-    <>
-      <AddCardContainer onSubmit={handleSubmit}>
-        <Input
-          value={question}
-          onChange={changeQuestion}
-          placeholder="설정"
-          inputLabel="문제"
-        />
-        <Input
-          value={answer}
-          onChange={changeAnswer}
-          placeholder="configure"
-          inputLabel="정답"
-        />
-        <Button
-          disabled={disabled}
-          isLoading={isCreateCardLoading}
-          width={'grow'}
-        >
-          카드 생성
-        </Button>
-      </AddCardContainer>
-    </>
+    <AddCardContainer onSubmit={handleSubmit}>
+      <Input
+        value={question}
+        onChange={changeQuestion}
+        placeholder="설정"
+        inputLabel="문제"
+      />
+      <Input
+        value={answer}
+        onChange={changeAnswer}
+        placeholder="configure"
+        inputLabel="정답"
+      />
+      <Button
+        disabled={disabled}
+        isLoading={isCreateCardLoading}
+        width={'grow'}
+      >
+        카드 생성
+      </Button>
+    </AddCardContainer>
   );
 }

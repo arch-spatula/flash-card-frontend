@@ -1,11 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
-import { Button, Input, PageHeading } from '../../Components';
-import { useInput } from '../../hooks';
-import { checkEmail, checkPassword } from '../../utils';
+import { Button, Input, PageHeading } from '@/Components';
+import { useInput } from '@/hooks';
+import { checkEmail, checkPassword } from '@/utils';
 import { ButtonWrapper, MainContainer, MainWrapper } from './SignUp.style';
-import { signUpAPI } from '../../api/authClient';
+import { signUpAPI } from '@/api';
 import { useNavigate } from 'react-router-dom';
-import { ROUTE_PATHS } from '../../constant/config';
+import { ROUTE_PATHS } from '@/constant/config';
 import { useState } from 'react';
 
 function SignUp() {
@@ -41,14 +41,16 @@ function SignUp() {
     mutate(
       { email, password },
       {
-        onSuccess: (data) => {
-          if (data.status === 201) {
-            navigate(ROUTE_PATHS.SIGN_IN);
-          } else {
-            const { msg } = data as { success: boolean; msg: string };
-            if (msg.startsWith('Error: 이미 가입한 아이디입니다.')) {
-              focusEmail();
-              setEmailHelper('이미 가입한 Email입니다.');
+        onSuccess: (res) => {
+          if (res) {
+            if (res.status === 201) {
+              navigate(ROUTE_PATHS.SIGN_IN);
+            } else {
+              const { msg } = res?.data as { success: boolean; msg: string };
+              if (msg.startsWith('Error: 이미 가입한 아이디입니다.')) {
+                focusEmail();
+                setEmailHelper('이미 가입한 Email입니다.');
+              }
             }
           }
         },

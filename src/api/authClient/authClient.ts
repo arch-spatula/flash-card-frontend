@@ -1,7 +1,7 @@
-import { AxiosError, AxiosResponse } from 'axios';
-import { authClient } from './AxiosClient';
-import { API_URLS, ROUTE_PATHS, STORAGE_KEY } from '../constant/config';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { redirect } from 'react-router-dom';
+import { authClient } from '../AxiosClient';
+import { API_URLS, ROUTE_PATHS, STORAGE_KEY } from '@/constant/config';
 
 type UserInput = {
   email: string;
@@ -25,15 +25,13 @@ async function signInAPI({ email, password }: UserInput) {
 
 async function signUpAPI({ email, password }: UserInput) {
   try {
-    const res = await authClient.post(API_URLS.SIGN_UP, {
+    const res = await authClient.post<null>(API_URLS.SIGN_UP, {
       email,
       password,
     });
     return res;
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return error.response?.data;
-    }
+    if (axios.isAxiosError<ErrorResponse>(error)) return error.response;
   }
 }
 

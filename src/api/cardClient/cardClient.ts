@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
-import { API_URLS } from '../constant/config';
-import { axiosClient } from './AxiosClient';
+import { axiosClient } from '../AxiosClient';
+import { API_URLS } from '@/constant/config';
 
 async function getCardsAPI() {
   try {
@@ -28,12 +28,13 @@ async function createCardsAPI(card: Card) {
 
 async function updateCardsAPI({ id, card }: { id: string; card: Card }) {
   try {
-    const res = await axiosClient.patch(`${API_URLS.CARDS}/${id}`, card);
+    const res = await axiosClient.patch<{
+      matchedCount: number;
+      modifiedCount: number;
+    }>(`${API_URLS.CARDS}/${id}`, card);
     return res;
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return error;
-    }
+    if (axios.isAxiosError<ErrorResponse>(error)) throw error;
   }
 }
 
@@ -42,9 +43,7 @@ async function deleteCardsAPI(id: string) {
     const res = await axiosClient.delete(`${API_URLS.CARDS}/${id}`);
     return res;
   } catch (error) {
-    if (error instanceof AxiosError) {
-      return error;
-    }
+    if (axios.isAxiosError<ErrorResponse>(error)) throw error;
   }
 }
 
