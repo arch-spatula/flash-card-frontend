@@ -73,12 +73,24 @@ describe('refresh access', () => {
   });
 
   it('should empty storages by token keys when there is no session token', async () => {
-    sessionStorage.clear();
     grantAccess();
+    sessionStorage.clear();
 
     await refreshAccessAPI();
 
     expect(localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN)).toBe(null);
     expect(sessionStorage.getItem(STORAGE_KEY.SESSION_TOKEN)).toBe(null);
+  });
+
+  it('should not refresh when token is expired', async () => {
+    grantAccess();
+    sessionStorage.setItem(STORAGE_KEY.SESSION_TOKEN, 'expired');
+
+    const res = await refreshAccessAPI();
+
+    expect(res).toEqual({
+      success: false,
+      msg: 'Error: expired',
+    });
   });
 });

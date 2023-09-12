@@ -79,13 +79,25 @@ export const signIn = rest.post(
 
 export const refresh = rest.post(
   BASE_URL + API_URLS.REFRESH,
-  async (_, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        success: true,
-        access_token: 'zxcv9876',
-      })
-    );
+  async (req, res, ctx) => {
+    const token = req.headers.get('Authorization')?.split(' ')[1];
+
+    if (token === 'expired') {
+      return res(
+        ctx.status(401),
+        ctx.json({
+          success: false,
+          msg: 'Error: expired',
+        })
+      );
+    } else {
+      return res(
+        ctx.status(200),
+        ctx.json({
+          success: true,
+          access_token: 'zxcv9876',
+        })
+      );
+    }
   }
 );
