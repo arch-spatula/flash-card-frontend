@@ -39,15 +39,41 @@ export const signUp = rest.post<{ email: string; password: string }>(
 
 export const signIn = rest.post(
   BASE_URL + API_URLS.SIGN_IN,
-  async (_, res, ctx) => {
-    return res(
-      ctx.status(201),
-      ctx.json({
-        success: true,
-        access_token: 'asdf1234',
-        refresh_token: 'qwer6789',
-      })
-    );
+  async (req, res, ctx) => {
+    const { email, password } = await req.json<{
+      email: string;
+      password: string;
+    }>();
+
+    const [user] = users.documents.filter((user) => user.email === email);
+    if (user === undefined) {
+      return res(
+        ctx.status(400),
+        ctx.json({
+          success: false,
+          msg: 'Error: 이메일이 없습니다.',
+        })
+      );
+    } else {
+      if (user.passwordHash === password && user.passwordSalt === password) {
+        return res(
+          ctx.status(201),
+          ctx.json({
+            success: true,
+            access_token: 'asdf1234',
+            refresh_token: 'qwer6789',
+          })
+        );
+      } else {
+        return res(
+          ctx.status(400),
+          ctx.json({
+            success: false,
+            msg: 'Error: 비밀번호가 일치하지 않습니다.',
+          })
+        );
+      }
+    }
   }
 );
 

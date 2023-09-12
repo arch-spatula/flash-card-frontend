@@ -39,6 +39,22 @@ describe('sign in', () => {
       refresh_token: 'qwer6789',
     });
   });
+
+  it('should fail when there is no signed up user', async () => {
+    const res = await signInAPI({
+      email: 'noone@email.com',
+      password: 'qwer1234',
+    });
+    expect(res.msg).toBe('Error: 이메일이 없습니다.');
+  });
+
+  it('should fail when password does not match', async () => {
+    const res = await signInAPI({
+      email: 'username@email.com',
+      password: 'notMatchingPassword',
+    });
+    expect(res.msg).toBe('Error: 비밀번호가 일치하지 않습니다.');
+  });
 });
 
 describe('refresh access', () => {

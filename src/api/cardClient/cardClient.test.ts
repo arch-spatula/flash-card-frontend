@@ -15,7 +15,7 @@ describe('cardClient - signup', () => {
   it('should get cards', async () => {
     const res = await getCardsAPI();
 
-    expect(res).toEqual(cards);
+    expect(res).toEqual(cards.documents);
   });
 
   it('should create a card', async () => {
