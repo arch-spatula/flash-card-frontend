@@ -2,11 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { getCardsAPI, signInAPI } from '.';
 import { STORAGE_KEY } from '@/constant/config';
 import { cards as cardsMock } from '@/mocks/fixture';
+import { emptyStorage } from '@/utils';
 
 describe('', () => {
   afterEach(() => {
-    localStorage.clear();
-    sessionStorage.clear();
+    emptyStorage();
   });
 
   it('should be able to access cards by token', async () => {

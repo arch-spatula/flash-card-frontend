@@ -1,6 +1,7 @@
 import { afterAll, describe, expect, it } from 'vitest';
 import { refreshAccessAPI, signInAPI, signUpAPI } from '.';
 import { STORAGE_KEY } from '@/constant/config';
+import { emptyStorage } from '@/utils';
 
 describe('authClient - signup', () => {
   it('should fail because of overlapping email', async () => {
@@ -59,8 +60,7 @@ describe('sign in', () => {
 
 describe('refresh access', () => {
   afterAll(() => {
-    localStorage.clear();
-    sessionStorage.clear();
+    emptyStorage();
   });
 
   it('should refresh access token', async () => {
