@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { Button, Input, PageHeading } from '@/Components';
-import { useInput } from '@/hooks';
+import { useCheckEmail, useInput } from '@/hooks';
 import { checkEmail, checkPassword } from '@/utils';
 import {
   ButtonWrapper,
@@ -8,7 +8,7 @@ import {
   MainContainer,
   MainWrapper,
 } from './SignUp.style';
-import { checkEmailAPI, signUpAPI } from '@/api';
+import { signUpAPI } from '@/api';
 import { useNavigate } from 'react-router-dom';
 import { ROUTE_PATHS } from '@/constant/config';
 import { useState } from 'react';
@@ -26,15 +26,18 @@ function SignUp() {
     useInput();
 
   const { mutate, isLoading } = useMutation({ mutationFn: signUpAPI });
-  const { mutate: mutateCheckEmail, isLoading: isLoadingCheckEmail } =
-    useMutation({ mutationFn: checkEmailAPI });
+  const {
+    mutateCheckEmail,
+    isLoadingCheckEmail,
+    conformedEmail,
+    setConformedEmail,
+  } = useCheckEmail();
 
   const navigate = useNavigate();
 
   const [emailHelper, setEmailHelper] = useState<
     '' | '이미 가입한 Email입니다.' | '사용할 수 있는 Email입니다.'
   >('');
-  const [conformedEmail, setConformedEmail] = useState('');
 
   const disabled = [
     checkEmail(email),
