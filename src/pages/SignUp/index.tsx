@@ -100,6 +100,11 @@ function SignUp() {
             placeholder="user@email.com"
             customRef={emailRef}
             helperText={emailHelper}
+            helperTextColor={
+              emailHelper === '사용할 수 있는 Email입니다.'
+                ? 'success'
+                : 'warning'
+            }
           />
           <Button
             type="button"
