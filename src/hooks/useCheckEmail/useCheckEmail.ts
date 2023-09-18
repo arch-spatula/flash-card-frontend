@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 function useCheckEmail() {
   const { mutate: mutateCheckEmail, isLoading: isLoadingCheckEmail } =
-    useMutation({ mutationFn: checkEmailAPI });
+    useMutation({ mutationFn: checkEmailAPI, retry: 0 });
 
   const [conformedEmail, setConformedEmail] = useState('');
 
