@@ -1,5 +1,5 @@
 import { afterAll, describe, expect, it } from 'vitest';
-import { refreshAccessAPI, signInAPI, signUpAPI } from '.';
+import { checkEmailAPI, refreshAccessAPI, signInAPI, signUpAPI } from '.';
 import { STORAGE_KEY } from '@/constant/config';
 import { emptyStorage, grantAccess } from '@/utils';
 
@@ -91,6 +91,29 @@ describe('refresh access', () => {
     expect(res).toEqual({
       success: false,
       msg: 'Error: expired',
+    });
+  });
+});
+
+describe('authClient - checkEmailAPI', () => {
+  it('should return nothing when there is no duplication', async () => {
+    const newUserEmail = 'newuser@email.com';
+
+    const res = await checkEmailAPI(newUserEmail);
+
+    expect(res?.status).toBe(204);
+    expect(res?.data).toEqual(null);
+  });
+
+  it('should return error when there is duplication', async () => {
+    const duplicateUserEmail = 'username@email.com';
+
+    const res = await checkEmailAPI(duplicateUserEmail).catch((err) => err);
+
+    expect(res?.status).toBe(409);
+    expect(res?.data).toEqual({
+      success: false,
+      msg: 'Error: email Conflict',
     });
   });
 });

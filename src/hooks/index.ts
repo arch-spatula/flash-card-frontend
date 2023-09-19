@@ -12,3 +12,4 @@ export * from './useEndRedirectToCards';
 export * from './useEmailSave';
 export * from './useStopScroll';
 export * from './useEmailSave';
+export * from './useCheckEmail';

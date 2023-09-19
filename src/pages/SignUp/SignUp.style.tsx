@@ -18,3 +18,8 @@ export const ButtonWrapper = styled.div`
   display: flex;
   gap: 0.5rem;
 `;
+
+export const EmailCheckWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;

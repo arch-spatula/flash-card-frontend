@@ -5,6 +5,7 @@ export const API_URLS = {
   SIGN_IN: '/auth/signin',
   SIGN_UP: '/auth/signup',
   REFRESH: '/auth/refresh',
+  CHECK_EMAIL: '/auth/check-email',
 } as const;
 
 export const ROUTE_PATHS = {
