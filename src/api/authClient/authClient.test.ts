@@ -1,5 +1,11 @@
 import { afterAll, describe, expect, it } from 'vitest';
-import { checkEmailAPI, refreshAccessAPI, signInAPI, signUpAPI } from '.';
+import {
+  checkEmailAPI,
+  deleteUserAPI,
+  refreshAccessAPI,
+  signInAPI,
+  signUpAPI,
+} from '.';
 import { STORAGE_KEY } from '@/constant/config';
 import { emptyStorage, grantAccess } from '@/utils';
 
@@ -116,4 +122,14 @@ describe('authClient - checkEmailAPI', () => {
       msg: 'Error: email Conflict',
     });
   });
+});
+
+describe('authClient - deleteUserAPI', () => {
+  it('should return nothing when delete succeed', async () => {
+    const res = await deleteUserAPI();
+    expect(res?.status).toBe(204);
+    expect(res?.data).toBe(null);
+  });
+  // 토큰이 없는 경우
+  // 존재하지 않는 경우
 });

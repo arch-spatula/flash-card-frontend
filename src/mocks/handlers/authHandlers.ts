@@ -121,3 +121,10 @@ export const checkEmail = rest.post(
       );
   }
 );
+
+export const deleteUser = rest.delete(
+  BASE_URL + API_URLS.WITHDRAWAL,
+  async (_, res, ctx) => {
+    return res(ctx.status(204), ctx.json(null));
+  }
+);
