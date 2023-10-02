@@ -44,6 +44,18 @@ async function checkEmailAPI(email: string) {
   }
 }
 
+async function deleteUserAPI() {
+  const accessToken = localStorage.getItem(STORAGE_KEY.ACCESS_TOKEN);
+  try {
+    const res = await authClient.delete<null>(API_URLS.WITHDRAWAL, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    return res;
+  } catch (error) {
+    if (axios.isAxiosError<ErrorResponse>(error)) throw error.response;
+  }
+}
+
 /** - API 명세의 요구사항 때문에 authClient 중 유일하게 header를 활용해야 함 */
 async function refreshAccessAPI() {
   try {
@@ -74,4 +86,4 @@ async function refreshAccessAPI() {
   }
 }
 
-export { signInAPI, signUpAPI, refreshAccessAPI, checkEmailAPI };
+export { signInAPI, signUpAPI, refreshAccessAPI, checkEmailAPI, deleteUserAPI };
